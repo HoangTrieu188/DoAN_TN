@@ -1,0 +1,37 @@
+﻿@model List<Gemini.Models._01_Hethong.SControlModel>
+
+    <div class="toolbar">
+        @(Html.Kendo().ToolBar()
+                          .Name("ToolbarItem")
+                          .Items(items =>
+                          {
+                              foreach (var item in Model)
+                              {
+                                  items.Add().Type(CommandType.Button).Text(@item.Name).SpriteCssClass(@item.SpriteCssClass).Url("javascript:ToolbarItem_Click('" + @item.EventClick + "')").Id(@item.EventClick);
+                              }
+                              //if (Model.Exists(m => vString.EqualsIgnoreCase(m.ControlCode, "btnSaveAdd")))
+                              //{
+                              //    items.Add().Type(CommandType.Button).Text(@Gemini.Resources.Resource.Btn_SaveAndAdd).SpriteCssClass("k-icon k-i-folder-add").Url("javascript:ToolbarItem_Click('btnSaveadd')").Id("btnSaveAdd");
+                              //}
+                              //if (Model.Exists(m => vString.EqualsIgnoreCase(m.ControlCode, "btnSaveClose")))
+                              //{
+                              //    items.Add().Type(CommandType.Button).Text(@Gemini.Resources.Resource.Btn_Save).SpriteCssClass("k-icon k-i-folder-up").Url("javascript:ToolbarItem_Click('btnSaveclose')").Id("btnSaveClose");
+                              //}
+                              //if (Model.Exists(m => vString.EqualsIgnoreCase(m.ControlCode, "btnDelete")))
+                              //{
+                              //    items.Add().Type(CommandType.Button).Text(@Gemini.Resources.Resource.Btn_Delete).SpriteCssClass("k-icon k-i-cancel").Url("javascript:ToolbarItem_Click('btnDelete')").Id("btnDelete");
+                              //}
+                              //if (Model.Exists(m => vString.EqualsIgnoreCase(m.ControlCode, "btnRefreshItem")))
+                              //{
+                              //    items.Add().Type(CommandType.Button).Text(@Gemini.Resources.Resource.Btn_Refresh).SpriteCssClass("k-icon k-i-refresh").Url("javascript:ToolbarItem_Click('btnRefresh')").Id("btnRefreshItem");
+                              //}
+                              //if (Model.Exists(m => vString.EqualsIgnoreCase(m.ControlCode, "btnClose")))
+                              //{
+                              //    items.Add().Type(CommandType.Button).Text(@Gemini.Resources.Resource.Btn_Close).SpriteCssClass("k-icon k-i-close").Url("javascript:ToolbarItem_Click('btnClose')").Id("btnClose");
+                              //}
+
+                          })
+        )
+    </div>
+
+

@@ -1,0 +1,18 @@
+@model string
+
+@(Html.Kendo().DropDownList()
+    .Name("Color")
+    .DataTextField("Text")
+    .DataValueField("Value")
+    .HtmlAttributes(new { style = "width: 100%; border: 2px solid blue;" })
+    .BindTo(new List<SelectListItem>() {
+        new SelectListItem() { Text = "Do", Value = "Do" },
+        new SelectListItem() { Text = "Xanh", Value = "Xanh" }
+    })
+    .DataSource(source => {
+        source.Custom()
+            .Transport(transport => {
+                transport.Read("function(options) { if(typeof colors !== 'undefined' && colors.length > 0) options.success(colors); else options.success([{text:'Check JS', value:'Check JS'}]); }");
+            });
+    })
+)

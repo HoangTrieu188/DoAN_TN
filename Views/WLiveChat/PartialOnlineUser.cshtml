@@ -1,0 +1,36 @@
+﻿@model Gemini.Models._05_Website.PartialOnlineUserModel
+
+<div class="panel panel-success">
+    <div class="panel-heading">Online</div>
+    @if (Model.ListUserOnline != null && Model.ListUserOnline.Any())
+    {
+        <table id="MenuContentHolder_DataList1" cellspacing="0" style="width:100%;border-collapse:collapse;">
+            <tbody>
+                @foreach (var item in Model.ListUserOnline)
+                {
+                    <tr>
+                        <td>
+                            <div class="list-group-item">
+                                <a class="item-chat" onclick="loadDataChatPannel('@item.Username')">@item.Username</a>
+                                <div class="OnlineCSS"></div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+<script>
+    function loadDataOnlineUser() {
+        $.ajax({
+            type: "POST",
+            url: "/WLiveChat/PartialOnlineUser",
+            dataType: "html",
+            success: function (response) {
+                $('#partialOnlineUser').html(response);
+            }
+        });
+    }
+</script>

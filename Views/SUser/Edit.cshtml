@@ -1,0 +1,389 @@
+﻿@model Gemini.Models._01_Hethong.SUserModel
+@{
+    Layout = "~/Views/Shared/_FormList.cshtml";
+}
+<style>
+    .k-multiselect-wrap {
+        height: 170px;
+        overflow: auto;
+    }
+</style>
+
+@Html.Action("AToolbarItem", "Nav")
+
+<div class="k-edit-form-container" style="overflow-x: hidden;">
+
+    <form method="post" id="frmEdit" class="form-horizontal" role="form">
+        <div id="Tabs">
+            <ul>
+                <li class="k-state-active">
+                    @Html.Label(@Gemini.Resources.Resource.LBasic)
+                </li>
+                <li>
+                    @Html.Label(@Gemini.Resources.Resource.LImage)
+                </li>
+            </ul>
+            @*Cơ bản*@
+            <div>
+                <div style="height: 0; overflow: hidden">
+                    @Html.HiddenFor(model => model.Guid)
+                    @Html.HiddenFor(model => model.IsUpdate)
+                    @Html.HiddenFor(model => model.Avartar)
+                    @Html.HiddenFor(model => model.Legit)
+                    @Html.HiddenFor(model => model.LegitCount)
+                    <input type="hidden" id="hfLuuvathem" value="0" /><input type="hidden" id="hfExpand" value="0" />
+                    <button type="submit" id="btnLuu" style="visibility: hidden"></button>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-2 col-md-2">
+                        @Html.LabelFor(m => m.FullName)
+                    </div>
+                    <div class="col-sm-10 col-md-10">
+                        @Html.TextBoxFor(model => model.FullName, new { @class = "k-textbox" })
+                        <div>@Html.ValidationMessageFor(model => model.FullName)</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-2 col-md-2">
+                        @Html.LabelFor(m => m.Username)
+                    </div>
+                    <div class="col-sm-4 col-md-4">
+                        @Html.TextBoxFor(model => model.Username, new { @class = "k-textbox" })
+                        <div>@Html.ValidationMessageFor(model => model.Username)</div>
+                    </div>
+                    <div id="checkChangePass">
+                        <div class="col-sm-2 col-md-2">
+                            @Html.LabelFor(m => m.IsChangePassword)
+                        </div>
+                        <div class="col-sm-4 col-md-4">
+                            @Html.CheckBoxFor(model => model.IsChangePassword)
+                            <div>@Html.ValidationMessageFor(model => model.IsChangePassword)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="passwordhide">
+                    <div class="form-group">
+                        <div class="col-sm-2 col-md-2">
+                            @Html.LabelFor(m => m.Password)
+                        </div>
+                        <div class="col-sm-4 col-md-4">
+                            @Html.PasswordFor(model => model.Password, new { @class = "k-textbox" })
+                            <div>@Html.ValidationMessageFor(model => model.Password)</div>
+                        </div>
+
+                        <div class="col-sm-2 col-md-2">
+                            @Html.Label("Gõ lại")
+                            <span class="k-icon k-i-note" id="k-invalid3"></span>
+                        </div>
+                        <div class="col-sm-4 col-md-4">
+                            @Html.PasswordFor(model => model.Password1, new { @class = "k-textbox" })
+                            <div>@Html.ValidationMessageFor(model => model.Password1)</div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Start*@
+                <div class="form-group">
+                    <div class="col-sm-2 col-md-2">
+                        @Html.LabelFor(m => m.RecordsInPage)
+                    </div>
+                    <div class="col-sm-4 col-md-4">
+                        @(Html.Kendo().DropDownListFor(m => m.RecordsInPage)
+                                  .Name("RecordsInPage")
+                                  .HtmlAttributes(new { @class = "k-dropdown" })
+                                  .HtmlAttributes(new { style = "width:100%;z-index:1;" })
+                                  .DataTextField("ValueType")
+                                  .DataValueField("ValueType")
+                                  .DataSource(source => source.Read(read => read.Action("SType", "Combo", new { key= "RECORDS_IN_PAGE" })))
+                        )
+                        <div>@Html.ValidationMessageFor(model => model.RecordsInPage)</div>
+                    </div>
+                    <div class="col-sm-2 col-md-2">
+                        @Html.LabelFor(m => m.GuidRole)
+                    </div>
+                    <div class="col-sm-4 col-md-4">
+                        @(Html.Kendo().DropDownListFor(model => model.GuidRole)
+                  .Name("GuidRole")
+                  .HtmlAttributes(new { @class = "k-dropdown" })
+                  .HtmlAttributes(new { style = "width:100%;z-index:1;" })
+                  .Filter(FilterType.Contains).OptionLabel(@Gemini.Resources.Resource.LChoose)
+                  .DataTextField("Name")
+                  .DataValueField("Guid")
+                  .DataSource(source => source.Read(read => read.Action("SRole", "Combo")))
+                        )
+                        <div>@Html.ValidationMessageFor(model => model.GuidRole)</div>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-2 col-md-2">
+                        @Html.LabelFor(m => m.Active)
+                    </div>
+                    <div class="col-sm-4 col-md-4">
+                        @Html.CheckBoxFor(model => model.Active)
+                        <div>@Html.ValidationMessageFor(model => model.Active)</div>
+                    </div>
+                    <div class="col-sm-2 col-md-2">
+                        @Html.LabelFor(m => m.Email)
+                    </div>
+                    <div class="col-sm-4 col-md-4">
+                        @Html.TextBoxFor(model => model.Email, new { @class = "k-textbox" })
+                        <div>@Html.ValidationMessageFor(model => model.Email)</div>
+                    </div>
+                </div>
+
+                @*<div class="form-group">
+                        <div class="col-sm-2 col-md-2">
+                            @Html.LabelFor(m => m.StartDate)
+                        </div>
+                        <div class="col-sm-4 col-md-4">
+                            @Html.Kendo().DateTimePickerFor(model => model.StartDate).HtmlAttributes(new { style = "width:100%;" })
+                            <div>@Html.ValidationMessageFor(model => model.StartDate)</div>
+                        </div>
+                        <div class="col-sm-2 col-md-2">
+                            @Html.LabelFor(m => m.EndDate)
+                        </div>
+                        <div class="col-sm-4 col-md-4">
+                            @Html.Kendo().DateTimePickerFor(model => model.EndDate).HtmlAttributes(new { style = "width:100%;" })
+                            <div>@Html.ValidationMessageFor(model => model.EndDate)</div>
+                        </div>
+                    </div>*@
+
+                <div class="form-group">
+                    <div class="col-sm-2 col-md-2">
+                        @Html.LabelFor(m => m.Mobile)
+                    </div>
+                    <div class="col-sm-4 col-md-4">
+                        @Html.TextBoxFor(model => model.Mobile, new { @class = "k-textbox" })
+                        <div>@Html.ValidationMessageFor(model => model.Mobile)</div>
+                    </div>
+                    <div class="col-sm-2 col-md-2">
+                        @Html.LabelFor(m => m.Skype)
+                    </div>
+                    <div class="col-sm-4 col-md-4">
+                        @Html.TextBoxFor(model => model.Skype, new { @class = "k-textbox" })
+                        <div>@Html.ValidationMessageFor(model => model.Skype)</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-2 col-md-2">
+                        @Html.LabelFor(m => m.Zalo)
+                    </div>
+                    <div class="col-sm-4 col-md-4">
+                        @Html.TextBoxFor(model => model.Zalo, new { @class = "k-textbox" })
+                        <div>@Html.ValidationMessageFor(model => model.Zalo)</div>
+                    </div>
+                    <div class="col-sm-2 col-md-2">
+                        @Html.LabelFor(m => m.Facebook)
+                    </div>
+                    <div class="col-sm-4 col-md-4">
+                        @Html.TextBoxFor(model => model.Facebook, new { @class = "k-textbox" })
+                        <div>@Html.ValidationMessageFor(model => model.Facebook)</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-2 col-md-2">
+                        @Html.LabelFor(m => m.FullAddress)
+                    </div>
+                    <div class="col-sm-10 col-md-4">
+                        @Html.TextBoxFor(model => model.FullAddress, new { @class = "k-textbox" })
+                        <div>@Html.ValidationMessageFor(model => model.FullAddress)</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-2 col-md-2">
+                        @Html.LabelFor(m => m.Note)
+                    </div>
+                    <div class="col-sm-10 col-md-10">
+                        @Html.TextAreaFor(model => model.Note, new { @class = "k-textbox", rows = "4" })
+                        <div>@Html.ValidationMessageFor(model => model.Note)</div>
+                    </div>
+                </div>
+            </div>
+
+            @*Ảnh NSD *@
+            <div>
+                <div class="form-group">
+                    <div class="col-sm-6 col-md-6">
+                        <input type="file" name="File_path1" id="files">
+                        <img src="@Model.Avartar" />
+                    </div>
+
+                    <div class="col-sm-6 col-md-6">
+                        <style>
+                            .image-preview {
+                                position: relative;
+                                vertical-align: top;
+                                height: 150px;
+                            }
+                        </style>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<script>
+    //
+    $(document).ready(function () {
+        $("#files").kendoUpload({
+            async: {
+                saveUrl: '@Url.Action("Save", "SUser")?guidUser=' + $("#Guid").val() + ''
+            },
+            multiple: false,
+            select: function (e) {
+                var fileInfo = e.files[0];
+                var wrapper = this.wrapper;
+
+                setTimeout(function () {
+                    addPreview(fileInfo, wrapper);
+                });
+            },
+            success: onSuccess
+        });
+    });
+
+    function onSuccess(e) {
+        voidRefreshItem();
+    }
+
+    function addPreview(file, wrapper) {
+        var raw = file.rawFile;
+        var reader = new FileReader();
+
+        if (raw) {
+            reader.onloadend = function () {
+                var preview = $("<img class='image-preview'>").attr("src", this.result);
+
+                wrapper.find(".k-file[data-uid='" + file.uid + "'] .k-file-extension-wrapper")
+                  .replaceWith(preview);
+            };
+
+            reader.readAsDataURL(raw);
+        }
+    }
+    //
+    ToolbarItem_Click();
+
+    $("#IsChangePassword").change(function () {
+        if (this.checked) {
+            document.getElementById('passwordhide').style.display = '';
+        } else {
+            document.getElementById('passwordhide').style.display = 'none';
+        }
+    });
+
+    $(document).ready(function () {
+        if ($("#IsUpdate").val() == 1) {
+            document.getElementById('passwordhide').style.display = 'none';
+            document.getElementById('checkChangePass').style.display = '';
+        } else {
+            document.getElementById('passwordhide').style.display = '';
+            document.getElementById('checkChangePass').style.display = 'none';
+        }
+    });
+
+    //Form submit
+    var validator = $("#frmEdit").kendoValidator().data("kendoValidator");
+    $("form").submit(function (event) {
+        if (validator.validate() == true) {
+            kendo.ui.progress(parent.$("#WidgetConfigWindow"), true);
+            var frm;
+            if ($("#IsUpdate").val() == 1 && $('#IsChangePassword').prop('checked') == true) {
+                if ($("#Password").val() == "" && $("#Password1").val() == "") {
+                    alert('Check Password Again');
+                    kendo.ui.progress(parent.$("#WidgetConfigWindow"), false);
+                    event.preventDefault();
+                } else if ($("#Password").val() != $("#Password1").val()) {
+                    alert('Check Password Again');
+                    kendo.ui.progress(parent.$("#WidgetConfigWindow"), false);
+                    event.preventDefault();
+                } else if ($("#Password").val().toString().length < 6) {
+                    alert('Check Password Again');
+                    kendo.ui.progress(parent.$("#WidgetConfigWindow"), false);
+                    event.preventDefault();
+                } else {
+                    frm = $('#frmEdit');
+                    $.post('@Url.Action("Update", "SUser")', frm.serialize(), function (dataResponse) {
+                        kendo.ui.progress(parent.$("#WidgetConfigWindow"), false);
+                        if (dataResponse.StatusCode == 200) {
+                            try {
+                                parent.voidRefresh();
+                                parent.ActiveRow(dataResponse.ActiveCode);
+                                if (parseInt($("#hfLuuvathem").val()) == 0) {
+                                    closeWindowEdit();
+                                } else {
+                                    parent.Create('0');
+                                }
+                            }
+                            catch {
+                                closeWindowEdit();
+                            }
+                        } else {
+                            Notification('@Gemini.Resources.Resource.EditUnsuccessful', dataResponse.StatusCode, dataResponse.MessagError, '@Gemini.Resources.Resource.ListStatusNotificationError', true);
+                        }
+                    });
+                }
+            } else {
+                frm = $('#frmEdit');
+                $.post('@Url.Action("Update", "SUser")', frm.serialize(), function (dataResponse) {
+                    kendo.ui.progress(parent.$("#WidgetConfigWindow"), false);
+                    if (dataResponse.StatusCode == 200) {
+                        try {
+                            parent.voidRefresh();
+                            parent.ActiveRow(dataResponse.ActiveCode);
+                            if (parseInt($("#hfLuuvathem").val()) == 0) {
+                                closeWindowEdit();
+                            } else {
+                                parent.Create('0');
+                            }
+                        }
+                        catch {
+                            closeWindowEdit();
+                        }
+                    } else {
+                        Notification('@Gemini.Resources.Resource.EditUnsuccessful', dataResponse.StatusCode, dataResponse.MessagError, '@Gemini.Resources.Resource.ListStatusNotificationError', true);
+                    }
+                });
+            }
+
+        }
+        event.preventDefault();
+    });
+
+
+    function closeWindowEdit() {
+        var window = parent.$("#WidgetConfigWindow").data("kendoWindow");
+        window.close();
+    }
+
+    function voidDeleteItem() {
+        parent.Delete();
+        closeWindowEdit();
+    }
+
+    function voidRefreshItem() {
+        if (parseInt($("#IsUpdate").val()) == 0) {
+            parent.Create('0');
+        } else if (parseInt($("#IsUpdate").val()) == 1) {
+            parent.Edit('1');
+        }
+    }
+
+    //Enter text box
+    PreventEventTextSubmit();
+    //Phím tắt
+    KeyboardNavigationEdit();
+    //
+    KendoTabStrip();
+</script>

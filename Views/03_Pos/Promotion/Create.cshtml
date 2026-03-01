@@ -1,0 +1,81 @@
+@model Gemini.Models.PosPromotion
+
+@{
+    ViewBag.Title = Model.Guid == Guid.Empty ? "Th&#234;m m&#7899;i khuy&#7871;n m&#227;i" : "C&#7853;p nh&#7853;t khuy&#7871;n m&#227;i";
+    Layout = "~/Views/Shared/_FormList.cshtml";
+}
+
+<div id="main-content">
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("Create", "Promotion", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.HiddenFor(m => m.Guid)
+                @Html.HiddenFor(m => m.CreatedAt)
+                @Html.HiddenFor(m => m.CreatedBy)
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">M&#227; khuy&#7871;n m&#227;i</label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.Code, new { @class = "form-control", @required = "required" })
+                        @Html.ValidationMessageFor(m => m.Code, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">Gi&#225; tr&#7883; gi&#7843;m</label>
+                    <div class="col-md-4">
+                        @Html.Kendo().NumericTextBoxFor(m => m.Value).HtmlAttributes(new { style = "width: 100%" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">Lo&#7841;i gi&#7843;m gi&#225;</label>
+                    <div class="col-md-4">
+                        <label class="radio-inline">
+                            @Html.RadioButtonFor(m => m.IsPercent, false) S&#7889; ti&#7873;n
+                        </label>
+                        <label class="radio-inline">
+                            @Html.RadioButtonFor(m => m.IsPercent, true) Ph&#7847;n tr&#259;m (%)
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">Th&#7901;i gian b&#7855;t &#273;&#7847;u</label>
+                    <div class="col-md-4">
+                        @Html.Kendo().DateTimePickerFor(m => m.StartDate).HtmlAttributes(new { style = "width: 100%" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">Th&#7901;i gian k&#7871;t th&#250;c</label>
+                    <div class="col-md-4">
+                        @Html.Kendo().DateTimePickerFor(m => m.EndDate).HtmlAttributes(new { style = "width: 100%" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">K&#237;ch ho&#7841;t</label>
+                    <div class="col-md-4">
+                        @Html.CheckBoxFor(m => m.Active)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">Ghi ch&#250;</label>
+                    <div class="col-md-8">
+                        @Html.TextAreaFor(m => m.Note, new { @class = "form-control", rows = 3 })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" class="btn btn-primary">L&#432;u l&#7841;i</button>
+                        <a href="@Url.Action("Index", "Promotion")" class="btn btn-default">H&#7911;y b&#7887;</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

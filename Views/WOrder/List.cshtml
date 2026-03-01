@@ -1,0 +1,363 @@
+﻿@{
+    Layout = "~/Views/Shared/_FormList.cshtml";
+    int gridPageSize = ViewBag.Pagesize;
+}
+
+<style>
+    .k-pane.k-scrollable {
+        height: 100% !important;
+    }
+
+    .k-splitbar.k-state-default.k-splitbar-horizontal.k-splitbar-draggable-horizontal {
+        height: 100% !important;
+    }
+</style>
+
+@(Html.Kendo().Splitter()
+              .Name("splitter")
+              .Orientation(SplitterOrientation.Horizontal)
+              .Panes(panes =>
+              {
+                  panes.Add().MinSize("30%").HtmlAttributes(new { style = "overflow: hidden" }).Content(@<div>
+                    @Rendergrid()
+                </div>);
+                        panes.Add().MinSize("30%").HtmlAttributes(new { style = "overflow: hidden" }).Content(@<div>
+                            @Rendergridtabc1()
+                        </div>);
+                            }))
+
+@helper Rendergrid()
+{
+    int gridPageSize = ViewBag.Pagesize;
+    <div style="width:98%">
+        @*Menu main*@
+        @Html.Action("AToolbar", "Nav")
+        @*Grid main*@
+        <div>
+            @(Html.Kendo().Grid<Gemini.Models._05_Website.WOrderModel>()
+                    .Name("grid")
+                    .Columns(columns =>
+                    {
+                        columns.Bound(p => p.OrderCode).Width(250).Sortable(true).Filterable(ftb => ftb.Cell(cell => cell.Operator("contains")));
+                        columns.Bound(p => p.Username).Width(160).Sortable(true).Filterable(ftb => ftb.Cell(cell => cell.Operator("contains")));
+                        columns.Bound(p => p.StatusName).Width(160).Sortable(true).Filterable(ftb => ftb.Cell(cell => cell.Operator("contains")));
+                        columns.Bound(p => p.Mobile).Width(160).Sortable(true).Filterable(ftb => ftb.Cell(cell => cell.Operator("contains")));
+                        columns.Bound(p => p.FullAddress).Width(160).Sortable(true).Filterable(ftb => ftb.Cell(cell => cell.Operator("contains")));
+                    })
+                    .ToolBar(toolbar =>
+                    {
+                        toolbar.Template(@<text>
+
+                        </text>);
+                    })
+                .Pageable(pageable => pageable.PageSizes(new[] { 100, 200, 500, 1000 }).ButtonCount(gridPageSize)
+                .Messages(messages => messages.ItemsPerPage(@Gemini.Resources.Resource.ListItemsPerPage)))
+                .Sortable()
+                .Scrollable()
+                .Selectable()
+                .Filterable(ftb => ftb.Mode(GridFilterMode.Row))
+                .Navigatable()
+                .Resizable(resize => resize.Columns(true))
+                .DataSource(dataSource => dataSource
+                .Ajax()
+                .ServerOperation(false)
+                .Model(model => model.Id(p => p.Guid))
+                .Read(read => read.Action("Read", "WOrder"))
+                .PageSize(gridPageSize)
+                .Batch(false)
+                .AutoSync(false)
+                )
+                .Events(e => e.DataBound("grid_DataBound").Change("grid_Change"))
+                )
+        </div>
+    </div>
+}
+
+@helper Rendergridtabc1()
+{
+    int gridPageSize = ViewBag.Pagesize;
+    @*Menu Tabc*@
+    @*Grid Tabc1*@
+    <div id="TabsChild">
+        <ul>
+            <li class="k-state-active">Chi tiết đơn hàng</li>
+        </ul>
+        <div>
+            @(Html.Kendo().Grid<Gemini.Models._05_Website.WOrderDetailModel>()
+                                                    .Name("gridTabc1")
+                                                    .Columns(columns =>
+                                                    {
+                                                        columns.Bound(p => p.ProduceLinkImg0).Width(110).ClientTemplate("<img height='100px' width='100px' src='#:data.ProduceLinkImg0#'  alt='' />");
+                                                        columns.Bound(p => p.ProduceCode).Width(200).Sortable(true).Filterable(ftb => ftb.Cell(cell => cell.Operator("contains")));
+                                                        columns.Bound(p => p.ProduceName).Width(200).Sortable(true).Filterable(ftb => ftb.Cell(cell => cell.Operator("contains")));
+                                                        columns.Bound(p => p.Size).Width(200).Sortable(true).Filterable(false);
+                                                        columns.Bound(p => p.Color).Width(200).Sortable(true).Filterable(false);
+                                                        columns.Bound(p => p.Quantity).Width(200).Sortable(true).Filterable(false);
+                                                        columns.Bound(p => p.Price).Width(130).Sortable(true).Filterable(false).Format("{0:#,##0}");
+                                                    }).ToolBar(toolbar =>
+                                                    {
+                                                    toolbar.Template(@<text></text>);
+                                                })
+                                        .Editable(editable => editable.Mode(GridEditMode.PopUp)) // Use inline editing mode
+                                        .Pageable(pageable => pageable.PageSizes(new[] { 5, 10, 20, 50, 100, 200, 500, 1000 }).ButtonCount(gridPageSize)
+                                        .Messages(messages => messages.ItemsPerPage(@Gemini.Resources.Resource.ListItemsPerPage)))
+                                        .Sortable()
+                                        .Scrollable()
+                                        .Selectable()
+                                        .Navigatable()
+                                        .Resizable(resize => resize.Columns(true))
+                                        .DataSource(dataSource => dataSource.Ajax().ServerOperation(false)
+                                        .Model(model => model.Id(p => p.Guid))
+                                        .Read(read => read.Action("ReadTabc1", "WOrder")) // Action invoked when the grid needs data
+                                        .PageSize(gridPageSize)
+                                        )
+            )
+        </div>
+    </div>
+}
+
+@*Bound*@
+<script>
+    var __IdCode = 0;
+    function grid_DataBound() {
+        var idCode = __IdCode;
+        var grid = $("#grid").data("kendoGrid");
+        var data = grid.dataSource.data();
+        var totalNumber = data.length;
+        var pageSize = grid.dataSource._pageSize;
+        var index = 0;
+        var row;
+        for (var i = 0; i < totalNumber; i++) {
+            row = data[i];
+            if (row.Guid == idCode) {
+                index = i + 1;
+                var model = grid.dataSource.get(idCode);
+                var row1 = $("#grid").find("tbody>tr[data-uid=" + model.uid + "]");
+                grid.select(row1);
+                break;
+            }
+        }
+        if (totalNumber > pageSize) {
+            var cpage = this.dataSource.page();
+            var page = Math.floor(index / pageSize);
+            if ((index % pageSize) != 0) {
+                page = page + 1;
+            }
+
+            if (cpage != page && page != 0) {
+                grid.dataSource.page(page);
+            }
+        }
+        if (idCode == "") {
+            var tpage = Math.floor(totalNumber / pageSize);
+            if ((totalNumber % pageSize) != 0) {
+                tpage = Math.floor(totalNumber / pageSize) + 1;
+            }
+            if (tpage < cpage && tpage != 0) {
+                grid.dataSource.page(tpage);
+            }
+            row = grid.tbody.find(">tr:not(.k-grouping-row)").eq(0);
+            grid.select(row);
+        }
+
+        __IdCode = 0;
+        if (index != 0) {
+            var scrollContentOffset = this.element.find("tbody").offset().top;
+            var selectContentOffset = this.select().offset().top;
+            var distance = selectContentOffset - scrollContentOffset;
+
+            this.element.find(".k-grid-content").animate({
+                scrollTop: distance
+            }, 400);
+        }
+    }
+
+    function ActiveRow(idCode) {
+        __IdCode = idCode;
+    }
+
+    function voidRefresh() {
+        LoadDataFind();
+    }
+
+    function LoadDataFind() {
+        $("#grid").data("kendoGrid").dataSource.read({});
+    }
+
+    function LoadTabc1() {
+        $("#gridTabc1").data("kendoGrid").dataSource.read({ Guid: getDataItem().Guid, textSearch: $("#txtSearchc").val() });
+    }
+
+    function grid_Change() {
+        kendo.ui.progress($("#splitter"), true);
+        var dataItem = this.dataItem(this.select());
+        if (dataItem != null) {
+            Id = dataItem.Id;
+            LoadTabc1();
+            kendo.ui.progress($("#splitter"), false);
+        }
+    }
+
+    function checkall() {
+        var cbox = document.getElementsByClassName("chkbox");
+        if ($("#selectAll").is(":checked") === true) {
+            for (var i = 0; i < cbox.length; i++){
+                if (cbox[i].type == 'checkbox')
+                    cbox[i].checked = true;
+            }
+        } else {
+            for (var i = 0; i < cbox.length; i++){
+                if (cbox[i].type == 'checkbox')
+                    cbox[i].checked = false;
+            }
+        }
+    }
+
+    function checkallMenu() {
+        var cbox = document.getElementsByClassName("chkboxMenu");
+        if ($("#selectAllMenu").is(":checked") === true) {
+            for (var i = 0; i < cbox.length; i++){
+                if (cbox[i].type == 'checkbox')
+                    cbox[i].checked = true;
+            }
+        } else {
+            for (var i = 0; i < cbox.length; i++){
+                if (cbox[i].type == 'checkbox')
+                    cbox[i].checked = false;
+            }
+        }
+    }
+
+    var Id = "";
+</script>
+
+@*div Main*@
+<div>
+    @(Html.Kendo().Window()
+          .Name("WidgetConfigWindow")
+          .Title(@Gemini.Resources.Resource.Menu_MetaTitle)
+          .Iframe(true)
+          .Events(ev => ev.Open(@"function(f){
+                                    if(window.loaded){
+                                        this.refresh();
+                                    }
+                                    window.loaded = true;
+                                }"))
+          .Animation(true)
+          .Resizable()
+          .Draggable()
+          .Width(850).Height(400)
+          .Actions(actions => actions.Pin().Minimize().Maximize().Close())
+          .HtmlAttributes(new { style = "marign:0;padding:0;overflow:hidden" })
+          .Visible(false)
+          .Modal(true)
+          )
+</div>
+
+@*CED Main*@
+<script>
+    window.onresize = function (event) {
+        $("#splitter").height($(window).innerHeight() - 10);        //Đặt độ cao cho grid
+        GridHeight("grid");
+        GridHeightTab("gridTabc1", 0);
+        $("#grid").data("kendoGrid").table.focus();
+    };
+
+    $(document).ready(function () {
+        $("#splitter").height($(window).innerHeight() - 10);        //Đặt độ cao cho grid
+        GridHeight("grid");
+        GridHeightTab("gridTabc1", 0);
+        $("#grid").data("kendoGrid").table.focus();
+    });
+
+    Toolbar_Click();
+
+    function getDataItem() {
+        var grid = $("#grid").data("kendoGrid");
+        if (grid.select().length > 0) {
+            var dataItem = grid.dataItem(grid.select());
+            if (dataItem) {
+                return dataItem;
+            }
+        }
+        return null;
+    }
+
+    function ConfirmOrder() {
+        if (getDataItem()) {
+            $.get('@Url.Action("ConfirmOrder", "WOrder")', { guid: getDataItem().Guid }, function (dataResponse) {
+                if (dataResponse.StatusCode == 200) {
+                    voidRefresh();
+                    ActiveRow(0);
+                } else {
+                    Notification('@Gemini.Resources.Resource.ListUnsuccessful', dataResponse.StatusCode, dataResponse.MessagError, '@Gemini.Resources.Resource.ListStatusNotificationError');
+                }
+            }).fail(function (xhr, status, error) {
+                Notification('@Gemini.Resources.Resource.ListUnsuccessful', '@Gemini.Resources.Resource.ListStatus404', error, '@Gemini.Resources.Resource.ListStatusNotificationError');
+            });
+        } else {
+            Notification('@Gemini.Resources.Resource.ListNoItemsSelected', '', '@Gemini.Resources.Resource.ListNoItemsSelected', '@Gemini.Resources.Resource.ListStatusNotificationInfo');
+        }
+    }
+
+    function RejectOrder() {
+        if (getDataItem()) {
+            $("#rejectReason").val("");
+            var wnd = $("#rejectWindow").data("kendoWindow");
+            wnd.center().open();
+        } else {
+            Notification('@Gemini.Resources.Resource.ListNoItemsSelected', '', '@Gemini.Resources.Resource.ListNoItemsSelected', '@Gemini.Resources.Resource.ListStatusNotificationInfo');
+        }
+    }
+    
+    function submitReject() {
+        var reason = $("#rejectReason").val();
+        if (!reason || reason.trim() === "") {
+            alert("Vui lòng nhập lý do hủy đơn hàng!");
+            return;
+        }
+        
+        $.get('@Url.Action("RejectOrder", "WOrder")', { guid: getDataItem().Guid, reason: reason }, function (dataResponse) {
+            if (dataResponse.StatusCode == 200) {
+                voidRefresh();
+                ActiveRow(0);
+                $("#rejectWindow").data("kendoWindow").close();
+                Notification('Thông báo', 200, 'Đã từ chối và gửi mail thành công', 'success');
+            } else {
+                Notification('@Gemini.Resources.Resource.ListUnsuccessful', dataResponse.StatusCode, dataResponse.MessagError, '@Gemini.Resources.Resource.ListStatusNotificationError');
+            }
+        }).fail(function (xhr, status, error) {
+            Notification('@Gemini.Resources.Resource.ListUnsuccessful', '@Gemini.Resources.Resource.ListStatus404', error, '@Gemini.Resources.Resource.ListStatusNotificationError');
+        });
+    }
+
+    $(document).ready(function () {
+        //TabsChild
+        $("#TabsChild").kendoTabStrip({
+            animation: {
+                open: {
+                    effects: "fadeIn"
+                }
+            },
+        });
+        
+        $("#rejectWindow").kendoWindow({
+            width: "500px",
+            title: "Từ chối đơn hàng",
+            visible: false,
+            actions: ["Close"],
+            modal: true
+        });
+    });
+</script>
+
+<div id="rejectWindow" style="display:none;">
+    <div style="padding: 10px;">
+        <p>Vui lòng nhập lý do hủy đơn hàng (Nội dung này sẽ được gửi email cho khách hàng):</p>
+        <textarea id="rejectReason" class="k-textbox" style="width: 100%; height: 100px;"></textarea>
+         <div style="text-align: right; margin-top: 10px;">
+            <button class="k-button" onclick='$("#rejectWindow").data("kendoWindow").close()'>Đóng</button>
+            <button class="k-button k-primary" onclick="submitReject()">Xác nhận hủy</button>
+        </div>
+    </div>
+</div>

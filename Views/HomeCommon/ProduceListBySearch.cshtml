@@ -1,0 +1,350 @@
+﻿@model Gemini.Models._20_Web.ProduceListBySearchModel
+@{
+    Layout = "~/Views/Shared/_Root.Head.cshtml";
+
+    var totalRecord = (int)ViewData["total"];
+    var pageActive = (int)ViewData["pageActive"];
+
+    const int recordMax = 12;
+    var pageStart = 1;
+    var numberPage = 5;
+    int pageMax = 0;
+    int soTrang;
+
+    if (totalRecord % recordMax == 0)
+    {
+        soTrang = totalRecord / recordMax;
+    }
+    else
+    {
+        soTrang = (totalRecord / recordMax) + 1;
+    }
+
+    if (soTrang < numberPage)
+    {
+        pageMax = soTrang;
+    }
+    else
+    {
+        if (pageActive != 1)
+        {
+            pageStart = pageActive - 1;
+            pageMax = numberPage + pageActive - 2;
+        }
+        else
+        {
+            pageMax = numberPage + pageActive - 1;
+        }
+    }
+
+    if (pageActive != 1)
+    {
+        pageStart = pageActive - 1;
+    }
+}
+
+@if (Model != null)
+{
+    <!-- Hero Section Begin -->
+    <section class="hero hero-normal">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="hero__categories">
+                        <div class="hero__categories__all">
+                            <i class="fa fa-bars"></i>
+                            <span>Danh mục sản phẩm</span>
+                        </div>
+                        <nav class="navigation">
+                            <ul class="mainmenu">
+                                @if (Model.ListPosCategory != null && Model.ListPosCategory.Any())
+                                {
+                                    foreach (var item in Model.ListPosCategory)
+                                    {
+                                        <li onmouseover="showSubMenu('@item.SeoFriendUrl')" onmouseleave="hideSubMenu('@item.SeoFriendUrl')">
+                                            @if (item.Items != null && item.Items.Any())
+                                            {
+                                                <a>@item.Name</a>
+
+                                                <ul id="submenu-@item.SeoFriendUrl" class="submenu">
+                                                    @foreach (var itemSub in item.Items)
+                                                    {
+                                                        <li onmouseover="showSubMenu('@itemSub.SeoFriendUrl')">
+                                                            @if (itemSub.Items != null && itemSub.Items.Any())
+                                                            {
+                                                                <a>● @itemSub.Name</a>
+
+                                                                <ul id="submenu-@itemSub.SeoFriendUrl" class="submenu">
+                                                                    @foreach (var itemSub2 in itemSub.Items)
+                                                                    {
+                                                                        <li><a href="/danh-muc/@itemSub2.SeoFriendUrl">● @itemSub2.Name</a></li>
+                                                                    }
+                                                                </ul>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a href="/danh-muc/@itemSub.SeoFriendUrl">● @itemSub.Name</a>
+                                                            }
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            }
+                                            else
+                                            {
+                                                <a href="/danh-muc/@item.SeoFriendUrl">@item.Name</a>
+                                            }
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="hero__search">
+                        <div class="hero__search__form">
+                            <form action="javascript:loadSearchData();">
+                                <input type="text" id="keyWord" placeholder="Tìm kiếm ...">
+                                <button type="button" class="site-btn" onclick="loadSearchData();"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            </form>
+                        </div>
+                        <div class="hero__search__phone">
+                            <div class="hero__search__phone__icon">
+                                <i class="fa fa-phone"></i>
+                            </div>
+                            <div class="hero__search__phone__text">
+                                <h5>0366 797 212</h5>
+                                <span>Hỗ trợ 24/7</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Hero Section End -->
+
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="/assets/theme/img/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Tìm kiếm</h2>
+                        <div class="breadcrumb__option">
+                            <a href="/">Trang chủ</a>
+                            <span>Tìm kiếm</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Product Section Begin -->
+    <section class="product spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-5">
+                    <div class="sidebar">
+                        <div class="sidebar__item">
+                            <h4>Danh mục sản phẩm</h4>
+                            <nav class="navigation">
+                                <ul class="mainmenu">
+                                    @if (Model.ListPosCategory != null && Model.ListPosCategory.Any())
+                                    {
+                                        foreach (var item in Model.ListPosCategory)
+                                        {
+                                            <li onmouseover="showSubMenu('@item.SeoFriendUrl', 'submenu-item')" onmouseleave="hideSubMenu('@item.SeoFriendUrl', 'submenu-item')">
+                                                @if (item.Items != null && item.Items.Any())
+                                                {
+                                                    <a>@item.Name</a>
+
+                                                    <ul id="submenu-item-@item.SeoFriendUrl" class="submenu">
+                                                        @foreach (var itemSub in item.Items)
+                                                        {
+                                                            <li onmouseover="showSubMenu('@itemSub.SeoFriendUrl', 'submenu-item')">
+                                                                @if (itemSub.Items != null && itemSub.Items.Any())
+                                                                {
+                                                                    <a>● @itemSub.Name</a>
+
+                                                                    <ul id="submenu-item-@itemSub.SeoFriendUrl" class="submenu">
+                                                                        @foreach (var itemSub2 in itemSub.Items)
+                                                                        {
+                                                                            <li><a href="/danh-muc/@itemSub2.SeoFriendUrl">● @itemSub2.Name</a></li>
+                                                                        }
+                                                                    </ul>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <a href="/danh-muc/@itemSub.SeoFriendUrl">● @itemSub.Name</a>
+                                                                }
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                }
+                                                else
+                                                {
+                                                    <a href="/danh-muc/@item.SeoFriendUrl">@item.Name</a>
+                                                }
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </nav>
+                        </div>
+                        <div class="sidebar__item">
+                            <div class="latest-product__text">
+                                <h4>Sản phẩm mới nhất</h4>
+                                <div class="latest-product__slider owl-carousel">
+                                    @if (Model.ListPosProduceLatest != null && Model.ListPosProduceLatest.Any())
+                                    {
+                                        for (var i = 0; i < Math.Ceiling((decimal)((float)Model.ListPosProduceLatest.Count / (float)3)); i++)
+                                        {
+                                            <div class="latest-prdouct__slider__item">
+                                                @for (var y = i * 3; y < (i + 1) * 3; y++)
+                                                {
+                                                    if (y < Model.ListPosProduceLatest.Count)
+                                                    {
+                                                        <a href="/san-pham/@Model.ListPosProduceLatest[y].SeoFriendUrl" class="latest-product__item">
+                                                            <div class="latest-product__item__pic">
+                                                                <img src="@Model.ListPosProduceLatest[y].LinkImg0" alt="">
+                                                            </div>
+                                                            <div class="latest-product__item__text">
+                                                                <h6 style="font-size: 13px; height: 14px;"><span style="max-width: 110px; display: inline-block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; float: left; font-size: unset; color: unset; font-weight: unset;">@Model.ListPosProduceLatest[y].Name</span> <p style="margin-bottom: 0px; float: right"><span class="featured__item__text__span__latest" id="rating-featured-@Model.ListPosProduceLatest[y].Guid">@Model.ListPosProduceLatest[y].Legit</span></p></h6>
+                                                                <span style="font-size: 11px; color: #d0021b">@String.Format("{0:n0}", Model.ListPosProduceLatest[y].Price) @Model.ListPosProduceLatest[y].Unit</span>
+                                                            </div>
+                                                        </a>
+                                                    }
+                                                }
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-7">
+                    <div class="filter__item">
+                        <div class="row">
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <div class="filter__sort">
+                                    <span>Xắp sếp theo</span>
+                                    <select onchange="changeSortBy()" id="sortBy">
+                                        <option value="newest">Mới nhất</option>
+                                        <option value="oldest">Cũ nhất</option>
+                                        <option value="a-z">A - Z</option>
+                                        <option value="z-a">Z - A</option>
+                                        <option value="priceH-L">Giá cao - thấp</option>
+                                        <option value="priceL-H">Giá thấp - cao</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="filter__found" style="float: right">
+                                    <h6><span>@totalRecord</span> sản phẩm</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        @if (Model.ListPosProduceBySearch != null && Model.ListPosProduceBySearch.Any())
+                        {
+                            foreach (var itemProduce in Model.ListPosProduceBySearch)
+                            {
+                                <div class="col-lg-4 col-md-6 col-sm-6">
+                                    <div class="product__item">
+                                        <div class="product__item__pic set-bg" data-setbg="@itemProduce.LinkImg0" onclick="redirect(event, '/san-pham/@itemProduce.SeoFriendUrl')">
+                                            <ul class="product__item__pic__hover">
+                                                <li class="liProduce"><a id="@itemProduce.Guid" onclick="loveProduce('@itemProduce.Guid', '@ViewBag.CurrentUsername')"><i class="fa fa-heart"></i></a></li>
+                                                @*<li><a onclick="cartProduce('@itemProduce.Guid', '@ViewBag.CurrentUsername')"><i class="fa fa-shopping-cart"></i></a></li>*@
+                                            </ul>
+                                        </div>
+                                        <div class="product__item__text">
+                                            <h6><a style="height: 39px; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;" href="/san-pham/@itemProduce.SeoFriendUrl">@itemProduce.Name</a></h6>
+                                            <h5 style="color: #d0021b">@String.Format("{0:n0}", itemProduce.Price) @itemProduce.Unit</h5>
+                                            <p style="margin-bottom: 0px"><span class="featured__item__text__span__search__produce" id="rating-produce-@itemProduce.Guid">@itemProduce.Legit</span> (@itemProduce.LegitCount)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <div class="product__pagination" style="text-align: center">
+                        <ul class="pagination" style="display: block">
+                            @if (soTrang > 1)
+                            {
+                                <li style="display: inline-block">
+                                    <a onclick="changePage('1')" aria-label="Previous" style="cursor: pointer">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                            }
+                            @for (var i = (pageMax - numberPage) > 0 ? (pageMax > soTrang ? soTrang : pageMax) - (numberPage - 1) : 1; i <= pageMax; i++)
+                            {
+                                if (i <= soTrang)
+                                {
+                                    <li style="display: inline-block"><a class="paging" id="page-@(@i)" onclick="changePage('@i')" style="cursor: pointer">@i</a></li>
+                                }
+                            }
+                            @if (soTrang > 1)
+                            {
+                                <li style="display: inline-block">
+                                    <a onclick="changePage('@soTrang')" aria-label="Next" style="cursor: pointer">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Product Section End -->
+}
+
+<script>
+    loadLoveProduce('@ViewBag.CurrentUsername');
+
+    showRating("featured__item__text__span__latest", 13);
+    showRating("featured__item__text__span__search__produce", 17);
+
+    var keyWord = "";
+
+    if (location.search) {
+        if (location.search.includes('keyWord')) {
+            keyWord = '@Html.Raw(HttpUtility.HtmlDecode(Model.KeyWord))';
+            $('#keyWord').val(keyWord);
+        }
+        if (location.search.includes('page')) {
+            page = location.search.split('page=')[1].split('&')[0];
+        }
+        if (location.search.includes('sortBy')) {
+            sortBy = location.search.split('sortBy=')[1].split('&')[0];
+            $('#sortBy').val(sortBy);
+        }
+    }
+
+    function changePage(val) {
+        debugger;
+        page = "page-" + val;
+        loadSearchData();
+    }
+
+    function changeSortBy() {
+        debugger;
+        sortBy = $('#sortBy').val();
+        loadSearchData();
+    }
+
+    var i = 1;
+    for (i = 1; i <= @soTrang; i++) {
+        if (page.includes(i)) {
+            $('.paging').removeClass('active');
+            $('#page-' + i).addClass('active');
+        }
+    }
+</script>

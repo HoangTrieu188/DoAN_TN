@@ -1,0 +1,236 @@
+﻿@{
+    Layout = "~/Views/Shared/_FormList.cshtml";
+    int gridPageSize = ViewBag.Pagesize;
+}
+
+@*Menu main*@
+@Html.Action("AToolbar", "Nav")
+
+@*Grid main*@
+<div>
+    @(Html.Kendo().Grid<Gemini.Models._01_Hethong.SReplaceCodeModel>()
+      .Name("grid")
+      .Columns(columns =>
+      {
+          columns.Bound(p => p.ReplaceCode).Width(200).Sortable(true).Filterable(ftb => ftb.Cell(cell => cell.Operator("contains")));
+          columns.Bound(p => p.Active).Width(90).Filterable(false).ClientTemplate("# if (Active == true) { #" + "<span class=\"k-icon k-i-tick\"></span>" + "# } #").HtmlAttributes(new { @class = "grid-center" });
+          columns.Bound(p => p.Type).Width(160).Sortable(true).Filterable(ftb => ftb.Cell(cell => cell.Operator("contains")));
+          columns.Bound(p => p.Note).Width(160).Sortable(true).Filterable(ftb => ftb.Cell(cell => cell.Operator("contains")));
+          columns.Bound(p => p.UpdatedAt).Width(160).Format(@Gemini.Resources.Resource.ListFormatDatetime).Sortable(true).Filterable(ftb => ftb.Cell(cell => cell.ShowOperators(false)));
+          columns.Bound(p => p.UpdatedBy).Width(130).Sortable(true).Filterable(ftb => ftb.Cell(cell => cell.Operator("contains")));
+          columns.Bound(p => p.CreatedAt).Width(160).Format(@Gemini.Resources.Resource.ListFormatDatetime).Sortable(true).Filterable(ftb => ftb.Cell(cell => cell.ShowOperators(false)));
+          columns.Bound(p => p.CreatedBy).Width(130).Sortable(true).Filterable(ftb => ftb.Cell(cell => cell.Operator("contains")));
+
+      })
+       .ToolBar(toolbar =>
+       {
+       toolbar.Template(@<text>
+        </text>);
+    })
+                                        .Pageable(pageable => pageable.PageSizes(new[] { 5, 10, 20, 50, 100, 200, 500, 1000 }).ButtonCount(gridPageSize)
+                                        .Messages(messages => messages.ItemsPerPage(@Gemini.Resources.Resource.ListItemsPerPage)))
+                                        .Sortable()
+                                        .Scrollable()
+                                        .Selectable()
+                                        .Filterable(ftb => ftb.Mode(GridFilterMode.Row))
+                                        .Navigatable()
+                                        .Resizable(resize => resize.Columns(true))
+                                        .DataSource(dataSource => dataSource
+                                        .Ajax()
+                                        .ServerOperation(false)
+                                            .Model(model => model.Id(p => p.Guid))
+                                            .Read(read => read.Action("Read", "SReplaceCode"))
+                                        .PageSize(gridPageSize)
+                                        )
+                                        .Events(e => e.DataBound("grid_DataBound"))
+    )
+</div>
+
+@*Bound*@
+<script>
+    var __IdCode = 0;
+    function grid_DataBound() {
+        var idCode = __IdCode;
+        var grid = $("#grid").data("kendoGrid");
+        var data = grid.dataSource.data();
+        var totalNumber = data.length;
+        var pageSize = grid.dataSource._pageSize;
+        var index = 0;
+        var row;
+        for (var i = 0; i < totalNumber; i++) {
+            row = data[i];
+            if (row.Guid == idCode) {
+                index = i + 1;
+                var model = grid.dataSource.get(idCode);
+                var row1 = $("#grid").find("tbody>tr[data-uid=" + model.uid + "]");
+                grid.select(row1);
+                break;
+            }
+        }
+        if (totalNumber > pageSize) {
+            var cpage = this.dataSource.page();
+            var page = Math.floor(index / pageSize);
+            if ((index % pageSize) != 0) {
+                page = page + 1;
+            }
+
+            if (cpage != page && page != 0) {
+                grid.dataSource.page(page);
+            }
+        }
+        if (idCode == "") {
+            var tpage = Math.floor(totalNumber / pageSize);
+            if ((totalNumber % pageSize) != 0) {
+                tpage = Math.floor(totalNumber / pageSize) + 1;
+            }
+            if (tpage < cpage && tpage != 0) {
+                grid.dataSource.page(tpage);
+            }
+            row = grid.tbody.find(">tr:not(.k-grouping-row)").eq(0);
+            grid.select(row);
+        }
+
+        __IdCode = 0;
+        if (index != 0) {
+            var scrollContentOffset = this.element.find("tbody").offset().top;
+            var selectContentOffset = this.select().offset().top;
+            var distance = selectContentOffset - scrollContentOffset;
+
+            this.element.find(".k-grid-content").animate({
+                scrollTop: distance
+            }, 400);
+        }
+    }
+
+    function ActiveRow(idCode) {
+        __IdCode = idCode;
+    }
+
+    function voidRefresh() {
+        LoadDataFind();
+    }
+    function Change_MaNhom() {
+        LoadDataFind();
+    }
+    function LoadDataFind() {
+        $("#grid").data("kendoGrid").dataSource.read();
+    }
+
+</script>
+
+@*Grid height*@
+<script type="text/javascript">
+    $(document).ready(function () {
+        //Set Grid height
+        GridHeight("grid");
+    });
+
+    Toolbar_Click();
+</script>
+
+@*div Main*@
+<div>
+    @(Html.Kendo().Window()
+     .Name("WidgetConfigWindow")
+     .Title(@Gemini.Resources.Resource.ListTitleTailieu)
+     .Iframe(true)
+     .Events(ev => ev.Open(@"function(f){
+        if(window.loaded){
+            this.refresh();
+        }
+        window.loaded = true;
+    }"))
+    .Animation(true)
+    .Resizable()
+    .Draggable()
+            .Width(850).Height(400)
+    .Actions(actions => actions.Pin().Minimize().Maximize().Close())
+    .HtmlAttributes(new { style = "marign:0;padding:0;overflow:hidden" })
+    .Visible(false)
+    .Modal(true)
+    )
+</div>
+
+@*CED Main*@
+<script>
+
+    function getDataItem() {
+        var grid = $("#grid").data("kendoGrid");
+        if (grid.select().length > 0) {
+            var dataItem = grid.dataItem(grid.select());
+            if (dataItem) {
+                return dataItem;
+            }
+        }
+        return null;
+    };
+
+    function Create() {
+        var windowWidget = $("#WidgetConfigWindow").data("kendoWindow").title("Replace Code");
+        windowWidget.refresh({
+            url: "@Url.Action("Create", "SReplaceCode")"
+        });
+        windowWidget.center();
+        windowWidget.open();
+    }
+    function Edit() {
+        if (getDataItem()) {
+            var windowWidget = $("#WidgetConfigWindow").data("kendoWindow").title("Replace Code");
+            windowWidget.refresh({
+                url: '@Url.Action("Edit", "SReplaceCode")?guid=' + getDataItem().Guid + ''
+            });
+            windowWidget.center();
+            windowWidget.open();
+        } else {
+            Notification('@Gemini.Resources.Resource.ListNoItemsSelected', '', '@Gemini.Resources.Resource.ListNoItemsSelected', '@Gemini.Resources.Resource.ListStatusNotificationInfo');
+        }
+    }
+    function Delete() {
+        if (getDataItem()) {
+            var conf = confirm('@Html.Raw(Gemini.Resources.Resource.ListConfirmDelete)');
+            if (conf == true) {
+                var httpDelete = $.get('@Url.Action("Delete", "SReplaceCode")', { guid: getDataItem().Guid }, function (dataResponse) {
+                    if (dataResponse.StatusCode == 200) {
+                        voidRefresh(); ActiveRow(0);
+                    } else {
+                        Notification('@Gemini.Resources.Resource.ListUnsuccessful', dataResponse.StatusCode, dataResponse.MessagError, '@Gemini.Resources.Resource.ListStatusNotificationError');
+                    }
+                }).fail(function (xhr, status, error) {
+                    Notification('@Gemini.Resources.Resource.ListUnsuccessful', '@Gemini.Resources.Resource.ListStatus404', error, '@Gemini.Resources.Resource.ListStatusNotificationError');
+                });
+            }
+        } else {
+            Notification('@Gemini.Resources.Resource.ListNoItemsSelected', '', '@Gemini.Resources.Resource.ListNoItemsSelected', '@Gemini.Resources.Resource.ListStatusNotificationInfo');
+        }
+    };
+
+
+    function Copy() {
+        if (getDataItem()) {
+            var conf = confirm('@Html.Raw(Gemini.Resources.Resource.ListConfirmCopy)');
+            if (conf == true) {
+                var httpCopy = $.get('@Url.Action("Copy", "SReplaceCode")', { guid: getDataItem().Guid }, function (dataResponse) {
+                    switch (parseInt(dataResponse.StatusCode)) {
+                        case 200:
+                            {
+                                voidRefresh();
+                                ActiveRow(dataResponse.ActiveCode);
+                                break;
+                            }
+                        default:
+                            {
+
+                                Notification('@Gemini.Resources.Resource.ListUnsuccessful', dataResponse.StatusCode, dataResponse.MessagError, '@Gemini.Resources.Resource.ListStatusNotificationError');
+                                break;
+                            }
+                    }
+                }).fail(function (xhr, status, error) {
+                    Notification('@Gemini.Resources.Resource.ListUnsuccessful', '@Gemini.Resources.Resource.ListStatus404', error, '@Gemini.Resources.Resource.ListStatusNotificationError');
+                });
+            }
+        } else {
+            Notification('@Gemini.Resources.Resource.ListNoItemsSelected', '', '@Gemini.Resources.Resource.ListNoItemsSelected', '@Gemini.Resources.Resource.ListStatusNotificationInfo');
+        }
+    };
+
+</script>

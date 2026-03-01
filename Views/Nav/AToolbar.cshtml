@@ -1,0 +1,72 @@
+﻿@model List<Gemini.Models._01_Hethong.SControlModel>
+
+<div class="toolbar">
+    @(Html.Kendo().ToolBar()
+    .Name("ToolBar")
+    .Items(items =>
+    {
+        foreach (var item in Model)
+        {
+            items.Add().Type(CommandType.Button).Text(@item.Name).SpriteCssClass(@item.SpriteCssClass).Url("javascript:Toolbar_Click('"+@item.EventClick + "')").Id(@item.EventClick);
+        }
+        //if (Model.Exists(m => vString.EqualsIgnoreCase(m.Name, "Thêm")))
+        //{
+        //    items.Add().Type(CommandType.Button).Text(@Gemini.Resources.Resource.Btn_Create).SpriteCssClass("k-icon k-i-plus").Url("javascript:Toolbar_Click('btnAdd')").Id("btnAdd");
+        //}
+        //if (Model.Exists(m => vString.EqualsIgnoreCase(m.Name, "Sửa")))
+        //{
+        //    items.Add().Type(CommandType.Button).Text(@Gemini.Resources.Resource.Btn_Edit).SpriteCssClass("k-icon k-i-pencil").Url("javascript:Toolbar_Click('btnEdit')").Id("btnEdit");
+        //}
+        //if (Model.Exists(m => vString.EqualsIgnoreCase(m.Name, "Xóa")))
+        //{
+        //    items.Add().Type(CommandType.Button).Text(@Gemini.Resources.Resource.Btn_Delete).SpriteCssClass("k-icon k-i-cancel").Url("javascript:Toolbar_Click('btnDelete')").Id("btnDelete");
+        //}
+        //if (Model.Exists(m => vString.EqualsIgnoreCase(m.Name, "btnRefresh")))
+        //{
+        //    items.Add().Type(CommandType.Button).Text(@Gemini.Resources.Resource.Btn_Refresh).SpriteCssClass("k-icon k-i-refresh").Url("javascript:Toolbar_Click('btnRefresh')").Id("btnRefresh");
+        //}
+        //if (Model.Exists(m => vString.EqualsIgnoreCase(m.Name, "btnCopy")))
+        //{
+        //    items.Add().Type(CommandType.Button).Text(@Gemini.Resources.Resource.Btn_Copy).Url("javascript:Toolbar_Click('btnCopy')").Id("btnCopy").ImageUrl("/Content/icons/053_Copy.png");
+        //}
+        //if (Model.Exists(m => vString.EqualsIgnoreCase(m.Name, "btnExport")))
+        //{
+        //    items.Add().Type(CommandType.SplitButton).Text(@Gemini.Resources.Resource.Btn_Export).Id("btnExport").MenuButtons(menuButtons =>
+        //    {
+        //        if (Model.Exists(m => vString.EqualsIgnoreCase(m.Name, "btnExportxlsx")))
+        //        {
+        //            menuButtons.Add().Text(@Gemini.Resources.Resource.Btn_XLSX).SpriteCssClass("k-icon k-i-excel").Url("javascript:Toolbar_Click('btnExportxlsx')").Id("btnExportxlsx");
+        //        }
+        //        if (Model.Exists(m => vString.EqualsIgnoreCase(m.Name, "btnExportpdf")))
+        //        {
+        //            menuButtons.Add().Text(@Gemini.Resources.Resource.Btn_XLSX).SpriteCssClass("k-icon k-i-pdf").Url("javascript:Toolbar_Click('btnExportpdf')").Id("btnExportpdf");
+        //        }
+        //        if (Model.Exists(m => vString.EqualsIgnoreCase(m.Name, "btnPrint")))
+        //        {
+        //            menuButtons.Add().Text(@Gemini.Resources.Resource.Btn_Print).ImageUrl("/Content/icons/printer.png").Url("javascript:Toolbar_Click('btnPrint')").Id("btnPrint");
+        //        }
+        //        if (Model.Exists(m => vString.EqualsIgnoreCase(m.Name, "btnImport")))
+        //        {
+        //            menuButtons.Add().Text(@Gemini.Resources.Resource.Btn_Import).SpriteCssClass("k-icon k-i-group").Url("javascript:Toolbar_Click('btnImport')").Id("btnImport");
+        //        }
+        //    });
+        //}
+
+
+    })
+    )
+
+</div>
+<div id="dialog"></div>
+
+
+<style>
+    .toolbar {
+        width: 100%;
+        border: none;
+        margin: 0;
+        padding: 0;
+        margin-top: 0;
+    }
+</style>
+

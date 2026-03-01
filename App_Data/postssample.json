@@ -1,0 +1,52 @@
+[
+   {
+      "IsUpdate":0,
+      "Id":0,
+      "Post":"Post here!",
+      "CheckIn":"Hi!",
+      "Images":"2;8",
+      "IsColor":true,
+      "CreationDate":"2017-09-05T23:57:48.000892+07:00",
+      "UserCreated":""
+   },
+   {
+      "IsUpdate":0,
+      "Id":0,
+      "Post":"My post here!",
+      "CheckIn":"Hello!",
+      "Images":"5;2;8",
+      "IsColor":false,
+      "CreationDate":"2017-09-05T23:57:49.8550766+07:00",
+      "UserCreated":""
+   },
+   {
+      "IsUpdate":0,
+      "Id":0,
+      "Post":"Vui quá",
+      "CheckIn":"Hello!",
+      "Images":"8",
+      "IsColor":false,
+      "CreationDate":"2017-09-05T23:57:49.8550766+07:00",
+      "UserCreated":""
+   },
+   {
+      "IsUpdate":0,
+      "Id":0,
+      "Post":"Buồn quá",
+      "CheckIn":"Hello!",
+      "Images":"5",
+      "IsColor":false,
+      "CreationDate":"2017-09-05T23:57:49.8550766+07:00",
+      "UserCreated":""
+   },
+   {
+      "IsUpdate":0,
+      "Id":0,
+      "Post":"Chán quá",
+      "CheckIn":"Hello!",
+      "Images":"2",
+      "IsColor":false,
+      "CreationDate":"2017-09-05T23:57:49.8550766+07:00",
+      "UserCreated":""
+   }
+]

@@ -1,0 +1,36 @@
+﻿@model Gemini.Models._05_Website.PartialOfflineUserModel
+
+<div class="panel panel-info">
+    <div class="panel-heading">Offline</div>
+    @if (Model.ListUserOffline != null && Model.ListUserOffline.Any())
+    {
+        <table id="MenuContentHolder_DataList3" cellspacing="0" style="width:100%;border-collapse:collapse;">
+            <tbody>
+                @foreach (var item in Model.ListUserOffline)
+                {
+                    <tr>
+                        <td>
+                            <div class="list-group-item">
+                                <a class="item-chat" onclick="loadDataChatPannel('@item.Username')">@item.Username</a>
+                                <div class="OfflineCSS"></div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+<script>
+    function loadDataOfflineUser() {
+        $.ajax({
+            type: "POST",
+            url: "/WLiveChat/PartialOfflineUser",
+            dataType: "html",
+            success: function (response) {
+                $('#partialOfflineUser').html(response);
+            }
+        });
+    }
+</script>

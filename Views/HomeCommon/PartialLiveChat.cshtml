@@ -1,0 +1,249 @@
+﻿@model Gemini.Models._05_Website.WLiveChatModel
+
+<!-- Chat Button -->
+<div id="gemini-chat-launcher" onclick="toggleChat()"
+     style="position: fixed; bottom: 80px; right: 20px; cursor: pointer; background: #007bff; color: white; padding: 10px; border-radius: 50%;">
+    <i class="fa fa-comments"></i>
+</div>
+<!-- Dialogflow Chatbot -->
+<div style="position: fixed; bottom: 20px; right: 20px;">
+    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+    <df-messenger intent="WELCOME"
+                  chat-title="Vali_Balo"
+                  agent-id="c5e36397-6be7-42a2-b982-9bdbf66f3b88"
+                  language-code="vi"></df-messenger>
+</div>
+
+<!-- Chat Window -->
+<div id="gemini-chat-window">
+    <div class="chat-header">
+        <span><i class="fa fa-rocket"></i> Trợ lý ảo AI</span>
+        <div class="chat-controls">
+            <i class="fa fa-minus" onclick="toggleChat()"></i>
+        </div>
+    </div>
+    <div id="chat-messages" class="chat-body">
+        <div class="message bot-message">
+            Chào @ViewBag.UserFullName! Tôi là trợ lý ảo AI. Tôi có thể giúp gì cho bạn hôm nay?
+        </div>
+    </div>
+    <div class="chat-footer">
+        <input type="text" id="chat-input" placeholder="Nhập tin nhắn..." onkeypress="handleKeyPress(event)">
+        <button onclick="sendMessage()"><i class="fa fa-paper-plane"></i></button>
+    </div>
+</div>
+
+<style>
+    /* Launcher Button */
+    #gemini-chat-launcher {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #00C6FF, #0072FF);
+        border-radius: 50%;
+        color: white;
+        text-align: center;
+        line-height: 60px;
+        font-size: 28px;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        z-index: 9999;
+        transition: transform 0.3s;
+    }
+
+        #gemini-chat-launcher:hover {
+            transform: scale(1.1);
+        }
+
+    /* Chat Window */
+    #gemini-chat-window {
+        position: fixed;
+        bottom: 90px;
+        right: 20px;
+        width: 350px;
+        height: 500px;
+        background: #fff;
+        border-radius: 15px;
+        box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+        z-index: 9999;
+        display: none;
+        flex-direction: column;
+        overflow: hidden;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    /* Header */
+    .chat-header {
+        background: linear-gradient(135deg, #00C6FF, #0072FF);
+        color: white;
+        padding: 15px;
+        font-weight: bold;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .chat-controls i {
+        cursor: pointer;
+        opacity: 0.8;
+    }
+
+        .chat-controls i:hover {
+            opacity: 1;
+        }
+
+    /* Body */
+    .chat-body {
+        flex: 1;
+        padding: 15px;
+        overflow-y: auto;
+        background: #f9f9f9;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    /* Messages */
+    .message {
+        max-width: 80%;
+        padding: 10px 15px;
+        border-radius: 15px;
+        font-size: 14px;
+        word-wrap: break-word;
+        line-height: 1.4;
+    }
+
+    .bot-message {
+        background: #e9ecef;
+        color: #333;
+        align-self: flex-start;
+        border-bottom-left-radius: 2px;
+    }
+
+    .user-message {
+        background: #0072FF;
+        color: white;
+        align-self: flex-end;
+        border-bottom-right-radius: 2px;
+    }
+
+    .loading-dots {
+        display: inline-block;
+        width: 50px;
+        font-style: italic;
+        color: #888;
+        font-size: 12px;
+    }
+
+    /* Footer */
+    .chat-footer {
+        padding: 10px;
+        border-top: 1px solid #eee;
+        display: flex;
+        gap: 10px;
+        background: white;
+    }
+
+    #chat-input {
+        flex: 1;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        padding: 8px 15px;
+        outline: none;
+    }
+
+        #chat-input:focus {
+            border-color: #0072FF;
+        }
+
+    .chat-footer button {
+        background: #0072FF;
+        color: white;
+        border: none;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+        .chat-footer button:hover {
+            background: #005bb5;
+        }
+</style>
+
+<script>
+    function toggleChat() {
+        var chatWindow = document.getElementById('gemini-chat-window');
+        if (chatWindow.style.display === 'none' || chatWindow.style.display === '') {
+            chatWindow.style.display = 'flex';
+        } else {
+            chatWindow.style.display = 'none';
+        }
+    }
+
+    function handleKeyPress(e) {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    }
+
+    function appendMessage(text, isUser) {
+        var messagesDiv = document.getElementById('chat-messages');
+        var msgDiv = document.createElement('div');
+        msgDiv.className = 'message ' + (isUser ? 'user-message' : 'bot-message');
+
+        // Convert newlines to <br> for bot messages
+        if (!isUser) {
+             text = text.replace(/\n/g, '<br>');
+        }
+
+        msgDiv.innerHTML = text;
+        messagesDiv.appendChild(msgDiv);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+
+    function sendMessage() {
+        var input = document.getElementById('chat-input');
+        var message = input.value.trim();
+        if (!message) return;
+
+        // Display user message
+        appendMessage(message, true);
+        input.value = '';
+
+        // Show loading state
+        var messagesDiv = document.getElementById('chat-messages');
+        var loadingDiv = document.createElement('div');
+        loadingDiv.className = 'message bot-message loading-indicator';
+        loadingDiv.innerHTML = '<span class="loading-dots">Đang trả lời...</span>';
+        loadingDiv.id = 'chat-loading';
+        messagesDiv.appendChild(loadingDiv);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+        // Call Backend API
+        $.ajax({
+            url: '@Url.Action("ChatWithAI", "HomeCommon")',
+            type: 'POST',
+            data: { userMessage: message },
+            success: function (response) {
+                // Remove loading
+                var loadingEl = document.getElementById('chat-loading');
+                if (loadingEl) loadingEl.remove();
+
+                if (response.success) {
+                    appendMessage(response.answer, false);
+                } else {
+                    appendMessage("Có lỗi xảy ra: " + response.answer, false);
+                }
+            },
+            error: function () {
+                var loadingEl = document.getElementById('chat-loading');
+                if (loadingEl) loadingEl.remove();
+                appendMessage("Không thể kết nối tới máy chủ.", false);
+            }
+        });
+    }
+</script>

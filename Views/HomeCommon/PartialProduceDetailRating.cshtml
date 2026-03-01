@@ -1,0 +1,118 @@
+﻿@model Gemini.Models._20_Web.PartialProduceDetailRatingModel
+@{
+    var totalRecord = (int)ViewData["total"];
+    var pageActive = (int)ViewData["pageActive"];
+
+    const int recordMax = 3;
+    var pageStart = 1;
+    var numberPage = 5;
+    int pageMax = 0;
+    int soTrang;
+
+    if (totalRecord % recordMax == 0)
+    {
+        soTrang = totalRecord / recordMax;
+    }
+    else
+    {
+        soTrang = (totalRecord / recordMax) + 1;
+    }
+
+    if (soTrang < numberPage)
+    {
+        pageMax = soTrang;
+    }
+    else
+    {
+        if (pageActive != 1)
+        {
+            pageStart = pageActive - 1;
+            pageMax = numberPage + pageActive - 2;
+        }
+        else
+        {
+            pageMax = numberPage + pageActive - 1;
+        }
+    }
+
+    if (pageActive != 1)
+    {
+        pageStart = pageActive - 1;
+    }
+}
+
+@if (Model != null && Model.ListRatingProduce != null && Model.ListRatingProduce.Any())
+{
+    foreach (var itemRating in Model.ListRatingProduce)
+    {
+        <a class="latest-product__item">
+            <div class="latest-product__item__pic">
+                <img src="@itemRating.Avatar" alt="" style="border-radius: 70px">
+            </div>
+            <div class="latest-product__item__text">
+                <h6>@itemRating.FullName <p style="margin-bottom: 0px; float: right"><span class="featured__item__text__span__ratingProcedure" id="rating-produce-@itemRating.Guid">@itemRating.Legit</span></p></h6>
+                <span></span>
+                <p class="featured__item__text__comment">@itemRating.Comment</p>
+            </div>
+        </a>
+    }
+
+    <div class="product__pagination">
+        <ul class="pagination" style="display: block; text-align: right">
+            @if (soTrang > 1)
+            {
+                <li style="display: inline-block">
+                    <a onclick="changePage('1')" aria-label="Previous" style="cursor: pointer">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            }
+            @for (var i = (pageMax - numberPage) > 0 ? (pageMax > soTrang ? soTrang : pageMax) - (numberPage - 1) : 1; i <= pageMax; i++)
+            {
+                if (i <= soTrang)
+                {
+                    <li style="display: inline-block"><a class="paging" id="page-@(@i)" onclick="changePage('@i')" style="cursor: pointer">@i</a></li>
+                }
+            }
+            @if (soTrang > 1)
+            {
+                <li style="display: inline-block">
+                    <a onclick="changePage('@soTrang')" aria-label="Next" style="cursor: pointer">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+}
+
+<script>
+    showRating("featured__item__text__span__ratingProcedure", 17);
+
+    var produce = location.pathname.split('/')[2];
+    var pageRating = "page-@pageActive";
+
+    function changePage(val) {
+        pageRating = "page-" + val;
+        loadData();
+    }
+
+    function loadData() {
+        $.ajax({
+            type: "POST",
+            url: "/HomeCommon/PartialProduceDetailRating?page=" + pageRating + "&seoFriendUrl=" + produce,
+            dataType: "html",
+            success: function (response) {
+                $('#partialProduceDetailRating').html(response);
+            }
+        });
+    }
+
+    var i = 1;
+    for (i = 1; i <= @soTrang; i++) {
+        if (pageRating.includes(i)) {
+            $('.paging').removeClass('active');
+            $('#page-' + i).addClass('active');
+        }
+    }
+</script>

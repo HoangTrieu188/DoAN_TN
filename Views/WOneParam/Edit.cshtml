@@ -1,0 +1,134 @@
+﻿@model Gemini.Models._05_Website.WOneParamModel
+@{
+    Layout = "~/Views/Shared/_FormList.cshtml";
+}
+
+@Html.Action("AToolbarItem", "Nav")
+
+<div class="k-edit-form-container" style="overflow-x: hidden; ">
+    <form method="post" id="frmEdit" class="form-horizontal" role="form">
+        <div id="Tabs">
+            <ul>
+                <li class="k-state-active">@Html.Label(@Gemini.Resources.Resource.LBasic)</li>
+                <li>@Html.Label(@Gemini.Resources.Resource.LDescribe)</li>
+            </ul>
+
+            @*Cơ bản*@
+            <div>
+                <div style="height: 0; overflow: hidden">
+                    @Html.HiddenFor(model => model.Guid)
+                    @Html.HiddenFor(model => model.IsUpdate)
+                    <input type="hidden" id="hfLuuvathem" value="0" /><input type="hidden" id="hfExpand" value="0" />
+                    <button type="submit" id="btnLuu" style="visibility: hidden"></button>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-2 col-md-2">
+                        @Html.LabelFor(m => m.Name)
+                    </div>
+                    <div class="col-sm-4 col-md-4">
+                        @Html.TextBoxFor(model => model.Name, new { @class = "k-textbox" })
+                        <div>@Html.ValidationMessageFor(model => model.Name)</div>
+                    </div>
+                    <div class="col-sm-2 col-md-2">
+                        @Html.LabelFor(m => m.Code)
+                    </div>
+                    <div class="col-sm-4 col-md-4">
+                        @Html.TextBoxFor(model => model.Code, new { @class = "k-textbox" })
+                        <div>@Html.ValidationMessageFor(model => model.Code)</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-2 col-md-2">
+                        @Html.LabelFor(m => m.Active)
+                    </div>
+                    <div class="col-sm-4 col-md-4">
+                        @Html.CheckBoxFor(model => model.Active)
+                        <div>@Html.ValidationMessageFor(model => model.Active)</div>
+                    </div>
+                </div>
+            </div>
+
+            @*Mô tả*@
+            <div>
+                @(Html.Kendo().EditorFor(model => model.Description)
+                      .HtmlAttributes(new { style = "width: 100%;height:420px" })
+                      .Tools(tools => tools
+                          .Clear().Bold().Italic().Underline().Strikethrough().JustifyLeft().JustifyCenter().JustifyRight().JustifyFull()
+                          .InsertUnorderedList().InsertOrderedList().Outdent().Indent().CreateLink().Unlink()
+                          .InsertImage().InsertFile().SubScript().SuperScript().TableEditing().ViewHtml().Formatting().FontName()
+                          .FontSize().FontColor().BackColor()
+                      ).ImageBrowser(imageBrowser => imageBrowser
+                          .Image("~/Content/UserFiles/Others/{0}")
+                          .Read("Read", "ImageBrowser")
+                          .Create("Create", "ImageBrowser")
+                          //.Destroy("Destroy", "ImageBrowser")
+                          .Upload("Upload", "ImageBrowser")
+                          .Thumbnail("Thumbnail", "ImageBrowser"))
+                          .FileBrowser(fileBrowser => fileBrowser
+                          .File("~/Content/UserFiles/Others/{0}")
+                          .Read("Read", "FileBrowser")
+                          .Create("Create", "FileBrowser")
+                          //.Destroy("Destroy", "FileBrowser")
+                          .Upload("Upload", "FileBrowser")
+                      ))
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    //Form submit
+    var validator = $("#frmEdit").kendoValidator().data("kendoValidator");
+    $("form").submit(function (event) {
+        if (validator.validate() == true) {
+            kendo.ui.progress(parent.$("#WidgetConfigWindow"), true);
+            var frm = $('#frmEdit');
+            var httpPost = $.post('@Url.Action("Update", "WOneParam")', frm.serialize(), function (dataResponse) {
+                kendo.ui.progress(parent.$("#WidgetConfigWindow"), false);
+                if (dataResponse.StatusCode == 200) {
+                    parent.voidRefresh();
+                    parent.ActiveRow(dataResponse.ActiveCode);
+                    if (parseInt($("#hfLuuvathem").val()) == 0) {
+                        closeWindowEdit();
+                    } else {
+                        parent.Create('0');
+                    }
+                } else {
+                    Notification('@Gemini.Resources.Resource.EditUnsuccessful', dataResponse.StatusCode, dataResponse.MessagError, '@Gemini.Resources.Resource.ListStatusNotificationError', true);
+                }
+            }).fail(function (xhr, status, error) {
+                kendo.ui.progress(parent.$("#WidgetConfigWindow"), false);
+                Notification('@Gemini.Resources.Resource.ListUnsuccessful', '@Gemini.Resources.Resource.ListStatus404', error, '@Gemini.Resources.Resource.ListStatusNotificationError', true);
+            });
+        }
+        event.preventDefault();
+    });
+
+
+    function closeWindowEdit() {
+        var window = parent.$("#WidgetConfigWindow").data("kendoWindow");
+        window.close();
+    }
+
+    function voidDeleteItem() {
+        parent.Delete();
+        closeWindowEdit();
+    }
+
+    function voidRefreshItem() {
+        if (parseInt($("#IsUpdate").val()) == 0) {
+            parent.Create('0');
+        } else if (parseInt($("#IsUpdate").val()) == 1) {
+            parent.Edit('1');
+        }
+    }
+
+    ToolbarItem_Click();
+    //Enter text box
+    PreventEventTextSubmit();
+    //Phím tắt
+    KeyboardNavigationEdit();
+    KendoTabStrip();
+</script>

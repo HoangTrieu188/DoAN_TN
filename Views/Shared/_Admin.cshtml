@@ -1,0 +1,92 @@
+﻿@{
+    Layout = "~/Views/Shared/_FormList.cshtml";
+}
+<div>
+    <div class="header">
+        @Html.Action("Amenu", "Nav")
+    </div>
+
+    <div id="k-edit-form-tab">
+        @(Html.Kendo().TabStrip().Name("snvTabstrip")
+                 .Items(tabstrip =>
+                      {
+                          tabstrip.Add().Text("Dashboard").Visible(false)
+                              .Content(@<text>
+                                Không gian làm việc
+                            </text>);
+                      }).Animation(false)
+        )
+
+        @RenderBody()
+    </div>
+</div>
+
+
+@* ReSharper disable once InconsistentNaming *@
+<script>
+    var _ncountTab = 0;
+    function GetTabActive(_ulr) {
+        var index = 0;
+        for (var i = 1; i <= _ncountTab; i++) {
+            var id = "#snvTabstrip-" + i;
+            var windowElement = $(id);
+            if (windowElement != null) {
+                var iframeDomElement = windowElement.children("iframe")[0];
+                if (iframeDomElement.src.match(_ulr) != null) {
+                    index = i;
+                }
+            }
+        }
+        return index;
+    }
+
+    //Select Tab
+    function Menu_Select(e) {
+        if ($(e.item).find(".k-link").attr("href") != null) {
+            var url;
+            url = $(e.item).find(".k-link").attr("href");
+            var index = GetTabActive(url);
+            if (index > 0) {
+                var _tabStrip = $("#snvTabstrip").data("kendoTabStrip");
+                _tabStrip.select(index - 1);
+            }
+            else {
+                if ($(e.item).find(".k-link").attr("href") != null) {
+                    var height = (window.innerHeight - 100) + "px"; // - menu - cbGiaodien - tabTieude
+                    url = $(e.item).find(".k-link").attr("href");
+                    var img = $(e.item).find(".k-image").attr("src");
+                    var content = '<iframe class="frame-tab" scrolling="no" frameborder="0"  src="' + url + '" style="width:100%;min-height:' + height + ';"></iframe>';
+                    var tabStrip = $("#snvTabstrip").data("kendoTabStrip");
+                    tabStrip.append({
+                        text: $(e.item).children(".k-link").text() + ' <span onclick=\'DeleteTabs(this);\'  class="k-icon k-i-close" role="presentation"></span>', encoded: false,
+                        imageUrl: img,
+                        content: content
+                    });
+                    _ncountTab += 1;
+                    tabStrip.select((tabStrip.tabGroup.children("li").length - 1));
+                }
+
+
+            }
+
+            //Close menu
+            var menu = $("#Menu").data("kendoMenu");
+            menu.close("#Menu");
+        }
+
+        e.preventDefault();
+        return false;
+    }
+
+    //Delete Tab
+    function DeleteTabs(imgObj) {
+        var tabStrip = $("#snvTabstrip").data("kendoTabStrip");
+        tabStrip.remove($(imgObj).closest("li").index());
+        //
+        _ncountTab -= 1;
+        if (_ncountTab > 0) {
+            tabStrip = $("#snvTabstrip").data("kendoTabStrip");
+            tabStrip.select(0);
+        }
+    }
+</script>

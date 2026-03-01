@@ -1,0 +1,632 @@
+﻿@model Gemini.Models._20_Web.ProduceCartModel
+@{
+    Layout = "~/Views/Shared/_Root.Head.cshtml";
+}
+
+@if (Model != null)
+{
+    <!-- Hero Section Begin -->
+    <section class="hero hero-normal">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="hero__categories">
+                        <div class="hero__categories__all">
+                            <i class="fa fa-bars"></i>
+                            <span>Danh mục sản phẩm</span>
+                        </div>
+                        <nav class="navigation">
+                            <ul class="mainmenu">
+                                @if (Model.ListPosCategory != null && Model.ListPosCategory.Any())
+                                {
+                                    foreach (var item in Model.ListPosCategory)
+                                    {
+                                        <li onmouseover="showSubMenu('@item.SeoFriendUrl')" onmouseleave="hideSubMenu('@item.SeoFriendUrl')">
+                                            @if (item.Items != null && item.Items.Any())
+                                            {
+                                                <a>@item.Name</a>
+
+                                                <ul id="submenu-@item.SeoFriendUrl" class="submenu">
+                                                    @foreach (var itemSub in item.Items)
+                                                    {
+                                                        <li onmouseover="showSubMenu('@itemSub.SeoFriendUrl')">
+                                                            @if (itemSub.Items != null && itemSub.Items.Any())
+                                                            {
+                                                                <a>● @itemSub.Name</a>
+
+                                                                <ul id="submenu-@itemSub.SeoFriendUrl" class="submenu">
+                                                                    @foreach (var itemSub2 in itemSub.Items)
+                                                                    {
+                                                                        <li><a href="/danh-muc/@itemSub2.SeoFriendUrl">● @itemSub2.Name</a></li>
+                                                                    }
+                                                                </ul>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a href="/danh-muc/@itemSub.SeoFriendUrl">● @itemSub.Name</a>
+                                                            }
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            }
+                                            else
+                                            {
+                                                <a href="/danh-muc/@item.SeoFriendUrl">@item.Name</a>
+                                            }
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="hero__search">
+                        <div class="hero__search__form">
+                            <form action="javascript:loadSearchData();">
+                                <input type="text" id="keyWord" placeholder="Tìm kiếm ...">
+                                <button type="button" class="site-btn" onclick="loadSearchData();"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            </form>
+                        </div>
+                        <div class="hero__search__phone">
+                            <div class="hero__search__phone__icon">
+                                <i class="fa fa-phone"></i>
+                            </div>
+                            <div class="hero__search__phone__text">
+                                <h5>0916 341 320</h5>
+                                <span>Hỗ trợ 24/7</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Hero Section End -->
+
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="/assets/theme/img/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Giỏ hàng</h2>
+                        <div class="breadcrumb__option">
+                            <a href="/">Trang chủ</a>
+                            <span>Giỏ hàng</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Shoping Cart Section Begin -->
+    <section class="shoping-cart spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div style="text-align: center;margin-bottom: 30px;margin-top: 0px;font-weight: bold; color: red;" id="errAcc"></div>
+                    <div class="shoping__cart__table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="shoping__product">Sản phẩm</th>
+                                    <th style="width: 200px; text-align: center">Giá</th>
+                                    <th style="text-align: center">Số lượng</th>
+                                    <th style="width: 300px; text-align: center">Thành tiền</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.ListPosProduceCart != null && Model.ListPosProduceCart.Any())
+                                {
+                                    foreach (var itemCart in Model.ListPosProduceCart)
+                                    {
+                                        <tr id="tr__@itemCart.Guid">
+                                            <td class="shoping__cart__item">
+                                                <a href="/san-pham/@itemCart.SeoFriendUrl"><img src="@itemCart.LinkImg0" alt="" width="100" height="100"></a>
+                                                <h5><a href="/san-pham/@itemCart.SeoFriendUrl">@itemCart.Name</a><p>Size: @itemCart.Size - Màu: @itemCart.Color </p></h5>
+                                                
+                                            </td>
+                                            <td class="shoping__cart__price">
+                                                @String.Format("{0:n0}", itemCart.Price) @itemCart.Unit
+                                            </td>
+                                            <td class="shoping__cart__quantity">
+                                                <div class="quantity">
+                                                    <div class="pro-qty" id="@itemCart.Guid">
+                                                        <span onclick="dec_qty('@itemCart.Guid')" class="dec qtybtn">-</span>
+                                                        <input id="qty__@itemCart.Guid" type="text" value="@itemCart.Quantity" min="1" onchange="changeQuantityCartItem('@itemCart.Guid')">
+                                                        <span onclick="inc_qty('@itemCart.Guid')" class="inc qtybtn">+</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="shoping__cart__total" id="item__cart__total">
+                                                <span id="price__@itemCart.Guid" style="display: none;">@itemCart.Price</span>
+                                                <span id="unit__@itemCart.Guid" style="display: none;">@itemCart.Unit</span>
+                                                <span id="total__@itemCart.Guid">@String.Format("{0:n0}", itemCart.Price * itemCart.Quantity)</span> @itemCart.Unit
+                                            </td>
+                                            <td class="shoping__cart__item__close">
+                                                <span class="icon_close" onclick="deleteCartItem('@itemCart.Guid')"></span>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="shoping__cart__btns">
+                        <a href="/" class="primary-btn cart-btn" style="margin-bottom: 10px">Tiếp tục mua sắm</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="shoping__continue">
+                        <div class="shoping__discount">
+                            <h5>Mã khuyến mãi</h5>
+                            <form action="javascript:void(0);">
+                                <input type="text" id="couponCode" placeholder="Nhập mã khuyến mãi" onkeyup="checkCouponInput()">
+                                <button type="button" id="btnApplyCoupon" class="site-btn" onclick="applyCoupon()" style="background-color: gray; cursor: not-allowed;" disabled>Áp dụng</button>
+                            </form>
+                            <p id="couponMsg" style="color: red; margin-top: 5px;"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="shoping__checkout" style="margin-top: 0px;">
+                        <h5>Giỏ hàng</h5>
+                        <ul>
+                            @if (Model.ListTotalByUnit != null && Model.ListTotalByUnit.Any())
+                            {
+                                foreach (var itemTotalByUnit in Model.ListTotalByUnit)
+                                {
+                                    <span id="total__cart__val__@itemTotalByUnit.Key" class="total__cart__val" style="display: none;">@itemTotalByUnit.Value</span>
+                                    <li>Tổng tiền <span>@itemTotalByUnit.Key</span><span id="total__cart__@itemTotalByUnit.Key">@String.Format("{0:n0}", itemTotalByUnit.Value)</span></li>
+                                    
+                                    <li class="discount-row" style="display:none; color: green;">
+                                        Giảm giá <span>@itemTotalByUnit.Key</span>
+                                        <span id="discount__val__@itemTotalByUnit.Key">-0</span>
+                                    </li>
+                                    <li class="final-total-row" style="display:none; font-weight: bold;">
+                                        Thanh toán <span>@itemTotalByUnit.Key</span>
+                                        <span id="final__total__@itemTotalByUnit.Key">@String.Format("{0:n0}", itemTotalByUnit.Value)</span>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                        <a id="btnPayment" href="#" onclick="payCart()" class="primary-btn disabled">Thanh toán</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Shoping Cart Section End -->
+}
+
+<style>
+    a.disabled {
+        pointer-events: none;
+        cursor: default;
+        background-color: #eee;
+        color: #333;
+    }
+</style>
+
+</script>
+
+<!-- QR Modal -->
+<div id="qrModal" style="display:none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center;">
+    <div style="background: white; padding: 20px; border-radius: 8px; text-align: center; max-width: 400px; width: 90%;">
+        <h3>Thanh toán qua QR</h3>
+        <p>Vui lòng quét mã bên dưới để thanh toán</p>
+        <div id="qrImageContainer">
+            <img id="qrImage" src="" alt="QR Code" style="width: 100%; max-width: 300px;" />
+        </div>
+        <p id="qrNote" style="margin-top: 10px; font-style: italic;"></p>
+        <input type="hidden" id="qrOrderGuid" value="" />
+        <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: center;">
+            <button class="site-btn" onclick="confirmQrPayment()" style="background-color: #28a745;">Đã thanh toán</button>
+            <button class="site-btn" onclick="cancelQrPayment()" style="background-color: #dc3545;">Hủy</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Payment Method Selection Logic
+    // This is simplified. Ideally we should have Radio buttons. 
+    // But to minimize UI changes, I will add a check in payCart.
+    
+    // Actually, let's inject a payment method selector before the Pay button
+    $(document).ready(function() {
+        var paymentHtml = `
+            <div class="checkout__input__checkbox" style="margin-bottom: 10px;">
+                <label for="payment_vnpay">
+                    Thanh toán VNPAY
+                    <input type="radio" id="payment_vnpay" name="payment_method" value="VNPAY" checked>
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <div class="checkout__input__checkbox">
+                <label for="payment_qr">
+                    Thanh toán QR Code
+                    <input type="radio" id="payment_qr" name="payment_method" value="QR">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+        `;
+        $("#btnPayment").before(paymentHtml);
+    });
+
+    enableBtnPay();
+
+    // ... existing functions ...
+    function dec_qty(guidProduce) {
+        var vals = [];
+        var cookieCart = decodeURIComponent(atob(getCookie("cartProduce_@ViewBag.CurrentUsername")));
+        if (cookieCart) {
+            vals = JSON.parse(cookieCart);
+        }
+
+        var price = parseFloat($('#price__' + guidProduce)[0].innerText);                   // int
+        var unit = $('#unit__' + guidProduce)[0].innerText;                                 // text
+        var total = $('#total__' + guidProduce)[0];                                         // item
+        var totalCart = $('#total__cart__' + unit)[0];                                      // item
+        var totalCartVal = parseFloat($('#total__cart__val__' + unit)[0].innerText);        // int
+
+        var existVal = vals.find(x => x.GuidProduce == guidProduce);
+        if (existVal.Quantity == 1)
+            return;
+        if (existVal ) {
+            existVal.Quantity -= 1;
+            if (existVal.Quantity < 1) {
+                existVal.Quantity = 1;
+            }
+            $("#qty__" + guidProduce).val(existVal.Quantity);
+            total.textContent = (price * existVal.Quantity).toLocaleString('it-IT');
+            totalCart.textContent = (totalCartVal - price).toLocaleString('it-IT');
+            $('#total__cart__val__' + unit)[0].innerText = (totalCartVal - price);
+        }
+
+        setCookie("cartProduce_@ViewBag.CurrentUsername", btoa(encodeURIComponent(JSON.stringify(vals))), 15);
+
+        loadCartProduce("@ViewBag.CurrentUsername");
+
+        enableBtnPay();
+    }
+
+    function inc_qty(guidProduce) {
+        var vals = [];
+        var cookieCart = decodeURIComponent(atob(getCookie("cartProduce_@ViewBag.CurrentUsername")));
+        if (cookieCart) {
+            vals = JSON.parse(cookieCart);
+        }
+
+        var price = parseFloat($('#price__' + guidProduce)[0].innerText);                   // int
+        var unit = $('#unit__' + guidProduce)[0].innerText;                                 // text
+        var total = $('#total__' + guidProduce)[0];                                         // item
+        var totalCart = $('#total__cart__' + unit)[0];                                      // item
+        var totalCartVal = parseFloat($('#total__cart__val__' + unit)[0].innerText);        // int
+
+        var existVal = vals.find(x => x.GuidProduce == guidProduce);
+        if (existVal) {
+            existVal.Quantity += 1;
+            $("#qty__" + guidProduce).val(existVal.Quantity);
+
+            total.textContent = (price * existVal.Quantity).toLocaleString('it-IT');
+
+            totalCart.textContent = (totalCartVal + price).toLocaleString('it-IT');
+            $('#total__cart__val__' + unit)[0].innerText = (totalCartVal + price);
+        }
+
+        setCookie("cartProduce_@ViewBag.CurrentUsername", btoa(encodeURIComponent(JSON.stringify(vals))), 15);
+
+        loadCartProduce("@ViewBag.CurrentUsername");
+
+        enableBtnPay();
+    }
+
+    function changeQuantityCartItem(guidProduce) {
+        var vals = [];
+        var cookieCart = decodeURIComponent(atob(getCookie("cartProduce_@ViewBag.CurrentUsername")));
+        if (cookieCart) {
+            vals = JSON.parse(cookieCart);
+        }
+
+        var price = parseFloat($('#price__' + guidProduce)[0].innerText);                   // int
+        var unit = $('#unit__' + guidProduce)[0].innerText;                                 // text
+        var total = $('#total__' + guidProduce)[0];                                         // item
+        var totalCart = $('#total__cart__' + unit)[0];                                      // item
+        var totalCartVal = parseFloat($('#total__cart__val__' + unit)[0].innerText);        // int
+
+        var existVal = vals.find(x => x.GuidProduce == guidProduce);
+        if (existVal) {
+            var newQty = parseFloat($('#qty__' + guidProduce).val());
+            if (newQty < 1) {
+                $('#qty__' + guidProduce).val(1);
+                return;
+            }
+            total.textContent = (price * newQty).toLocaleString('it-IT');
+
+            totalCart.textContent = (totalCartVal + price * (newQty - existVal.Quantity)).toLocaleString('it-IT');
+            $('#total__cart__val__' + unit)[0].innerText = (totalCartVal + price * (newQty - existVal.Quantity));
+
+            existVal.Quantity = newQty;
+        }
+
+        setCookie("cartProduce_@ViewBag.CurrentUsername", btoa(encodeURIComponent(JSON.stringify(vals))), 15);
+
+        loadCartProduce("@ViewBag.CurrentUsername");
+
+        enableBtnPay();
+    }
+
+    function deleteCartItem(guidProduce) {
+        var vals = [];
+        var cookieCart = decodeURIComponent(atob(getCookie("cartProduce_@ViewBag.CurrentUsername")));
+        if (cookieCart) {
+            vals = JSON.parse(cookieCart);
+        }
+
+        var price = parseFloat($('#price__' + guidProduce)[0].innerText);                   // int
+        var unit = $('#unit__' + guidProduce)[0].innerText;                                 // text
+        var totalCart = $('#total__cart__' + unit)[0];                                      // item
+        var totalCartVal = parseFloat($('#total__cart__val__' + unit)[0].innerText);        // int
+
+        var existVal = vals.find(x => x.GuidProduce == guidProduce);
+        if (existVal) {
+            totalCart.textContent = (totalCartVal - price * existVal.Quantity).toLocaleString('it-IT');
+            $('#total__cart__val__' + unit)[0].innerText = totalCartVal - price * existVal.Quantity;
+
+            const index = vals.indexOf(existVal);
+            if (index > -1) {
+                vals.splice(index, 1);
+                $('#tr__' + guidProduce).empty();
+            }
+        }
+
+        setCookie("cartProduce_@ViewBag.CurrentUsername", btoa(encodeURIComponent(JSON.stringify(vals))), 15);
+
+        loadCartProduce("@ViewBag.CurrentUsername");
+
+        var x = document.getElementById("removeCartSuccess");
+        x.className = "show";
+        setTimeout(function () {
+            x.className = x.className.replace("show", "");
+        }, 1500);
+
+        enableBtnPay();
+    }
+
+    function enableBtnPay() {
+        var total = 0;
+
+        var elements = document.getElementsByClassName('total__cart__val');
+
+        for (var i = 0; i < elements.length; i++) {
+            total += parseFloat(elements[i].innerText);
+        };
+
+        if (total == 0) {
+            $("#btnPayment").addClass("disabled");
+        }
+        else {
+            $("#btnPayment").removeClass("disabled");
+        }
+    }
+
+    var selectedQrConfig = null;
+
+    function payCart() {
+        var discountCode = $("#couponCode").val();
+        var paymentMethod = $("input[name='payment_method']:checked").val();
+
+        if (paymentMethod === "QR") {
+            // Logic for QR Payment
+             $.get('@Url.Action("GetActiveQr", "HomeCommon")' + '?v=' + new Date().getTime(), function(response) {
+                 if (response.StatusCode === 200) {
+                     selectedQrConfig = response.Data;
+                     
+                     // Calculate Total Amount - similar to enableBtnPay but just getting the sum
+                     var total = 0;
+                     var elements = document.getElementsByClassName('total__cart__val');
+                     // Note: We might have multiple units, but usually one checkout per unit? 
+                     // Or just take the first one or sum them up if same currency?
+                     // Based on current UI, it loops. Let's assume the user is checking out.
+                     
+                     // Wait, in previous PayCart logic, it goes to VNPAY which handles everything.
+                     // Here we just show QR. We need order ID...
+                     
+                     // Actually, we should call an API to Create Order FIRST, regardless of payment method, 
+                     // or at least have a temporary "Pending" order?
+                     // But the current `PayCart` action CREATES the order AND returns VNPAY URL.
+                     // We should modify `PayCart` to support QR flow (Create Order -> Return Success + QR Info/Order Info).
+                     
+                     // Since I can't easily refactor `PayCart` (huge existing logic) without risk, 
+                     // I will stick to current: Select QR -> Show QR.
+                     // But wait, "Amount" is needed. And "Order Code" (content).
+                     // If I don't create order, I don't have Order Code.
+                     
+                     // Solution: Call `PayCart` with a special flag or handle "QR" mode on Client side if Order Creation is strictly VNPAY coupled.
+                     // Looking at `PayCart` (C#), it creates `WOrder`.
+                     
+                     // Refactor Plan (Minimal):
+                     // 1. I need to make `PayCart` return `OrderId` and `FinalAmount`.
+                     // The user request says: "khi user nhấn thanh toán thì sẽ hiện mã QR đó" (when user clicks pay, QR shows).
+                     
+                     // So, I WILL call `PayCart` basically, but maybe `PayCart` needs to know NOT to return VNPAY URL if it's QR?
+                     // Or I can ignore VNPAY URL and use the OrderID it created?
+                     // `PayCart` C# logic currently returns `PaymentUrl` for VNPAY.
+                     
+                     // I will modify `PayCart` in C# to accept `paymentMethod`.
+                     // IF `paymentMethod` == "QR", create order, but don't generate VNPAY URL, return OrderID/Total.
+                     
+                     // Since I am already editing `ProduceCart.cshtml`, I should switch to editing `HomeCommonController.cs` again to update `PayCart`.
+                     // But for now, let's just make the Frontend call `PayCart` passing `paymentMethod`.
+                     
+                     var httpPost = $.post('@Url.Action("PayCart", "HomeCommon")', { discountCode: discountCode, paymentMethod: "QR" }, function (dataResponse) {
+                        try {
+                            var dataRes = JSON.parse(dataResponse); // Or just dataResponse if it's auto parsed
+                            // The current C# returns `Json(..., "text/plain")` so it might be string.
+                            
+                            if (dataRes.StatusCode == 200) {
+                                if (dataRes.PaymentType === "QR") {
+                                    // Valid QR Mode
+                                    var amount = parseInt(dataRes.Amount);
+                                    var content = dataRes.OrderCode; // We need Controller to return this
+                                    
+                                     var bank = (selectedQrConfig.BankCode || "").trim().toUpperCase().replace(/\s+/g, '');
+                                    var acc = (selectedQrConfig.AccountNumber || "").trim().replace(/\s+/g, '');
+                                    var template = (selectedQrConfig.Template || "compact").trim();
+                                     
+                                    var qrUrl = `https://img.vietqr.io/image/${bank}-${acc}-${template}.png?amount=${amount}&addInfo=${encodeURIComponent(content)}`;
+                                    
+                                    console.log("QR URL:", qrUrl); // Debug
+
+                                    $("#qrImage").attr("src", qrUrl);
+                                    $("#qrNote").text(`Vui lòng chuyển ${amount.toLocaleString('it-IT')} đến ${selectedQrConfig.BankName} - ${selectedQrConfig.AccountNumber}`);
+                                    $("#qrOrderGuid").val(dataRes.OrderGuid); // Store Order GUID
+                                    $("#qrModal").css("display", "flex");
+                                } else {
+                                     location.href = dataRes.PaymentUrl;
+                                }
+                            }
+                            else {
+                                console.log(dataRes.Message);
+                                $("#errAcc").html(dataRes.Message);
+                            }
+                        }
+                        catch(e) { console.log(e); }
+                    });
+                     
+                 } else {
+                     alert("Không tìm thấy cấu hình thanh toán QR. Vui lòng chọn phương thức khác.");
+                 }
+             });
+             return;
+        }
+
+        var httpPost = $.post('@Url.Action("PayCart", "HomeCommon")', { discountCode: discountCode, paymentMethod: "VNPAY" }, function (dataResponse) {
+            try {
+                var dataRes = JSON.parse(dataResponse);
+                if (dataRes.StatusCode == 200) {
+                    location.href = dataRes.PaymentUrl;
+                }
+                else {
+                    console.log(dataRes.Message);
+                    $("#errAcc").html(dataRes.Message);
+                }
+            }
+            catch { }
+        }).fail(function (xhr, status, error) {
+            console.log(error);
+        });
+    }
+
+    function confirmQrPayment() {
+        var orderGuid = $("#qrOrderGuid").val();
+        if (!orderGuid) {
+            alert("Không tìm thấy thông tin đơn hàng");
+            return;
+        }
+
+        $.post('@Url.Action("ConfirmQrPayment", "HomeCommon")', { orderGuid: orderGuid }, function (response) {
+            if (response.StatusCode == 200) {
+                // Clear cart
+                setCookie("cartProduce_@ViewBag.CurrentUsername", "", -1);
+                
+                $("#qrModal").hide();
+                alert("Đơn hàng đã được xác nhận! Vui lòng chờ admin duyệt.");
+                window.location.href = "/";
+            } else {
+                alert(response.Message || "Có lỗi xảy ra khi xác nhận đơn hàng");
+            }
+        }).fail(function() {
+            alert("Có lỗi xảy ra. Vui lòng thử lại.");
+        });
+    }
+
+    function cancelQrPayment() {
+        var orderGuid = $("#qrOrderGuid").val();
+        if (!orderGuid) {
+            $("#qrModal").hide();
+            return;
+        }
+
+        if (confirm("Bạn có chắc muốn hủy đơn hàng này?")) {
+            $.post('@Url.Action("CancelQrPayment", "HomeCommon")', { orderGuid: orderGuid }, function (response) {
+                $("#qrModal").hide();
+                if (response.StatusCode == 200) {
+                    alert("Đơn hàng đã được hủy");
+                }
+                window.location.href = "/gio-hang";
+            }).fail(function() {
+                $("#qrModal").hide();
+                window.location.href = "/gio-hang";
+            });
+        }
+    }
+
+    function checkCouponInput() {
+        var code = document.getElementById("couponCode").value;
+        var btn = document.getElementById("btnApplyCoupon");
+        if (code && code.trim().length > 0) {
+            btn.style.backgroundColor = "green"; 
+            btn.style.cursor = "pointer";
+            btn.disabled = false;
+        } else {
+            btn.style.backgroundColor = "gray";
+            btn.style.cursor = "not-allowed";
+            btn.disabled = true;
+        }
+    }
+
+    function applyCoupon() {
+        var code = $("#couponCode").val();
+        if (!code) {
+            $("#couponMsg").text("Vui lòng nhập mã khuyến mãi");
+            return;
+        }
+
+        $.post('@Url.Action("CheckDiscount", "HomeCommon")', { code: code }, function (response) {
+            if (response.StatusCode == 200) {
+                $("#couponMsg").css("color", "green").text("Áp dụng mã thành công!");
+                
+                // Recalculate totals
+                var elements = document.getElementsByClassName('total__cart__val');
+                for (var i = 0; i < elements.length; i++) {
+                    var unit = elements[i].id.replace("total__cart__val__", "");
+                    var total = parseFloat(elements[i].innerText);
+                    var discountAmount = 0;
+
+                    if (response.IsPercent) {
+                        discountAmount = total * response.Value / 100;
+                    } else {
+                        discountAmount = response.Value;
+                    }
+
+                    // Limit discount not to exceed total
+                    if(discountAmount > total) discountAmount = total;
+
+                    var finalTotal = total - discountAmount;
+
+                    // Show discount rows
+                    $(".discount-row").show();
+                    $(".final-total-row").show();
+
+                    // Update UI
+                    $("#discount__val__" + unit).text("-" + discountAmount.toLocaleString('it-IT'));
+                    $("#final__total__" + unit).text(finalTotal.toLocaleString('it-IT'));
+                };
+            } else {
+                $("#couponMsg").css("color", "red").text(response.Message);
+                // Reset UI
+                $(".discount-row").hide();
+                $(".final-total-row").hide();
+            }
+        });
+    }
+</script>

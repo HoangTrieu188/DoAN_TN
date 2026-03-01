@@ -1,0 +1,42 @@
+﻿@model Gemini.Models._20_Web.VnPayReturnModel
+@{
+    Layout = "~/Views/Shared/_Root.Head.cshtml";
+}
+
+@if (Model != null)
+{
+    <div class="container content" style="text-align: center; padding-top: 60px; padding-bottom: 60px">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="error-v1">
+                    <center><b>@Model.Message</b></center>
+                    <br />
+                    <div class="imgError" style="text-align: left;">
+                        <span>@Model.TxnRef</span>
+                        <br />
+                        <br />
+                        <span>@Model.VnpayTranNo</span>
+                        <br />
+                        <br />
+                        <span>@Model.Amount</span>
+                        <br />
+                        <br />
+                        <span>@Model.BankCode</span>
+                    </div>
+                    <div class="imgError">
+                        <br />
+                        <br />
+                        <a class="btn-u btn-bordered" href="/">Trang chủ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--=== End Content Part ===-->
+
+    <script>
+        setCookie("cartProduce_@ViewBag.CurrentUsername", "", 15);
+
+        loadCartProduce("@ViewBag.CurrentUsername");
+    </script>
+}

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7f949d5aa8834bef9d86b16748f8a183" Name="Diagram1" ZoomLevel="65">
+        <EntityTypeShape EntityType="Gemini.CrmEmailSetting" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Gemini.CrmEmailTemplate" Width="1.5" PointX="7.75" PointY="5.75" />
+        <EntityTypeShape EntityType="Gemini.FControlMenu" Width="1.5" PointX="2.75" PointY="8.75" />
+        <EntityTypeShape EntityType="Gemini.FProduceGallery" Width="1.5" PointX="4.75" PointY="8.75" />
+        <EntityTypeShape EntityType="Gemini.FRoleControlMenu" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Gemini.PosBatch" Width="1.5" PointX="0.75" PointY="2.625" />
+        <EntityTypeShape EntityType="Gemini.PosCategory" Width="1.5" PointX="0.75" PointY="8.25" />
+        <EntityTypeShape EntityType="Gemini.PosProcess" Width="1.5" PointX="5.25" PointY="1.125" />
+        <EntityTypeShape EntityType="Gemini.PosProduce" Width="1.5" PointX="3" PointY="1.375" />
+        <EntityTypeShape EntityType="Gemini.SControl" Width="1.5" PointX="9.75" PointY="4.75" />
+        <EntityTypeShape EntityType="Gemini.SLanguage" Width="1.5" PointX="6.75" PointY="9.75" />
+        <EntityTypeShape EntityType="Gemini.SMenu" Width="1.5" PointX="8.75" PointY="9.75" />
+        <EntityTypeShape EntityType="Gemini.SRegion" Width="1.5" PointX="10.75" PointY="9.75" />
+        <EntityTypeShape EntityType="Gemini.SReplaceCode" Width="1.5" PointX="11.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Gemini.SRole" Width="1.5" PointX="0.75" PointY="14.625" />
+        <EntityTypeShape EntityType="Gemini.SType" Width="1.5" PointX="11.75" PointY="4.75" />
+        <EntityTypeShape EntityType="Gemini.SUser" Width="1.5" PointX="3" PointY="12.875" />
+        <EntityTypeShape EntityType="Gemini.sysdiagram" Width="1.5" PointX="12.75" PointY="8.75" />
+        <EntityTypeShape EntityType="Gemini.UGallery" Width="1.5" PointX="12.75" PointY="11.75" />
+        <EntityTypeShape EntityType="Gemini.UGroup" Width="1.5" PointX="13.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Gemini.WLiveChat" Width="1.5" PointX="13.75" PointY="5.75" />
+        <EntityTypeShape EntityType="Gemini.WOneParam" Width="1.5" PointX="5.75" PointY="13.75" />
+        <EntityTypeShape EntityType="Gemini.WOrder" Width="1.5" PointX="7.75" PointY="14.75" />
+        <EntityTypeShape EntityType="Gemini.WOrderDetail" Width="1.5" PointX="14.75" PointY="8.75" />
+        <EntityTypeShape EntityType="Gemini.WRatingProduce" Width="1.5" PointX="9.75" PointY="14.75" />
+        <AssociationConnector Association="Gemini.FK_PosProduce_PosBatch" />
+        <AssociationConnector Association="Gemini.FK_PosProduce_PosCategory" />
+        <AssociationConnector Association="Gemini.FK_PosProcess_PosProduce" />
+        <AssociationConnector Association="Gemini.FK_PosProcess_SUser_ManufacturingBy" />
+        <AssociationConnector Association="Gemini.FK_SUser_SRole" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

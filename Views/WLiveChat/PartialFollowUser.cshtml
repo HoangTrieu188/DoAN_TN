@@ -1,0 +1,35 @@
+﻿@model Gemini.Models._05_Website.PartialFollowUserModel
+
+<div class="panel panel-success">
+    @if (Model.ListUserFollow != null && Model.ListUserFollow.Any())
+    {
+        <table id="MenuContentHolder_DataList1" cellspacing="0" style="width:100%;border-collapse:collapse;">
+            <tbody>
+                @foreach (var item in Model.ListUserFollow)
+                {
+                    <tr>
+                        <td>
+                            <div class="list-group-item">
+                                <a class="item-chat" onclick="loadDataChatPannel('@item.Username')">@item.Username</a>
+                                <div class="FollowCSS"></div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+<script>
+    function loadDataFollowUser() {
+        $.ajax({
+            type: "POST",
+            url: "/WLiveChat/PartialFollowUser",
+            dataType: "html",
+            success: function (response) {
+                $('#partialFollowUser').html(response);
+            }
+        });
+    }
+</script>

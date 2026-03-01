@@ -1,0 +1,829 @@
+﻿@model Gemini.Models._20_Web.ProduceDetailModel
+@{
+    Layout = "~/Views/Shared/_Root.Head.cshtml";
+}
+
+@if (Model != null && Model.PosProduce != null)
+{
+    bool isOutOfStock = !string.IsNullOrEmpty(Model.PosProduce.Status) &&
+                       (Model.PosProduce.Status.ToLower().Contains("het") ||
+                        Model.PosProduce.Status.ToLower().Contains("hết") ||
+                        Model.PosProduce.Status.ToLower().Contains("out") ||
+                        Model.PosProduce.Status.Trim() == "0");
+    string outOfStockClass = isOutOfStock ? "out-of-stock" : "";
+    <!-- Hero Section Begin -->
+    <section class="hero hero-normal">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="hero__categories">
+                        <div class="hero__categories__all">
+                            <i class="fa fa-bars"></i>
+                            <span>Danh mục sản phẩm</span>
+                        </div>
+                        <nav class="navigation">
+                            <ul class="mainmenu">
+                                @if (Model.ListPosCategory != null && Model.ListPosCategory.Any())
+                                {
+                                    foreach (var item in Model.ListPosCategory)
+                                    {
+                                        <li onmouseover="showSubMenu('@item.SeoFriendUrl')" onmouseleave="hideSubMenu('@item.SeoFriendUrl')">
+                                            @if (item.Items != null && item.Items.Any())
+                                            {
+                                                <a>@item.Name</a>
+
+                                                <ul id="submenu-@item.SeoFriendUrl" class="submenu">
+                                                    @foreach (var itemSub in item.Items)
+                                                    {
+                                                        <li onmouseover="showSubMenu('@itemSub.SeoFriendUrl')">
+                                                            @if (itemSub.Items != null && itemSub.Items.Any())
+                                                            {
+                                                                <a>● @itemSub.Name</a>
+
+                                                                <ul id="submenu-@itemSub.SeoFriendUrl" class="submenu">
+                                                                    @foreach (var itemSub2 in itemSub.Items)
+                                                                    {
+                                                                        <li><a href="/danh-muc/@itemSub2.SeoFriendUrl">● @itemSub2.Name</a></li>
+                                                                    }
+                                                                </ul>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a href="/danh-muc/@itemSub.SeoFriendUrl">● @itemSub.Name</a>
+                                                            }
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            }
+                                            else
+                                            {
+                                                <a href="/danh-muc/@item.SeoFriendUrl">@item.Name</a>
+                                            }
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="hero__search">
+                        <div class="hero__search__form">
+                            <form action="javascript:loadSearchData();">
+                                <input type="text" id="keyWord" placeholder="Tìm kiếm ...">
+                                <button type="button" class="site-btn" onclick="loadSearchData();"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            </form>
+                        </div>
+                        <div class="hero__search__phone">
+                            <div class="hero__search__phone__icon">
+                                <i class="fa fa-phone"></i>
+                            </div>
+                            <div class="hero__search__phone__text">
+                                <h5>0916 341 320</h5>
+                                <span>Hỗ trợ 24/7</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Hero Section End -->
+
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="/assets/theme/img/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>@Model.PosProduce.Name</h2>
+                        <div class="breadcrumb__option">
+                            <a href="/">Trang chủ</a>
+                            <a href="/danh-muc/@Model.PosProduce.CategorySeoFriendUrl">@Model.PosProduce.NameCategory</a>
+                            <span>@Model.PosProduce.Name</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Product Details Section Begin -->
+
+    <style>
+    </style>
+    <section class="product-details spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <style>
+                        #myCarousel {
+                            max-width: 640px;
+                            margin: 0 auto;
+                        }
+
+                            #myCarousel .f-carousel__slide {
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                            }
+                    </style>
+                    @if (Model.PosProduce.ListGallery != null && Model.PosProduce.ListGallery.Any())
+                    {
+                        <div class="f-carousel" id="myCarousel">
+                            @for (var i = 0; i < Model.PosProduce.ListGallery.Count; i++)
+                            {
+                                <div class="f-carousel__slide" data-thumb-src="@Model.PosProduce.ListGallery[i].Image">
+                                    <a href="@Model.PosProduce.ListGallery[i].Image" data-fancybox="gallery">
+                                        <img width="640" height="480" alt="" data-lazy-src="@Model.PosProduce.ListGallery[i].Image" />
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                        @*<div class="product__details__pic">
+                                <div class="product__details__pic__item data-fancybox=" gallery"">
+                                    <img class="product__details__pic__item--large"
+                                         src="@Model.PosProduce.ListGallery[0].Image" alt="">
+                                </div>
+                                <div class="product__details__pic__slider owl-carousel data-fancybox=" gallery"">
+                                    @for (var i = 1; i < Model.PosProduce.ListGallery.Count; i++)
+                                    {
+                                        <img data-imgbigurl="@Model.PosProduce.ListGallery[i].Image"
+                                             src="@Model.PosProduce.ListGallery[i].Image" alt="">
+                                    }
+                                </div>
+                            </div>*@
+                    }
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="product__details__text">
+                        <div class="row">
+                            <div class="col-9">
+                                <h3 style="margin-top: 10px;">
+                                    <span>@Model.PosProduce.Name</span>
+                                </h3>
+                            </div>
+                            <div class="col-3">
+                                <ul class="featured__item__pic__hover" style="position: unset; padding-top: 0px; margin-top: 0px; border-top: none">
+                                    @if (Model.SUser != null)
+                                    {
+                                        <li class="liProduce"><a id="@Model.PosProduce.Guid" onclick="loveProduce('@Model.PosProduce.Guid', '@Model.SUser.Username')"><i class="fa fa-heart"></i></a></li>
+                                    }
+                                    else
+                                    {
+                                        <li class="liProduce"><a id="@Model.PosProduce.Guid" onclick="loveProduce('@Model.PosProduce.Guid')"><i class="fa fa-heart"></i></a></li>
+                                    }
+                                    <li><a class="@outOfStockClass" onclick="cartProduce('@Model.PosProduce.Guid', '@ViewBag.CurrentUsername', $('#number-qty').val(), $('input[name=Size]:checked').val(), $('input[name=Color]:checked').val())"><i class="fa fa-shopping-cart"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="product__details__rating"><span class="featured__item__text__span" id="rating-@Model.PosProduce.Guid">@Model.PosProduce.Legit</span> <span>(@Model.PosProduce.LegitCount reviews)</span></div>
+                        <div class="product__details__price" style="color: #d0021b">@String.Format("{0:n0}", Model.PosProduce.Price) @Model.PosProduce.Unit</div>
+                        <ul style="padding-top: 0px; margin-top: 0px; margin-bottom: 30px;">
+                            <li><b>Mã sản phẩm:</b> <span>@Model.PosProduce.Code</span></li>
+                            <li>
+                                <b>Loại sản phẩm:</b>
+                                <span>@Model.PosProduce.NameCategory</span>
+                            </li>
+                            <li>
+                                <b>Lô sản phẩm:</b>
+                                <span>@Model.PosProduce.NameBatch</span>
+                            </li>
+                        </ul>
+                        <style>
+                            .color .btn span.glyphicon {
+                                opacity: 0;
+                            }
+
+                            .color .btn.active span.glyphicon {
+                                opacity: 1;
+                            }
+
+                            .out-of-stock {
+                                opacity: 0.5;
+                                pointer-events: none;
+                                filter: grayscale(100%);
+                            }
+                        </style>
+
+                        <div class="color d-flex align-items-center">
+
+                            <p class="mr-4 mb-0">Màu sắc</p>
+
+                            <div class="btn-group ml-4 color-radio @outOfStockClass" data-toggle="buttons">
+                                @{
+                                    var lstColor = Model.PosProduce.Color.Split(',');
+                                }
+                                @for (int i = 0; i < lstColor.Length; i++)
+                                {
+                                    string ok = i == 0 ? "checked" : "";
+
+                                    <label class="btn btn-default active mr-3">
+                                        <span>@lstColor[i]</span>
+                                        <input type="radio" name="Color" value="@lstColor[i]" id="Color-@lstColor[i]" autocomplete="off" @ok>
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                    </label>
+
+                                }
+                            </div>
+                        </div>
+                        <div class="color d-flex align-items-center mt-3 mb-3">
+
+                            <p class="mr-4 mb-0">Kích thước</p>
+
+                            <div class="btn-group ml-4 size-radio @outOfStockClass" data-toggle="buttons">
+                                @{
+                                    var lstSize = Model.PosProduce.Size.Split(',');
+                                }
+                                @for (int i = 0; i < lstSize.Length; i++)
+                                {
+                                    string ok = i == 0 ? "checked" : "";
+
+                                    <label class="btn btn-default active mr-3">
+                                        <span>@lstSize[i]</span>
+                                        <input type="radio" name="Size" value="@lstSize[i]" id="Size-@lstSize[i]" autocomplete="off" @ok>
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                    </label>
+
+                                }
+                            </div>
+                        </div>
+                        <style>
+                            .quantity-cart form {
+                                width: 300px;
+                            }
+
+                            .quantity-cart .value-button {
+                                display: inline-block;
+                                border: 1px solid #ddd;
+                                margin: 0px;
+                                width: 40px;
+                                height: 41px;
+                                text-align: center;
+                                vertical-align: middle;
+                                padding: 11px 0;
+                                background: #eee;
+                                -webkit-touch-callout: none;
+                                -webkit-user-select: none;
+                                -moz-user-select: none;
+                                -ms-user-select: none;
+                                user-select: none;
+                            }
+
+                            .value-button:hover {
+                                cursor: pointer;
+                            }
+
+                            .quantity-cart form #decrease {
+                                margin-right: -4px;
+                                border-radius: 8px 0 0 8px;
+                            }
+
+                            .quantity-cart form #increase {
+                                margin-left: -4px;
+                                border-radius: 0 8px 8px 0;
+                            }
+
+                            .quantity-cart form #input-wrap {
+                                margin: 0px;
+                                padding: 0px;
+                            }
+
+                            .quantity-cart input#number-qty {
+                                text-align: center;
+                                border: none;
+                                border-top: 1px solid #ddd;
+                                border-bottom: 1px solid #ddd;
+                                margin: 0px;
+                                width: 80px;
+                                height: 40px;
+                            }
+
+                            .quantity-cart input[type=number]::-webkit-inner-spin-button,
+                            .quantity-cart input[type=number]::-webkit-outer-spin-button {
+                                -webkit-appearance: none;
+                                margin: 0;
+                            }
+                        </style>
+                        <div class="quantity-cart d-flex align-items-center mb-5">
+                            <p class="mb-0 mr-3">Số lượng: </p>
+                            <form>
+                                <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
+                                <input type="number" id="number-qty" value="1" />
+                                <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
+                            </form>
+                        </div>
+                        <script>
+                            function increaseValue() {
+                                var value = parseInt(document.getElementById('number-qty').value, 10);
+                                value = isNaN(value) ? 0 : value;
+                                value++;
+                                document.getElementById('number-qty').value = value;
+                            }
+
+                            function decreaseValue() {
+                                var value = parseInt(document.getElementById('number-qty').value, 10);
+                                value = isNaN(value) ? 0 : value;
+                                value--;
+                                value < 1 ? value = 1 : '';
+                                document.getElementById('number-qty').value = value;
+                            }
+                        </script>
+                        @if (Model.PosProduceCreatedBy != null)
+                        {
+                            <div class="blog__sidebar__item" style="margin-bottom: 10px">
+                                <div class="blog__sidebar__recent">
+                                    <div class="blog__sidebar__recent__item">
+                                        <div class="blog__sidebar__recent__item__pic">
+                                            <a href="/cua-hang/@Model.PosProduceCreatedBy.Username"><img src="@Model.PosProduceCreatedBy.Avartar" alt="" width="70" height="70" style="border-radius: 70px"></a>
+                                        </div>
+                                        <div class="blog__sidebar__recent__item__text">
+                                            <h6 style="margin-top: 0px">
+                                                <a href="/cua-hang/@Model.PosProduceCreatedBy.Username"><span style="max-width: 250px; display: inline-block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; float: left;">@Model.PosProduceCreatedBy.FullName</span></a>
+                                                <span style="float: right; margin-left: 5px;">(@Model.PosProduceCreatedBy.LegitCount)</span><span style="margin-left: 5px; float: right" class="featured__item__text__span__ratingUser" id="rating-user-@Model.PosProduceCreatedBy.Guid">@Model.PosProduceCreatedBy.Legit</span>
+                                            </h6>
+                                        </div>
+                                        <div class="blog__sidebar__recent__item__text">
+                                            <ul style="margin-top: 10px; padding-top: 0px; border-top: none">
+                                                <li>
+                                                    <div class="share">
+                                                        <ul class="featured__item__pic__hover" style="position: unset; padding-top: 0px; margin-top: 0px; border-top: none">
+                                                            @*<li>
+                                                                    <a href="#"><i class="fa fa-facebook" style="top: -3px"></i></a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="#"><i class="fa fa-twitter" style="top: -3px"></i></a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="#"><i class="fa fa-linkedin" style="top: -3px"></i></a>
+                                                                </li>
+                                                                <li>
+                                                                    @if (Model.SUser != null)
+                                                                    {
+                                                                        <a title="Chat" class="follow-user" onclick="onLiveChat('@Model.SUser.Username');"><i class="fa fa-comment" style="top: -4px"></i></a>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <a title="Chat" class="follow-user" onclick="onLiveChat();"><i class="fa fa-comment" style="top: -4px"></i></a>
+                                                                    }
+                                                                </li>*@
+                                                            <li class="liFollow">
+                                                                @if (Model.SUser != null)
+                                                                {
+                                                                    <a id="@Model.PosProduceCreatedBy.Guid" title="Theo dõi" class="follow-user" onclick="followUser('@Model.PosProduceCreatedBy.Guid', '@Model.SUser.Username');" style="width: 130px; border-radius: 20px;"><i class="fa fa-plus" style="top: -4px"> Theo dõi</i></a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <a id="@Model.PosProduceCreatedBy.Guid" title="Theo dõi" class="follow-user" onclick="followUser('@Model.PosProduceCreatedBy.Guid');" style="width: 130px; border-radius: 20px;"><i class="fa fa-plus" style="top: -4px"> Theo dõi</i></a>
+                                                                }
+                                                            </li>
+                                                            <li>
+                                                                <div class="alert" id="follow-fail" style="display: none">
+                                                                    <span class="closebtn" onclick="this.parentElement.style.display='none';" style="margin-top: 8px">&times;</span>
+                                                                    Vui lòng thử lại sau ít phút.
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @*if (!string.IsNullOrEmpty(Model.PosProduceCreatedBy.Mobile))
+                                {
+                                    <a class="primary-btn rating-produce" style="border-radius: 30px; color: white; margin-top: 15px; background-color: #FF8800;">@Model.PosProduceCreatedBy.Mobile</a>
+                                }
+                                if (!string.IsNullOrEmpty(Model.PosProduceCreatedBy.Email))
+                                {
+                                    <a class="primary-btn rating-produce" style="border-radius: 30px; color: white; margin-top: 15px; background-color: #FF8800;">@Model.PosProduceCreatedBy.Email</a>
+                                }*@
+                        }
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="product__details__tab">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab"
+                                   aria-selected="true">Mô tả</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab"
+                                   aria-selected="false">Đánh giá <span>(@Model.PosProduce.LegitCount)</span></a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                                <div class="product__details__tab__desc">
+                                    @Html.Raw(HttpUtility.HtmlDecode(Model.PosProduce.Description))
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tabs-2" role="tabpanel">
+                                <div class="product__details__tab__desc" style="text-align: center; padding-top: 30px">
+                                    <span class="rating" data-rating="0">
+                                        <i class="star" data-checked="false" data-note="1" style="font-style: unset; font-size: 25px; color: darkgray;"></i>
+                                        <i class="star" data-checked="false" data-note="2" style="font-style: unset; font-size: 25px; color: darkgray;"></i>
+                                        <i class="star" data-checked="false" data-note="3" style="font-style: unset; font-size: 25px; color: darkgray;"></i>
+                                        <i class="star" data-checked="false" data-note="4" style="font-style: unset; font-size: 25px; color: darkgray;"></i>
+                                        <i class="star" data-checked="false" data-note="5" style="font-style: unset; font-size: 25px; color: darkgray;"></i>
+                                        <span id="rating-write-label" style=" margin-top: 10px; position: absolute; margin-left: 15px;"></span>
+                                    </span>
+                                    <div class="contact-form spad" style="padding-top: 30px; padding-bottom: 30px">
+                                        <div class="container">
+                                            <form action="#" id="frmRating">
+                                                <div class="row">
+                                                    @Html.HiddenFor(model => model.NewRatingProduce.GuidProduce)
+                                                    @if (!(Model.SUser != null && Model.SUser.Guid != null && Model.SUser.Guid != Guid.Empty))
+                                                    {
+                                                        <div class="col-lg-12 col-md-12">
+                                                            @Html.TextBoxFor(model => model.NewRatingProduce.FullName, new { placeholder = "Họ tên" })
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6">
+                                                            @Html.TextBoxFor(model => model.NewRatingProduce.Email, new { placeholder = "Email" })
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6">
+                                                            @Html.TextBoxFor(model => model.NewRatingProduce.Mobile, new { placeholder = "SĐT" })
+                                                        </div>
+                                                    }
+                                                    <div class="col-lg-12 text-center">
+                                                        @Html.TextAreaFor(model => model.NewRatingProduce.Comment, new { rows = "3", placeholder = "Nhận xét" })
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <a onclick="ratingProduce()" class="primary-btn rating-produce" style="border-radius: 30px; color: white">Đánh giá</a>
+                                    <div class="alert" id="rating-fail" style="display: none">
+                                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                                        Vui lòng kiểm tra lại thông tin thiếu.
+                                    </div>
+                                </div>
+                                <hr style="margin-top: 3rem; margin-bottom: 3rem; border: 0; border-top: 1px solid rgb(0 0 0 / 7%);" />
+                                <div id="partialProduceDetailRating">
+                                    @Html.Action("PartialProduceDetailRating", "HomeCommon")
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Product Details Section End -->
+
+    <!-- Same CreatedBy Product Section Begin -->
+    if (Model.ListProduceSameCreatedBy != null && Model.ListProduceSameCreatedBy.Any())
+    {
+        <section class="related-product">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="section-title related__product__title">
+                            <h2>Sản phẩm khác của @Model.PosProduce.CreatedBy</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    @foreach (var item in Model.ListProduceSameCreatedBy)
+                    {
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="product__item">
+                                <div class="product__item__pic set-bg" data-setbg="@item.LinkImg0" onclick="redirect(event, '/san-pham/@item.SeoFriendUrl')">
+                                    <ul class="product__item__pic__hover">
+                                        @if (Model.SUser != null)
+                                        {
+                                            <li class="liProduce"><a id="@item.Guid" onclick="loveProduce('@item.Guid', '@Model.SUser.Username')"><i class="fa fa-heart"></i></a></li>
+                                        }
+                                        else
+                                        {
+                                            <li class="liProduce"><a id="@item.Guid" onclick="loveProduce('@item.Guid')"><i class="fa fa-heart"></i></a></li>
+                                        }
+                                        @*<li><a onclick="cartProduce('@item.Guid', '@ViewBag.CurrentUsername')"><i class="fa fa-shopping-cart"></i></a></li>*@
+                                    </ul>
+                                </div>
+                                <div class="product__item__text">
+                                    <h6><a style="height: 39px; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;" href="/san-pham/@item.SeoFriendUrl">@item.Name</a></h6>
+                                    <h5 style="color: #d0021b">@String.Format("{0:n0}", item.Price) @item.Unit</h5>
+                                    <p style="margin-bottom: 0px"><span class="featured__item__text__span__sameCreatedBy" id="rating-sameCreatedBy-@item.Guid">@item.Legit</span> (@item.LegitCount)</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+    }
+    <!-- Same CreatedBy Product Section End -->
+
+    <!-- Same Category Product Section Begin -->
+    if (Model.ListProduceSameCategory != null && Model.ListProduceSameCategory.Any())
+    {
+        <section class="related-product">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="section-title related__product__title">
+                            <h2>Sản phẩm tương tự</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    @foreach (var item in Model.ListProduceSameCategory)
+                    {
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="product__item">
+                                <div class="product__item__pic set-bg" data-setbg="@item.LinkImg0" onclick="redirect(event, '/san-pham/@item.SeoFriendUrl')">
+                                    <ul class="product__item__pic__hover">
+                                        @if (Model.SUser != null)
+                                        {
+                                            <li class="liProduce"><a id="@item.Guid" onclick="loveProduce('@item.Guid', '@Model.SUser.Username')"><i class="fa fa-heart"></i></a></li>
+                                        }
+                                        else
+                                        {
+                                            <li class="liProduce"><a id="@item.Guid" onclick="loveProduce('@item.Guid')"><i class="fa fa-heart"></i></a></li>
+                                        }
+                                        @*<li><a onclick="cartProduce('@item.Guid', '@ViewBag.CurrentUsername')"><i class="fa fa-shopping-cart"></i></a></li>*@
+                                    </ul>
+                                </div>
+                                <div class="product__item__text">
+                                    <h6><a style="height: 39px; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;" href="/san-pham/@item.SeoFriendUrl">@item.Name</a></h6>
+                                    <h5 style="color: #d0021b">@String.Format("{0:n0}", item.Price) @item.Unit</h5>
+                                    <p style="margin-bottom: 0px"><span class="featured__item__text__span__sameCategory" id="rating-sameCategory-@item.Guid">@item.Legit</span> (@item.LegitCount)</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+    }
+    <!-- Same Category Product Section End -->
+}
+
+<script>
+    loadLoveProduce('@ViewBag.CurrentUsername');
+    loadFollowUser('@ViewBag.CurrentUsername');
+
+    showRating("featured__item__text__span", 17);
+    showRating("featured__item__text__span__ratingUser", 13);
+    showRating("featured__item__text__span__sameCreatedBy", 17);
+    showRating("featured__item__text__span__sameCategory", 17);
+
+    const ratings = document.querySelectorAll('.rating');
+    ratings.forEach(rating =>
+        rating.addEventListener('mouseleave', ratingHandler)
+    );
+
+    const stars = document.querySelectorAll('.rating .star');
+    stars.forEach(star => {
+        star.addEventListener('mouseover', starSelection);
+        star.addEventListener('mouseleave', starSelection);
+        star.addEventListener('click', activeSelect);
+    });
+
+    function ratingHandler(e) {
+        const childStars = e.target.children;
+        for (let i = 0; i < childStars.length; i++) {
+            const star = childStars.item(i)
+            if (star.dataset.checked === "true") {
+                star.classList.add('rating-hover');
+            }
+            else {
+                star.classList.remove('rating-hover');
+            }
+        }
+    }
+
+    let note = 0;
+    function starSelection(e) {
+        note = 0;
+        const parent = e.target.parentElement
+        const childStars = parent.children;
+        const dataset = e.target.dataset;
+        note = +dataset.note; // Convert note (string) to note (number)
+        for (let i = 0; i < childStars.length; i++) {
+            const star = childStars.item(i)
+            if (+star.dataset.note > note) {
+                star.classList.remove('rating-hover');
+            } else {
+                star.classList.add('rating-hover');
+            }
+        }
+    }
+
+    function activeSelect(e) {
+        note = 0;
+        const parent = e.target.parentElement
+        const childStars = parent.children;
+        const dataset = e.target.dataset;
+        note = +dataset.note; // Convert note (string) to note (number)
+        for (let i = 0; i < childStars.length; i++) {
+            const star = childStars.item(i)
+            if (+star.dataset.note > note) {
+                star.classList.remove('rating-hover');
+                star.dataset.checked = "false";
+            } else {
+                star.classList.add('rating-hover');
+                star.dataset.checked = "true";
+            }
+        }
+
+        var noteString = "";
+        if (note == 1) {
+            noteString = "Rất tệ"
+        }
+        else if (note == 2) {
+            noteString = "Cần cải thiện nhiều"
+        }
+        else if (note == 3) {
+            noteString = "Tạm ổn"
+        }
+        else if (note == 4) {
+            noteString = "Tốt"
+        }
+        else if (note == 5) {
+            noteString = "Tuyệt vời"
+        }
+        $('#rating-write-label').text(noteString);
+    }
+
+    function ratingProduce() {
+        var frm = $('#frmRating');
+        var data = frm.serialize();
+        data += "&NewRatingProduce.Legit=" + note;
+        $.post('@Url.Action("RatingProduce", "HomeCommon")', data, function (dataResponse) {
+            if (dataResponse.StatusCode == 200) {
+                location.reload();
+            } else {
+                $('#rating-fail').show();
+            }
+        });
+    }
+
+    // --- Inventory Logic ---
+    var maxQuantity = 0;
+    var productInventory = [];
+
+    function initInventory() {
+        var guidProduce = '@Model.PosProduce.Guid';
+        $.post('/HomeCommon/GetProductInventory', { guidProduce: guidProduce }, function (response) {
+            if (response.StatusCode == 200) {
+                productInventory = response.Data;
+                updateOptionsAvailability();
+                checkInventory(); // Check initial selection
+            }
+        });
+    }
+
+    function updateOptionsAvailability() {
+        // Logic: 
+        // 1. If Size is selected -> Gray out Colors that have 0 quantity for that Size
+        // 2. If Color is selected -> Gray out Sizes that have 0 quantity for that Color
+        
+        var selectedSize = $('input[name=Size]:checked').val();
+        var selectedColor = $('input[name=Color]:checked').val();
+
+        // Check Colors based on selected Size
+        $('input[name=Color]').each(function() {
+            // Never disable the currently selected item
+            if ($(this).is(':checked')) {
+                $(this).parent().removeClass('out-of-stock');
+                return;
+            }
+
+            var colorVal = $(this).val();
+            var $label = $(this).parent();
+            
+            if (selectedSize) {
+                // Find variant with selectedSize + this Color
+                var variant = productInventory.find(x => x.Size == selectedSize && x.Color == colorVal);
+                if (!variant || variant.Quantity <= 0) {
+                    $label.addClass('out-of-stock');
+                } else {
+                    $label.removeClass('out-of-stock');
+                }
+            } else {
+                 // If no Size selected, check if this Color has ANY stock in ANY size
+                 var hasStock = productInventory.some(x => x.Color == colorVal && x.Quantity > 0);
+                 if (!hasStock) $label.addClass('out-of-stock');
+                 else $label.removeClass('out-of-stock');
+            }
+        });
+
+        // Check Sizes based on selected Color
+        $('input[name=Size]').each(function() {
+             // Never disable the currently selected item
+            if ($(this).is(':checked')) {
+                $(this).parent().removeClass('out-of-stock');
+                return;
+            }
+
+            var sizeVal = $(this).val();
+            var $label = $(this).parent();
+
+            if (selectedColor) {
+                // Find variant with sizeVal + selected Color
+                var variant = productInventory.find(x => x.Size == sizeVal && x.Color == selectedColor);
+                if (!variant || variant.Quantity <= 0) {
+                    $label.addClass('out-of-stock');
+                } else {
+                    $label.removeClass('out-of-stock');
+                }
+            } else {
+                 // If no Color selected, check if this Size has ANY stock in ANY color
+                 var hasStock = productInventory.some(x => x.Size == sizeVal && x.Quantity > 0);
+                 if (!hasStock) $label.addClass('out-of-stock');
+                 else $label.removeClass('out-of-stock');
+            }
+        });
+    }
+
+    function checkInventory() {
+        var size = $('input[name=Size]:checked').val();
+        var color = $('input[name=Color]:checked').val();
+        var $addToCartBtn = $('.fa-shopping-cart').parent();
+        var $qtyInput = $('#number-qty');
+        var $msg = $('#inventory-msg');
+
+        if (!$msg.length) {
+           $('.quantity-cart').after('<div id="inventory-msg" style="color: red; margin-bottom: 10px;"></div>');
+           $msg = $('#inventory-msg');
+        }
+
+        if (size && color) {
+            // Find in local data first
+            var variant = productInventory.find(x => x.Size == size && x.Color == color);
+            
+            if (variant) {
+                maxQuantity = variant.Quantity;
+                $msg.text('Còn lại: ' + maxQuantity + ' sản phẩm');
+            } else {
+                 maxQuantity = 0;
+                 $msg.text('Hết hàng');
+            }
+
+            if (maxQuantity <= 0) {
+                $addToCartBtn.addClass('out-of-stock');
+                $addToCartBtn.attr('onclick', '');
+                $qtyInput.val(0);
+                $qtyInput.prop('disabled', true);
+            } else {
+                $addToCartBtn.removeClass('out-of-stock');
+                 $addToCartBtn.attr('onclick', "cartProduce('@Model.PosProduce.Guid', '@ViewBag.CurrentUsername', $('#number-qty').val(), $('input[name=Size]:checked').val(), $('input[name=Color]:checked').val())");
+                
+                $qtyInput.prop('disabled', false);
+                if (parseInt($qtyInput.val()) > maxQuantity) {
+                   $qtyInput.val(maxQuantity);
+                }
+                 if (parseInt($qtyInput.val()) <= 0) {
+                   $qtyInput.val(1);
+                }
+            }
+        }
+    }
+
+    $(document).ready(function() {
+        initInventory(); // Load all inventory data
+
+        $('input[name=Size], input[name=Color]').change(function() {
+            updateOptionsAvailability(); // Update visuals
+            checkInventory(); // Update quantity limit
+        });
+        
+        $('#number-qty').on('input', function() {
+            var val = parseInt($(this).val());
+            if (val > maxQuantity && maxQuantity > 0) {
+                $(this).val(maxQuantity);
+            }
+             if (val < 1 && maxQuantity > 0) {
+                $(this).val(1);
+            }
+        });
+    });
+
+    function increaseValue() {
+        var value = parseInt(document.getElementById('number-qty').value, 10);
+        value = isNaN(value) ? 0 : value;
+        if (value < maxQuantity) {
+            value++;
+            document.getElementById('number-qty').value = value;
+        }
+    }
+</script>
+@section Scripts {
+    <script>
+        const container = document.getElementById("myCarousel");
+        const options = { Dots: false };
+
+        new Carousel(container, options, { Thumbs });
+
+        Fancybox.bind("[data-fancybox]", {
+            // Your custom options
+        });
+    </script>
+
+}

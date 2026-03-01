@@ -1,0 +1,52 @@
+[
+   {
+      "IsUpdate":0,
+      "Id":0,
+      "Post":"Tôi thấy yêu cả thế giới",
+      "CheckIn":"Hà Nội",
+      "Images":"2;8",
+      "IsColor":true,
+      "CreationDate":"2017-09-05T23:57:48.000892+07:00",
+      "UserCreated":""
+   },
+   {
+      "IsUpdate":0,
+      "Id":0,
+      "Post":"Chào các bạn mình muốn làm quen với tất cả mọi người",
+      "CheckIn":"Hà Nội",
+      "Images":"5;2;8",
+      "IsColor":false,
+      "CreationDate":"2017-09-05T23:57:49.8550766+07:00",
+      "UserCreated":""
+   },
+   {
+      "IsUpdate":0,
+      "Id":0,
+      "Post":"Thế giới này luôn có những điều kỳ diệu xảy ra",
+      "CheckIn":"Hải Phòng",
+      "Images":"8",
+      "IsColor":false,
+      "CreationDate":"2017-09-05T23:57:49.8550766+07:00",
+      "UserCreated":""
+   },
+   {
+      "IsUpdate":0,
+      "Id":0,
+      "Post":"Học vấn do người siêng năng đạt được, tài sản do người tinh tế sở hữu, quyền lợi do người dũng cảm nắm giữ, thiên đường do người lương thiện xây dựng.",
+      "CheckIn":"Nam Định",
+      "Images":"5",
+      "IsColor":false,
+      "CreationDate":"2017-09-05T23:57:49.8550766+07:00",
+      "UserCreated":""
+   },
+   {
+      "IsUpdate":0,
+      "Id":0,
+      "Post":"Tôi yêu các bạn!",
+      "CheckIn":"Thanh Hóa",
+      "Images":"2",
+      "IsColor":false,
+      "CreationDate":"2017-09-05T23:57:49.8550766+07:00",
+      "UserCreated":""
+   }
+]

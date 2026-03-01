@@ -1,0 +1,221 @@
+﻿@model IEnumerable<Gemini.Models._01_Hethong.ResourceModel>
+@{
+    Layout = "~/Views/Shared/_FormList.cshtml";
+    int gridPageSize = ViewBag.Pagesize;
+}
+
+@*Menu main*@
+@Html.Action("AToolbar", "Nav")
+
+@*Grid main*@
+<div>
+    @(Html.Kendo().Grid<Gemini.Models._01_Hethong.ResourceModel>()
+      .Name("grid")
+      .Columns(columns =>
+      {
+          columns.Bound(p => p.Key).Width(120);
+          columns.Bound(p => p.Value).Width(125);
+
+      })
+       .ToolBar(toolbar =>
+    {
+        toolbar.Template(@<text>
+            <div class="form-horizontal toolbar">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label class="control-label">@Html.Label(@Gemini.Resources.Resource.LKeywordsearch)</label>
+                    </div>
+                    <div class="col-md-3">
+                        <input class="k-textbox" id="txtSearch" onchange="txtSearch_textChanged()" style="width: 100%" />
+                    </div>
+                    <div class="col-md-2">
+
+                    </div>
+                    <div class="col-md-3">
+                        @(Html.Kendo().DropDownList()
+                                .Name("CbMa_nhom")
+                                .HtmlAttributes(new { @class = "k-dropdown" })
+                                .HtmlAttributes(new { style = "width:100%;z-index:1;" })
+                                .Filter(FilterType.Contains)
+                                .DataTextField("TenTrangthai")
+                                        .DataValueField("Ghichu")
+                                                 .Value("Resource.resx")
+                               .DataSource(source => source.Read(read => read.Action("Dm_trangthai", "Combo", new { nhomtrangthai = 200 })))
+                                .Events(e => e.Change("Change_MaNhom"))
+                        )
+                    </div>
+                </div>
+            </div>
+        </text>);
+    })
+                                                                                            .Pageable(pageable => pageable.PageSizes(new int[] { 5,10,20, 50, 100,200,500,1000 }).ButtonCount(gridPageSize))
+                                                                                            .Sortable()
+                                                                                            .Scrollable()
+                                                                                            .Selectable()
+                                                                                            .Filterable()
+                                                                                            .Navigatable()
+                                                                                            .Resizable(resize => resize.Columns(true))
+                                                                                            .DataSource(dataSource => dataSource
+                                                                                            .Ajax()
+                                                                                            .ServerOperation(false)
+                                                                                            .Model(model => model.Id(p => p.Key))
+                                                                                             .Read(read => read.Action("Read", "Resource"))
+                                                                                            .PageSize(gridPageSize)
+                                                                                            )
+                                                                                            .Events(e => e.DataBound("grid_DataBound"))
+    )
+</div>
+
+@*Bound*@
+<script>
+    var __IdCode = 0;
+    function grid_DataBound() {
+        var idCode = __IdCode;
+        var grid = $("#grid").data("kendoGrid");
+        var data = grid.dataSource.data();
+        var totalNumber = data.length;
+        var index = 0;
+        var row;
+        for (var i = 0; i < totalNumber; i++) {
+            row = data[i];
+            if (row.Key == idCode) {
+                index = i + 1;
+                var model = grid.dataSource.get(idCode);
+                var row1 = $("#grid").find("tbody>tr[data-uid=" + model.uid + "]");
+                grid.select(row1);
+                break;
+            }
+        }
+        var pageSize = grid.dataSource._pageSize;//Số bản ghi trên 1 trang
+        var cpage = this.dataSource.page();//Trang hiện tại
+        var page = Math.floor(index / pageSize);
+        if ((index % pageSize) != 0) {
+            //Công thêm trang nếu số dư # 0
+            page = page + 1;
+        }
+
+        if (cpage != page && page != 0) {
+            grid.dataSource.page(page);
+        }
+        //Chọn ban ghi đầu tiên,xóa  khi IdCode=""
+        if (idCode == "") {
+            var tpage = Math.floor(totalNumber / pageSize);//Tổng số trang của grid
+            if ((totalNumber % pageSize) != 0) {
+                tpage = Math.floor(totalNumber / pageSize) + 1;
+            }
+            //kiểm tra nếu tổng số trang < trang hiện tại thì lùi lại 1 trang .Ngược lại chon bản ghi đầu tiên trang đó
+            if (tpage < cpage && tpage != 0) {
+                grid.dataSource.page(tpage);
+            }
+            //Chon row 0
+            row = grid.tbody.find(">tr:not(.k-grouping-row)").eq(0);
+            grid.select(row);
+        }
+
+        __IdCode = 0;
+
+        //Autosroll grid
+        if (index != 0) {
+            ////Autoscroll
+            var scrollContentOffset = this.element.find("tbody").offset().top;
+            var selectContentOffset = this.select().offset().top;
+            var distance = selectContentOffset - scrollContentOffset;
+
+            //    animate our scroll
+            this.element.find(".k-grid-content").animate({
+                scrollTop: distance
+            }, 400);
+        }
+        //Autosroll grid
+    }
+
+    function ActiveRow(idCode) {
+        __IdCode = idCode;
+    }
+
+    function voidRefresh() {
+        LoadDataFind();
+    }
+
+    function VoidSearch() {
+
+    }
+    function Change_MaNhom() {
+        LoadDataFind();
+    }
+    function txtSearch_textChanged() {
+        LoadDataFind();
+    }
+
+    function LoadDataFind() {
+        $("#grid").data("kendoGrid").dataSource.read({ tukhoa: $("#txtSearch").val(), filename: $("#CbMa_nhom").data("kendoDropDownList").value() });
+    }
+
+
+</script>
+
+
+@*Grid height*@
+<script type="text/javascript">
+    $(document).ready(function () {
+        //Set Grid height
+        GridHeight("grid");
+    });
+    Toolbar_Click();
+</script>
+
+@*div Main*@
+<div>
+    @(Html.Kendo().Window()
+    .Name("WidgetConfigWindow")
+     .Iframe(true)
+     .Events(ev => ev.Open(@"function(f){
+        if(window.loaded){
+            this.refresh();
+        }
+        window.loaded = true;
+    }"))
+    .Animation(true)
+    .Resizable()
+    .Draggable()
+    .Width(890)
+    .Height(510)
+    .Actions(actions => actions.Pin().Minimize().Maximize().Close())
+    .HtmlAttributes(new { style = "marign:0;padding:0;overflow:hidden" })
+    .Visible(false)
+    .Modal(true)
+    )
+</div>
+
+@*CED Main*@
+<script>
+
+    function GetId() {
+        var grid = $("#grid").data("kendoGrid");
+        var Key = "";
+        if (grid.select().length > 0) {
+            var dataItem = grid.dataItem(grid.select());
+            if (dataItem != null) {
+                Key = dataItem.Key;
+            }
+        }
+        return Key;
+    }
+
+    function Edit() {
+        var grid = $("#grid").data("kendoGrid");
+        var dataItem = grid.dataItem(grid.select());
+        var windowWidget = $("#WidgetConfigWindow").data("kendoWindow");
+        if (dataItem != null) {
+            windowWidget.refresh({
+                url: '@Url.Action("Edit", "Resource")?key=' + GetId() + '& filename=' +$("#CbMa_nhom").data("kendoDropDownList").value() 
+            });
+            windowWidget.center();
+            windowWidget.open();
+        }
+    }
+
+
+</script>
+
+

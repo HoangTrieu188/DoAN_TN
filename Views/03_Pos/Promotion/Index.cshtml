@@ -1,0 +1,47 @@
+@{
+    ViewBag.Title = "Qu&#7843;n l&#253; khuy&#7871;n m&#227;i";
+    Layout = "~/Views/Shared/_FormList.cshtml";
+}
+
+<div id="main-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div>
+                <a href="@Url.Action("Create", "Promotion")" class="btn btn-primary">Th&#234;m m&#7899;i</a>
+            </div>
+            <br />
+            @(Html.Kendo().Grid<Gemini.Models.PosPromotion>()
+                .Name("grid")
+                .Columns(columns =>
+                {
+                    columns.Bound(p => p.Code).Title("M&#227; khuy&#7871;n m&#227;i").Width(150);
+                    columns.Bound(p => p.Value).Title("Gi&#225; tr&#7883;").Width(100).Format("{0:n0}");
+                    columns.Bound(p => p.IsPercent).Title("Lo&#7841;i").Width(100).ClientTemplate("#= IsPercent ? 'Ph&#7847;n tr&#259;m' : 'S&#7889; ti&#7873;n' #");
+                    columns.Bound(p => p.StartDate).Title("B&#7855;t &#273;&#7847;u").Width(150).Format("{0:dd/MM/yyyy HH:mm}");
+                    columns.Bound(p => p.EndDate).Title("K&#7871;t th&#250;c").Width(150).Format("{0:dd/MM/yyyy HH:mm}");
+                    columns.Bound(p => p.Active).Title("K&#237;ch ho&#7841;t").Width(100).ClientTemplate("#= Active ? 'C&#243;' : 'Kh&#244;ng' #");
+                    columns.Bound(p => p.Note).Title("Ghi ch&#250;");
+                    columns.Template(@<text></text>).ClientTemplate(
+                        "<a class='btn btn-warning btn-sm' href='" + Url.Action("Edit", "Promotion") + "/?guid=#=Guid#'>S&#7917;a</a> " +
+                        "<a class='btn btn-danger btn-sm' href='javascript:void(0)' onclick='deleteItem(\"#=Guid#\")'>X&#243;a</a>"
+                    ).Width(150);
+                })
+                .Pageable()
+                .Sortable()
+                .DataSource(dataSource => dataSource
+                    .Ajax()
+                    .PageSize(20)
+                    .Read(read => read.Action("Read", "Promotion"))
+                )
+            )
+        </div>
+    </div>
+</div>
+
+<script>
+    function deleteItem(guid) {
+        if (confirm("B\u1ea1n c\u00f3 ch\u1eafc ch\u1eafn mu\u1ed1n x\u00f3a khuy\u1ebfn m\u00e3i n\u00e0y?")) {
+            location.href = "@Url.Action("Delete", "Promotion")/?guid=" + guid;
+        }
+    }
+</script>

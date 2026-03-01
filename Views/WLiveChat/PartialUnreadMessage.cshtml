@@ -1,0 +1,40 @@
+﻿@model Gemini.Models._05_Website.PartialUnreadMessageModel
+
+<div class="panel panel-danger">
+    <div class="panel-heading">
+        <span>Unread </span>
+        <span>
+            <span id="MenuContentHolder_UnreadMsgCountLabel" class="badge">@Model.ListUnreadMessage.Count</span>
+        </span>
+    </div>
+    <div class="list-group">
+        @if (Model.ListUnreadMessage != null && Model.ListUnreadMessage.Any())
+        {
+            <table id="MenuContentHolder_DataList4" cellspacing="0" style="width:100%;border-collapse:collapse;">
+                <tbody>
+                    @foreach (var item in Model.ListUnreadMessage)
+                    {
+                        <tr>
+                            <td>
+                                <a class="list-group-item item-chat" onclick="loadDataChatPannel('@item.MsgSender')">@item.MsgSender</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
+
+<script>
+    function loadDataUnreadMessage() {
+        $.ajax({
+            type: "POST",
+            url: "/WLiveChat/PartialUnreadMessage",
+            dataType: "html",
+            success: function (response) {
+                $('#partialUnreadMessage').html(response);
+            }
+        });
+    }
+</script>

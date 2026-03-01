@@ -1,0 +1,46 @@
+@{
+    ViewBag.Title = "Qu&#7843;n l&#253; QR thanh to&#225;n";
+    Layout = "~/Views/Shared/_FormList.cshtml";
+}
+
+<div id="main-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div>
+                <a href="@Url.Action("Create", "PaymentQr")" class="btn btn-primary">Th&#234;m m&#7899;i</a>
+            </div>
+            <br />
+            @(Html.Kendo().Grid<Gemini.Models.PosPaymentQr>()
+                .Name("grid")
+                .Columns(columns =>
+                {
+                    columns.Bound(p => p.BankName).Title("Ng&#226;n h&#224;ng").Width(150);
+                    columns.Bound(p => p.AccountNumber).Title("S&#7889; t&#224;i kho&#7843;n").Width(150);
+                    columns.Bound(p => p.AccountName).Title("T&#234;n t&#224;i kho&#7843;n").Width(200);
+                    columns.Bound(p => p.Template).Title("Template").Width(100);
+                    columns.Bound(p => p.Active).Title("K&#237;ch ho&#7841;t").Width(100).ClientTemplate("#= Active ? 'C&#243;' : 'Kh&#244;ng' #");
+                    columns.Bound(p => p.Note).Title("Ghi ch&#250;");
+                    columns.Template(@<text></text>).ClientTemplate(
+                        "<a class='btn btn-warning btn-sm' href='" + Url.Action("Edit", "PaymentQr") + "/?guid=#=Guid#'>S&#7917;a</a> " +
+                        "<a class='btn btn-danger btn-sm' href='javascript:void(0)' onclick='deleteItem(\"#=Guid#\")'>X&#243;a</a>"
+                    ).Width(150);
+                })
+                .Pageable()
+                .Sortable()
+                .DataSource(dataSource => dataSource
+                    .Ajax()
+                    .PageSize(20)
+                    .Read(read => read.Action("Read", "PaymentQr"))
+                )
+            )
+        </div>
+    </div>
+</div>
+
+<script>
+    function deleteItem(guid) {
+        if (confirm("B\u1ea1n c\u00f3 ch\u1eafc ch\u1eafn mu\u1ed1n x\u00f3a c\u1ea1nh n\u00e0y?")) {
+            location.href = "@Url.Action("Delete", "PaymentQr")/?guid=" + guid;
+        }
+    }
+</script>

@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <title>Quản trị hệ thống</title>
+    @*css styles*@
+    <link href="@Url.Content("~/assets/admin/plugins/bootstrap/css/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/kendo.common-bootstrap.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Custom/Site.css")" rel="stylesheet" type="text/css" />
+
+    @*js scripts*@
+    <script src="@Url.Content("~/Scripts/kendo/jquery.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/kendo.all.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/kendo.aspnetmvc.min.js")"></script>
+
+    @*Set Theme for UI*@
+    <link href="@Url.Content("~/Content/kendo/" + Html.Action("GetKendoTheme", "SettingGlobal"))" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/kendo/language/" + Html.Action("GetKendoLanguage", "SettingGlobal"))"></script>
+    <script src="@Url.Content("~/Scripts/kendo/cultures/" + Html.Action("GetKendoCulture", "SettingGlobal"))"></script>
+    <script type="text/javascript">kendo.culture("@Html.Action("GetKendoCultureName", "SettingGlobal")");</script>
+    <script src="~/Content/Custom/FunctionCommon.js"></script>
+</head>
+<body>
+    <div>
+        <script id="authoritiesTemplate" type="text/x-kendo-template">
+            <div class="new-mail">
+                <img src="/Content/icons/184_notification.png" />
+                <h3 style="color: black">#= title #</h3>
+                <p>#= message #</p>
+            </div>
+        </script>
+        <script id="errorTemplate" type="text/x-kendo-template">
+            <div class="wrong-pass">
+                <img src="/Content/icons/error-icon.png" />
+                <h3 style="color: black">#= title #</h3>
+                <p>#= message #</p>
+            </div>
+        </script>
+        @(Html.Kendo().Notification()
+                  .Name("notificationList")
+                  .Position(p => p.Pinned(true).Top(30).Right(30))
+                  .Stacking(NotificationStackingSettings.Down)
+                  .AutoHideAfter(Convert.ToInt16(@Gemini.Resources.Resource.NTimeNotification))
+                  .Templates(t =>
+                  {
+                      t.Add().Type("info").ClientTemplateID("authoritiesTemplate");
+                      t.Add().Type("error").ClientTemplateID("errorTemplate");
+                  })
+        )
+    </div>
+    <div>
+        <script id="errorTemplate" type="text/x-kendo-template">
+            <div class="wrong-pass">
+                <img src="/Content/icons/error-icon.png" />
+                <h3>#= title #</h3>
+                <p>#= message #</p>
+            </div>
+        </script>
+        @(Html.Kendo().Notification()
+    .Name("notificationEdit")
+    .Position(p => p.Pinned(true).Top(30).Right(30))
+    .Stacking(NotificationStackingSettings.Down)
+    .AutoHideAfter(0)
+    .Templates(t => t.Add().Type("error").ClientTemplateID("errorTemplate"))
+        )
+    </div>
+
+    @RenderBody()
+
+    @*@RenderSection("scripts", false)*@
+
+    <script>
+            //var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+            //if (isChrome === true) {
+            //} else {
+            //    var url = "Admin/Admin/Logout";
+            //    window.location = url;
+            //}
+            //$(document).bind("contextmenu", function (e) {
+            //    e.preventDefault();
+            //});
+            //$(document).keydown(function (e) {
+            //    if (e.which === 123) {
+            //        return false;
+            //    }
+            //});
+    </script>
+</body>
+</html>

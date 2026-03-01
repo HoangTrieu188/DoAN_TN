@@ -1,0 +1,1755 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Gemini.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="PosPaymentQr">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="BankCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="BankName" Type="nvarchar" MaxLength="255" />
+          <Property Name="AccountName" Type="nvarchar" MaxLength="255" />
+          <Property Name="AccountNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="Template" Type="nvarchar" MaxLength="50" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Note" Type="nvarchar(max)" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PosInventory">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="GuidProduce" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Size" Type="nvarchar" MaxLength="255" />
+          <Property Name="Color" Type="nvarchar" MaxLength="255" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="CrmEmailSetting">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Note" Type="nvarchar" MaxLength="2000" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="PassEmail" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Smtp" Type="nvarchar" MaxLength="255" />
+          <Property Name="Port" Type="int" Nullable="false" />
+          <Property Name="IsHtml" Type="bit" Nullable="false" />
+          <Property Name="EnableSsl" Type="bit" Nullable="false" />
+          <Property Name="DelayTime" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CrmEmailTemplate">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="SubjectEmail" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Note" Type="nvarchar" MaxLength="2000" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="ContentTemplate" Type="ntext" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FControlMenu">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="GuidControl" Type="uniqueidentifier" />
+          <Property Name="GuidMenu" Type="uniqueidentifier" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="Note" Type="nvarchar" MaxLength="2000" />
+        </EntityType>
+        <EntityType Name="FProduceGallery">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="GuidProduce" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="GuidGallery" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="FRoleControlMenu">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="GuidRole" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="GuidControl" Type="uniqueidentifier" />
+          <Property Name="GuidMenu" Type="uniqueidentifier" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="Note" Type="nvarchar" MaxLength="2000" />
+        </EntityType>
+        <EntityType Name="PosBatch">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="ManufacturingAt" Type="datetime" />
+          <Property Name="Note" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PosCategory">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Note" Type="nvarchar" MaxLength="2000" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="ParentGuid" Type="uniqueidentifier" />
+          <Property Name="OrderBy" Type="int" />
+          <Property Name="SeoFriendUrl" Type="nvarchar" MaxLength="255" />
+          <Property Name="SeoTitle" Type="nvarchar" MaxLength="255" />
+          <Property Name="SeoDescription" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="PosProcess">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="GuidProduce" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ManufacturingBy" Type="uniqueidentifier" />
+          <Property Name="ManufacturingStartAt" Type="datetime" />
+          <Property Name="ManufacturingEndAt" Type="datetime" />
+          <Property Name="History" Type="nvarchar(max)" />
+          <Property Name="TransportBy" Type="uniqueidentifier" />
+          <Property Name="TransportStartAt" Type="datetime" />
+          <Property Name="TransportEndAt" Type="datetime" />
+          <Property Name="DistributeBy" Type="uniqueidentifier" />
+          <Property Name="DistributeStartAt" Type="datetime" />
+          <Property Name="DistributeEndAt" Type="datetime" />
+          <Property Name="Signature" Type="nvarchar(max)" />
+          <Property Name="SignAt" Type="datetime" />
+          <Property Name="PublicKey" Type="nvarchar(max)" />
+          <Property Name="ManufacturingStatus" Type="int" />
+          <Property Name="TransportStatus" Type="int" />
+          <Property Name="DistributeStatus" Type="int" />
+          <Property Name="Status" Type="int" />
+          <Property Name="BigchainDBTransactionId" Type="nvarchar(max)" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PosProduce">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="255" />
+          <Property Name="Note" Type="nvarchar" MaxLength="2000" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Description" Type="ntext" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Unit" Type="nvarchar" MaxLength="255" />
+          <Property Name="GuidBatch" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="GuidCategory" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="SeoTitle" Type="nvarchar" MaxLength="255" />
+          <Property Name="SeoDescription" Type="nvarchar" MaxLength="255" />
+          <Property Name="SeoFriendUrl" Type="nvarchar" MaxLength="500" />
+          <Property Name="Legit" Type="int" />
+          <Property Name="LegitCount" Type="int" />
+          <Property Name="HotProduce" Type="bit" Nullable="false" />
+          <Property Name="Color" Type="nvarchar(max)" />
+          <Property Name="Size" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="SControl">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Note" Type="nvarchar" MaxLength="2000" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="SpriteCssClass" Type="nvarchar" MaxLength="255" />
+          <Property Name="EventClick" Type="nvarchar" MaxLength="255" />
+          <Property Name="Type" Type="nvarchar" MaxLength="255" />
+          <Property Name="Orderby" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SLanguage">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Note" Type="nvarchar" MaxLength="2000" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SMenu">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Note" Type="nvarchar" MaxLength="2000" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="GuidLanguage" Type="uniqueidentifier" />
+          <Property Name="OrderMenu" Type="int" />
+          <Property Name="Icon" Type="nvarchar" MaxLength="255" />
+          <Property Name="GuidParent" Type="uniqueidentifier" />
+          <Property Name="Type" Type="nvarchar" MaxLength="255" />
+          <Property Name="LinkUrl" Type="nvarchar" MaxLength="255" />
+          <Property Name="FriendUrl" Type="nvarchar" MaxLength="255" />
+          <Property Name="RouterUrl" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="SRegion">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="ParentGuid" Type="uniqueidentifier" />
+          <Property Name="ZipCode" Type="nvarchar" MaxLength="25" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Note" Type="nvarchar" MaxLength="2000" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SReplaceCode">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ReplaceCode" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Note" Type="nvarchar" MaxLength="2000" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="ReplaceText" Type="ntext" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="SRole">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Note" Type="nvarchar" MaxLength="2000" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="IsAdmin" Type="bit" />
+        </EntityType>
+        <EntityType Name="SType">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="KeyType" Type="nvarchar" MaxLength="255" />
+          <Property Name="ValueType" Type="nvarchar" MaxLength="255" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Note" Type="nvarchar" MaxLength="2000" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SUser">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="255" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Note" Type="nvarchar" MaxLength="2000" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Notification" Type="bit" Nullable="false" />
+          <Property Name="GuidRole" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="255" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="255" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Skype" Type="nvarchar" MaxLength="255" />
+          <Property Name="Position" Type="nvarchar" MaxLength="255" />
+          <Property Name="Avartar" Type="nvarchar" MaxLength="255" />
+          <Property Name="StartDate" Type="date" />
+          <Property Name="EndDate" Type="date" />
+          <Property Name="RecordsInPage" Type="int" />
+          <Property Name="Zalo" Type="nvarchar" MaxLength="255" />
+          <Property Name="Facebook" Type="nvarchar" MaxLength="255" />
+          <Property Name="Legit" Type="int" />
+          <Property Name="LegitCount" Type="int" />
+          <Property Name="GuidFollow" Type="ntext" />
+          <Property Name="OnlineStatus" Type="int" />
+          <Property Name="FullAddress" Type="nvarchar" MaxLength="2000" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="UGallery">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Note" Type="nvarchar" MaxLength="2000" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Link" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Description" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Image" Type="nvarchar" MaxLength="2000" />
+          <Property Name="GuidGroup" Type="uniqueidentifier" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="UGroup">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Note" Type="nvarchar" MaxLength="2000" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="SeoTitle" Type="nvarchar" MaxLength="255" />
+          <Property Name="SeoDescription" Type="nvarchar" MaxLength="255" />
+          <Property Name="SeoImage" Type="nvarchar" MaxLength="255" />
+          <Property Name="SeoFriendUrl" Type="nvarchar" MaxLength="255" />
+          <Property Name="CountView" Type="int" />
+          <Property Name="ParentGuid" Type="uniqueidentifier" />
+          <Property Name="LanguageGuid" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="WLiveChat">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ChatMsg" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="MsgSender" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="MsgReceiver" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="RecevierSeen" Type="int" Nullable="false" />
+          <Property Name="SendAt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="WOneParam">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WOrder">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="GuidUser" Type="uniqueidentifier" />
+          <Property Name="FullAddress" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="255" />
+          <Property Name="PaymentTranId" Type="bigint" />
+          <Property Name="Status" Type="int" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="WOrderDetail">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="GuidOrder" Type="uniqueidentifier" />
+          <Property Name="GuidProduce" Type="uniqueidentifier" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Size" Type="nvarchar(max)" />
+          <Property Name="Color" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="WRatingProduce">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="GuidProduce" Type="uniqueidentifier" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="255" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="255" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Legit" Type="int" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Avatar" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <Association Name="FK_PosProcess_PosProduce">
+          <End Role="PosProduce" Type="Self.PosProduce" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PosProcess" Type="Self.PosProcess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PosProduce">
+              <PropertyRef Name="Guid" />
+            </Principal>
+            <Dependent Role="PosProcess">
+              <PropertyRef Name="GuidProduce" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PosProcess_SUser_ManufacturingBy">
+          <End Role="SUser" Type="Self.SUser" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PosProcess" Type="Self.PosProcess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SUser">
+              <PropertyRef Name="Guid" />
+            </Principal>
+            <Dependent Role="PosProcess">
+              <PropertyRef Name="ManufacturingBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PosProduce_PosBatch">
+          <End Role="PosBatch" Type="Self.PosBatch" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PosProduce" Type="Self.PosProduce" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PosBatch">
+              <PropertyRef Name="Guid" />
+            </Principal>
+            <Dependent Role="PosProduce">
+              <PropertyRef Name="GuidBatch" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PosProduce_PosCategory">
+          <End Role="PosCategory" Type="Self.PosCategory" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PosProduce" Type="Self.PosProduce" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PosCategory">
+              <PropertyRef Name="Guid" />
+            </Principal>
+            <Dependent Role="PosProduce">
+              <PropertyRef Name="GuidCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SUser_SRole">
+          <End Role="SRole" Type="Self.SRole" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="SUser" Type="Self.SUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SRole">
+              <PropertyRef Name="Guid" />
+            </Principal>
+            <Dependent Role="SUser">
+              <PropertyRef Name="GuidRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="fnSplit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="sInputList" Type="varchar" Mode="In" />
+          <Parameter Name="sDelimiter" Type="varchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="item" Type="varchar" MaxLength="8000" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="GeminiStoreContainer">
+          <EntitySet Name="PosPaymentQr" EntityType="Self.PosPaymentQr" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PosInventory" EntityType="Self.PosInventory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CrmEmailSetting" EntityType="Self.CrmEmailSetting" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CrmEmailTemplate" EntityType="Self.CrmEmailTemplate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FControlMenu" EntityType="Self.FControlMenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FProduceGallery" EntityType="Self.FProduceGallery" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FRoleControlMenu" EntityType="Self.FRoleControlMenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PosBatch" EntityType="Self.PosBatch" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PosCategory" EntityType="Self.PosCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PosProcess" EntityType="Self.PosProcess" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PosProduce" EntityType="Self.PosProduce" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SControl" EntityType="Self.SControl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SLanguage" EntityType="Self.SLanguage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SMenu" EntityType="Self.SMenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SRegion" EntityType="Self.SRegion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SReplaceCode" EntityType="Self.SReplaceCode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SRole" EntityType="Self.SRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SType" EntityType="Self.SType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SUser" EntityType="Self.SUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UGallery" EntityType="Self.UGallery" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UGroup" EntityType="Self.UGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WLiveChat" EntityType="Self.WLiveChat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WOneParam" EntityType="Self.WOneParam" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WOrder" EntityType="Self.WOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WOrderDetail" EntityType="Self.WOrderDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WRatingProduce" EntityType="Self.WRatingProduce" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_PosProcess_PosProduce" Association="Self.FK_PosProcess_PosProduce">
+            <End Role="PosProduce" EntitySet="PosProduce" />
+            <End Role="PosProcess" EntitySet="PosProcess" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PosProcess_SUser_ManufacturingBy" Association="Self.FK_PosProcess_SUser_ManufacturingBy">
+            <End Role="SUser" EntitySet="SUser" />
+            <End Role="PosProcess" EntitySet="PosProcess" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PosProduce_PosBatch" Association="Self.FK_PosProduce_PosBatch">
+            <End Role="PosBatch" EntitySet="PosBatch" />
+            <End Role="PosProduce" EntitySet="PosProduce" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PosProduce_PosCategory" Association="Self.FK_PosProduce_PosCategory">
+            <End Role="PosCategory" EntitySet="PosCategory" />
+            <End Role="PosProduce" EntitySet="PosProduce" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SUser_SRole" Association="Self.FK_SUser_SRole">
+            <End Role="SRole" EntitySet="SRole" />
+            <End Role="SUser" EntitySet="SUser" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Gemini" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+        <EntityContainer Name="GeminiEntities" annotation:LazyLoadingEnabled="true" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(Gemini.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(Gemini.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <FunctionImport Name="fnSplit" IsComposable="true" ReturnType="Collection(String)">
+            <Parameter Name="sInputList" Mode="In" Type="String" />
+            <Parameter Name="sDelimiter" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="PosPaymentQrs" EntityType="Gemini.PosPaymentQr" />
+          <EntitySet Name="PosInventories" EntityType="Gemini.PosInventory" />
+          <EntitySet Name="CrmEmailSettings" EntityType="Gemini.CrmEmailSetting" />
+          <EntitySet Name="CrmEmailTemplates" EntityType="Gemini.CrmEmailTemplate" />
+          <EntitySet Name="FControlMenus" EntityType="Gemini.FControlMenu" />
+          <EntitySet Name="FProduceGalleries" EntityType="Gemini.FProduceGallery" />
+          <EntitySet Name="FRoleControlMenus" EntityType="Gemini.FRoleControlMenu" />
+          <EntitySet Name="PosBatches" EntityType="Gemini.PosBatch" />
+          <EntitySet Name="PosCategories" EntityType="Gemini.PosCategory" />
+          <EntitySet Name="PosProcesses" EntityType="Gemini.PosProcess" />
+          <EntitySet Name="PosProduces" EntityType="Gemini.PosProduce" />
+          <EntitySet Name="SControls" EntityType="Gemini.SControl" />
+          <EntitySet Name="SLanguages" EntityType="Gemini.SLanguage" />
+          <EntitySet Name="SMenus" EntityType="Gemini.SMenu" />
+          <EntitySet Name="SRegions" EntityType="Gemini.SRegion" />
+          <EntitySet Name="SReplaceCodes" EntityType="Gemini.SReplaceCode" />
+          <EntitySet Name="SRoles" EntityType="Gemini.SRole" />
+          <EntitySet Name="STypes" EntityType="Gemini.SType" />
+          <EntitySet Name="SUsers" EntityType="Gemini.SUser" />
+          <EntitySet Name="sysdiagrams" EntityType="Gemini.sysdiagram" />
+          <EntitySet Name="UGalleries" EntityType="Gemini.UGallery" />
+          <EntitySet Name="UGroups" EntityType="Gemini.UGroup" />
+          <EntitySet Name="WLiveChats" EntityType="Gemini.WLiveChat" />
+          <EntitySet Name="WOneParams" EntityType="Gemini.WOneParam" />
+          <EntitySet Name="WOrders" EntityType="Gemini.WOrder" />
+          <EntitySet Name="WOrderDetails" EntityType="Gemini.WOrderDetail" />
+          <EntitySet Name="WRatingProduces" EntityType="Gemini.WRatingProduce" />
+          <AssociationSet Name="FK_PosProduce_PosBatch" Association="Gemini.FK_PosProduce_PosBatch">
+            <End Role="PosBatch" EntitySet="PosBatches" />
+            <End Role="PosProduce" EntitySet="PosProduces" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PosProduce_PosCategory" Association="Gemini.FK_PosProduce_PosCategory">
+            <End Role="PosCategory" EntitySet="PosCategories" />
+            <End Role="PosProduce" EntitySet="PosProduces" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PosProcess_PosProduce" Association="Gemini.FK_PosProcess_PosProduce">
+            <End Role="PosProduce" EntitySet="PosProduces" />
+            <End Role="PosProcess" EntitySet="PosProcesses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PosProcess_SUser_ManufacturingBy" Association="Gemini.FK_PosProcess_SUser_ManufacturingBy">
+            <End Role="SUser" EntitySet="SUsers" />
+            <End Role="PosProcess" EntitySet="PosProcesses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SUser_SRole" Association="Gemini.FK_SUser_SRole">
+            <End Role="SRole" EntitySet="SRoles" />
+            <End Role="SUser" EntitySet="SUsers" />
+          </AssociationSet>
+          </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="PosPaymentQr">
+        <Key>
+          <PropertyRef Name="Guid" />
+        </Key>
+        <Property Name="Guid" Type="Guid" Nullable="false" />
+        <Property Name="BankCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        <Property Name="BankName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        <Property Name="AccountName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        <Property Name="AccountNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        <Property Name="Template" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        <Property Name="Active" Type="Boolean" Nullable="false" />
+        <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+        <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+      </EntityType>
+      <EntityType Name="PosInventory">
+        <Key>
+          <PropertyRef Name="Guid" />
+        </Key>
+        <Property Name="Guid" Type="Guid" Nullable="false" />
+        <Property Name="GuidProduce" Type="Guid" Nullable="false" />
+        <Property Name="Size" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        <Property Name="Color" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        <Property Name="Quantity" Type="Int32" Nullable="false" />
+        <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+        <Property Name="CreatedBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+        <Property Name="UpdatedBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+      </EntityType>
+      <EntityType Name="CrmEmailSetting">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="Guid" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PassEmail" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Smtp" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Port" Type="Int32" Nullable="false" />
+          <Property Name="IsHtml" Type="Boolean" Nullable="false" />
+          <Property Name="EnableSsl" Type="Boolean" Nullable="false" />
+          <Property Name="DelayTime" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CrmEmailTemplate">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="Guid" Nullable="false" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SubjectEmail" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ContentTemplate" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="FControlMenu">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="Guid" Nullable="false" />
+          <Property Name="GuidControl" Type="Guid" />
+          <Property Name="GuidMenu" Type="Guid" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Note" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="FProduceGallery">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="Guid" Nullable="false" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="GuidProduce" Type="Guid" Nullable="false" />
+          <Property Name="GuidGallery" Type="Guid" />
+        </EntityType>
+        <EntityType Name="FRoleControlMenu">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="Guid" Nullable="false" />
+          <Property Name="GuidRole" Type="Guid" Nullable="false" />
+          <Property Name="GuidControl" Type="Guid" />
+          <Property Name="GuidMenu" Type="Guid" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Note" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="PosBatch">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ManufacturingAt" Type="DateTime" Precision="3" />
+          <Property Name="Note" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PosProduces" Relationship="Gemini.FK_PosProduce_PosBatch" FromRole="PosBatch" ToRole="PosProduce" />
+        </EntityType>
+        <EntityType Name="PosCategory">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Note" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="ParentGuid" Type="Guid" />
+          <Property Name="OrderBy" Type="Int32" />
+          <Property Name="SeoFriendUrl" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SeoTitle" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SeoDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PosProduces" Relationship="Gemini.FK_PosProduce_PosCategory" FromRole="PosCategory" ToRole="PosProduce" />
+        </EntityType>
+        <EntityType Name="PosProcess">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="Guid" Nullable="false" />
+          <Property Name="GuidProduce" Type="Guid" Nullable="false" />
+          <Property Name="ManufacturingBy" Type="Guid" />
+          <Property Name="ManufacturingStartAt" Type="DateTime" Precision="3" />
+          <Property Name="ManufacturingEndAt" Type="DateTime" Precision="3" />
+          <Property Name="History" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TransportBy" Type="Guid" />
+          <Property Name="TransportStartAt" Type="DateTime" Precision="3" />
+          <Property Name="TransportEndAt" Type="DateTime" Precision="3" />
+          <Property Name="DistributeBy" Type="Guid" />
+          <Property Name="DistributeStartAt" Type="DateTime" Precision="3" />
+          <Property Name="DistributeEndAt" Type="DateTime" Precision="3" />
+          <Property Name="Signature" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SignAt" Type="DateTime" Precision="3" />
+          <Property Name="PublicKey" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ManufacturingStatus" Type="Int32" />
+          <Property Name="TransportStatus" Type="Int32" />
+          <Property Name="DistributeStatus" Type="Int32" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="BigchainDBTransactionId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PosProduce" Relationship="Gemini.FK_PosProcess_PosProduce" FromRole="PosProcess" ToRole="PosProduce" />
+          <NavigationProperty Name="SUser" Relationship="Gemini.FK_PosProcess_SUser_ManufacturingBy" FromRole="PosProcess" ToRole="SUser" />
+        </EntityType>
+        <EntityType Name="PosProduce">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="Guid" Nullable="false" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Note" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Unit" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="GuidBatch" Type="Guid" Nullable="false" />
+          <Property Name="GuidCategory" Type="Guid" Nullable="false" />
+          <Property Name="SeoTitle" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SeoDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SeoFriendUrl" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Legit" Type="Int32" />
+          <Property Name="LegitCount" Type="Int32" />
+          <Property Name="HotProduce" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="PosBatch" Relationship="Gemini.FK_PosProduce_PosBatch" FromRole="PosProduce" ToRole="PosBatch" />
+          <NavigationProperty Name="PosCategory" Relationship="Gemini.FK_PosProduce_PosCategory" FromRole="PosProduce" ToRole="PosCategory" />
+          <NavigationProperty Name="PosProcesses" Relationship="Gemini.FK_PosProcess_PosProduce" FromRole="PosProduce" ToRole="PosProcess" />
+          <Property Name="Color" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Size" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SControl">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SpriteCssClass" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="EventClick" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Orderby" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SLanguage">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SMenu">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="GuidLanguage" Type="Guid" />
+          <Property Name="OrderMenu" Type="Int32" />
+          <Property Name="Icon" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="GuidParent" Type="Guid" />
+          <Property Name="Type" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LinkUrl" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="FriendUrl" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="RouterUrl" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SRegion">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ParentGuid" Type="Guid" />
+          <Property Name="ZipCode" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SReplaceCode">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="Guid" Nullable="false" />
+          <Property Name="ReplaceCode" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ReplaceText" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SRole">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IsAdmin" Type="Boolean" />
+          <NavigationProperty Name="SUsers" Relationship="Gemini.FK_SUser_SRole" FromRole="SRole" ToRole="SUser" />
+        </EntityType>
+        <EntityType Name="SType">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="Guid" Nullable="false" />
+          <Property Name="KeyType" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ValueType" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SUser">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="Guid" Nullable="false" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Notification" Type="Boolean" Nullable="false" />
+          <Property Name="GuidRole" Type="Guid" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Skype" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Position" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Avartar" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <Property Name="RecordsInPage" Type="Int32" />
+          <Property Name="Zalo" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Facebook" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Legit" Type="Int32" />
+          <Property Name="LegitCount" Type="Int32" />
+          <Property Name="GuidFollow" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OnlineStatus" Type="Int32" />
+          <Property Name="FullAddress" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PosProcesses" Relationship="Gemini.FK_PosProcess_SUser_ManufacturingBy" FromRole="SUser" ToRole="PosProcess" />
+          <NavigationProperty Name="SRole" Relationship="Gemini.FK_SUser_SRole" FromRole="SUser" ToRole="SRole" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="UGallery">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="Guid" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Link" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="GuidGroup" Type="Guid" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="UGroup">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SeoTitle" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SeoDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SeoImage" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SeoFriendUrl" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CountView" Type="Int32" />
+          <Property Name="ParentGuid" Type="Guid" />
+          <Property Name="LanguageGuid" Type="Guid" />
+        </EntityType>
+        <EntityType Name="WLiveChat">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="Guid" Nullable="false" />
+          <Property Name="ChatMsg" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MsgSender" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MsgReceiver" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="RecevierSeen" Type="Int32" Nullable="false" />
+          <Property Name="SendAt" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="WOneParam">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="Guid" Nullable="false" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="WOrder">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="Guid" Nullable="false" />
+          <Property Name="GuidUser" Type="Guid" />
+          <Property Name="FullAddress" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentTranId" Type="Int64" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="WOrderDetail">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="Guid" Nullable="false" />
+          <Property Name="GuidOrder" Type="Guid" />
+          <Property Name="GuidProduce" Type="Guid" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Size" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Color" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="WRatingProduce">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="Guid" Nullable="false" />
+          <Property Name="GuidProduce" Type="Guid" />
+          <Property Name="FullName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Comment" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Legit" Type="Int32" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Avatar" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_PosProduce_PosBatch">
+          <End Type="Gemini.PosBatch" Role="PosBatch" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Gemini.PosProduce" Role="PosProduce" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PosBatch">
+              <PropertyRef Name="Guid" />
+            </Principal>
+            <Dependent Role="PosProduce">
+              <PropertyRef Name="GuidBatch" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PosProduce_PosCategory">
+          <End Type="Gemini.PosCategory" Role="PosCategory" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Gemini.PosProduce" Role="PosProduce" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PosCategory">
+              <PropertyRef Name="Guid" />
+            </Principal>
+            <Dependent Role="PosProduce">
+              <PropertyRef Name="GuidCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PosProcess_PosProduce">
+          <End Type="Gemini.PosProduce" Role="PosProduce" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Gemini.PosProcess" Role="PosProcess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PosProduce">
+              <PropertyRef Name="Guid" />
+            </Principal>
+            <Dependent Role="PosProcess">
+              <PropertyRef Name="GuidProduce" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PosProcess_SUser_ManufacturingBy">
+          <End Type="Gemini.SUser" Role="SUser" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Gemini.PosProcess" Role="PosProcess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SUser">
+              <PropertyRef Name="Guid" />
+            </Principal>
+            <Dependent Role="PosProcess">
+              <PropertyRef Name="ManufacturingBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SUser_SRole">
+          <End Type="Gemini.SRole" Role="SRole" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Gemini.SUser" Role="SUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SRole">
+              <PropertyRef Name="Guid" />
+            </Principal>
+            <Dependent Role="SUser">
+              <PropertyRef Name="GuidRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GeminiStoreContainer" CdmEntityContainer="GeminiEntities">
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Gemini.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Gemini.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Gemini.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Gemini.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Gemini.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="Gemini.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Gemini.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Gemini.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="fnSplit" FunctionName="Gemini.Store.fnSplit" />
+          <EntitySetMapping Name="CrmEmailSettings">
+            <EntityTypeMapping TypeName="Gemini.CrmEmailSetting">
+              <MappingFragment StoreEntitySet="CrmEmailSetting">
+                <ScalarProperty Name="DelayTime" ColumnName="DelayTime" />
+                <ScalarProperty Name="EnableSsl" ColumnName="EnableSsl" />
+                <ScalarProperty Name="IsHtml" ColumnName="IsHtml" />
+                <ScalarProperty Name="Port" ColumnName="Port" />
+                <ScalarProperty Name="Smtp" ColumnName="Smtp" />
+                <ScalarProperty Name="PassEmail" ColumnName="PassEmail" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CrmEmailTemplates">
+            <EntityTypeMapping TypeName="Gemini.CrmEmailTemplate">
+              <MappingFragment StoreEntitySet="CrmEmailTemplate">
+                <ScalarProperty Name="ContentTemplate" ColumnName="ContentTemplate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="SubjectEmail" ColumnName="SubjectEmail" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FControlMenus">
+            <EntityTypeMapping TypeName="Gemini.FControlMenu">
+              <MappingFragment StoreEntitySet="FControlMenu">
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="GuidMenu" ColumnName="GuidMenu" />
+                <ScalarProperty Name="GuidControl" ColumnName="GuidControl" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FProduceGalleries">
+            <EntityTypeMapping TypeName="Gemini.FProduceGallery">
+              <MappingFragment StoreEntitySet="FProduceGallery">
+                <ScalarProperty Name="GuidGallery" ColumnName="GuidGallery" />
+                <ScalarProperty Name="GuidProduce" ColumnName="GuidProduce" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FRoleControlMenus">
+            <EntityTypeMapping TypeName="Gemini.FRoleControlMenu">
+              <MappingFragment StoreEntitySet="FRoleControlMenu">
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="GuidMenu" ColumnName="GuidMenu" />
+                <ScalarProperty Name="GuidControl" ColumnName="GuidControl" />
+                <ScalarProperty Name="GuidRole" ColumnName="GuidRole" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PosBatches">
+            <EntityTypeMapping TypeName="Gemini.PosBatch">
+              <MappingFragment StoreEntitySet="PosBatch">
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="ManufacturingAt" ColumnName="ManufacturingAt" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PosCategories">
+            <EntityTypeMapping TypeName="Gemini.PosCategory">
+              <MappingFragment StoreEntitySet="PosCategory">
+                <ScalarProperty Name="SeoDescription" ColumnName="SeoDescription" />
+                <ScalarProperty Name="SeoTitle" ColumnName="SeoTitle" />
+                <ScalarProperty Name="SeoFriendUrl" ColumnName="SeoFriendUrl" />
+                <ScalarProperty Name="OrderBy" ColumnName="OrderBy" />
+                <ScalarProperty Name="ParentGuid" ColumnName="ParentGuid" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PosProcesses">
+            <EntityTypeMapping TypeName="Gemini.PosProcess">
+              <MappingFragment StoreEntitySet="PosProcess">
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="BigchainDBTransactionId" ColumnName="BigchainDBTransactionId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DistributeStatus" ColumnName="DistributeStatus" />
+                <ScalarProperty Name="TransportStatus" ColumnName="TransportStatus" />
+                <ScalarProperty Name="ManufacturingStatus" ColumnName="ManufacturingStatus" />
+                <ScalarProperty Name="PublicKey" ColumnName="PublicKey" />
+                <ScalarProperty Name="SignAt" ColumnName="SignAt" />
+                <ScalarProperty Name="Signature" ColumnName="Signature" />
+                <ScalarProperty Name="DistributeEndAt" ColumnName="DistributeEndAt" />
+                <ScalarProperty Name="DistributeStartAt" ColumnName="DistributeStartAt" />
+                <ScalarProperty Name="DistributeBy" ColumnName="DistributeBy" />
+                <ScalarProperty Name="TransportEndAt" ColumnName="TransportEndAt" />
+                <ScalarProperty Name="TransportStartAt" ColumnName="TransportStartAt" />
+                <ScalarProperty Name="TransportBy" ColumnName="TransportBy" />
+                <ScalarProperty Name="History" ColumnName="History" />
+                <ScalarProperty Name="ManufacturingEndAt" ColumnName="ManufacturingEndAt" />
+                <ScalarProperty Name="ManufacturingStartAt" ColumnName="ManufacturingStartAt" />
+                <ScalarProperty Name="ManufacturingBy" ColumnName="ManufacturingBy" />
+                <ScalarProperty Name="GuidProduce" ColumnName="GuidProduce" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PosProduces">
+            <EntityTypeMapping TypeName="Gemini.PosProduce">
+              <MappingFragment StoreEntitySet="PosProduce">
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="HotProduce" ColumnName="HotProduce" />
+                <ScalarProperty Name="LegitCount" ColumnName="LegitCount" />
+                <ScalarProperty Name="Legit" ColumnName="Legit" />
+                <ScalarProperty Name="SeoFriendUrl" ColumnName="SeoFriendUrl" />
+                <ScalarProperty Name="SeoDescription" ColumnName="SeoDescription" />
+                <ScalarProperty Name="SeoTitle" ColumnName="SeoTitle" />
+                <ScalarProperty Name="GuidCategory" ColumnName="GuidCategory" />
+                <ScalarProperty Name="GuidBatch" ColumnName="GuidBatch" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SControls">
+            <EntityTypeMapping TypeName="Gemini.SControl">
+              <MappingFragment StoreEntitySet="SControl">
+                <ScalarProperty Name="Orderby" ColumnName="Orderby" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="EventClick" ColumnName="EventClick" />
+                <ScalarProperty Name="SpriteCssClass" ColumnName="SpriteCssClass" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SLanguages">
+            <EntityTypeMapping TypeName="Gemini.SLanguage">
+              <MappingFragment StoreEntitySet="SLanguage">
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SMenus">
+            <EntityTypeMapping TypeName="Gemini.SMenu">
+              <MappingFragment StoreEntitySet="SMenu">
+                <ScalarProperty Name="RouterUrl" ColumnName="RouterUrl" />
+                <ScalarProperty Name="FriendUrl" ColumnName="FriendUrl" />
+                <ScalarProperty Name="LinkUrl" ColumnName="LinkUrl" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="GuidParent" ColumnName="GuidParent" />
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="OrderMenu" ColumnName="OrderMenu" />
+                <ScalarProperty Name="GuidLanguage" ColumnName="GuidLanguage" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SRegions">
+            <EntityTypeMapping TypeName="Gemini.SRegion">
+              <MappingFragment StoreEntitySet="SRegion">
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="ParentGuid" ColumnName="ParentGuid" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SReplaceCodes">
+            <EntityTypeMapping TypeName="Gemini.SReplaceCode">
+              <MappingFragment StoreEntitySet="SReplaceCode">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="ReplaceText" ColumnName="ReplaceText" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ReplaceCode" ColumnName="ReplaceCode" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SRoles">
+            <EntityTypeMapping TypeName="Gemini.SRole">
+              <MappingFragment StoreEntitySet="SRole">
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STypes">
+            <EntityTypeMapping TypeName="Gemini.SType">
+              <MappingFragment StoreEntitySet="SType">
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ValueType" ColumnName="ValueType" />
+                <ScalarProperty Name="KeyType" ColumnName="KeyType" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SUsers">
+            <EntityTypeMapping TypeName="Gemini.SUser">
+              <MappingFragment StoreEntitySet="SUser">
+                <ScalarProperty Name="FullAddress" ColumnName="FullAddress" />
+                <ScalarProperty Name="OnlineStatus" ColumnName="OnlineStatus" />
+                <ScalarProperty Name="GuidFollow" ColumnName="GuidFollow" />
+                <ScalarProperty Name="LegitCount" ColumnName="LegitCount" />
+                <ScalarProperty Name="Legit" ColumnName="Legit" />
+                <ScalarProperty Name="Facebook" ColumnName="Facebook" />
+                <ScalarProperty Name="Zalo" ColumnName="Zalo" />
+                <ScalarProperty Name="RecordsInPage" ColumnName="RecordsInPage" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Avartar" ColumnName="Avartar" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="Skype" ColumnName="Skype" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="GuidRole" ColumnName="GuidRole" />
+                <ScalarProperty Name="Notification" ColumnName="Notification" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Gemini.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UGalleries">
+            <EntityTypeMapping TypeName="Gemini.UGallery">
+              <MappingFragment StoreEntitySet="UGallery">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="GuidGroup" ColumnName="GuidGroup" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UGroups">
+            <EntityTypeMapping TypeName="Gemini.UGroup">
+              <MappingFragment StoreEntitySet="UGroup">
+                <ScalarProperty Name="LanguageGuid" ColumnName="LanguageGuid" />
+                <ScalarProperty Name="ParentGuid" ColumnName="ParentGuid" />
+                <ScalarProperty Name="CountView" ColumnName="CountView" />
+                <ScalarProperty Name="SeoFriendUrl" ColumnName="SeoFriendUrl" />
+                <ScalarProperty Name="SeoImage" ColumnName="SeoImage" />
+                <ScalarProperty Name="SeoDescription" ColumnName="SeoDescription" />
+                <ScalarProperty Name="SeoTitle" ColumnName="SeoTitle" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WLiveChats">
+            <EntityTypeMapping TypeName="Gemini.WLiveChat">
+              <MappingFragment StoreEntitySet="WLiveChat">
+                <ScalarProperty Name="SendAt" ColumnName="SendAt" />
+                <ScalarProperty Name="RecevierSeen" ColumnName="RecevierSeen" />
+                <ScalarProperty Name="MsgReceiver" ColumnName="MsgReceiver" />
+                <ScalarProperty Name="MsgSender" ColumnName="MsgSender" />
+                <ScalarProperty Name="ChatMsg" ColumnName="ChatMsg" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WOneParams">
+            <EntityTypeMapping TypeName="Gemini.WOneParam">
+              <MappingFragment StoreEntitySet="WOneParam">
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WOrders">
+            <EntityTypeMapping TypeName="Gemini.WOrder">
+              <MappingFragment StoreEntitySet="WOrder">
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="PaymentTranId" ColumnName="PaymentTranId" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="FullAddress" ColumnName="FullAddress" />
+                <ScalarProperty Name="GuidUser" ColumnName="GuidUser" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WOrderDetails">
+            <EntityTypeMapping TypeName="Gemini.WOrderDetail">
+              <MappingFragment StoreEntitySet="WOrderDetail">
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="GuidProduce" ColumnName="GuidProduce" />
+                <ScalarProperty Name="GuidOrder" ColumnName="GuidOrder" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PosPaymentQrs">
+      <EntityTypeMapping TypeName="Gemini.PosPaymentQr">
+        <MappingFragment StoreEntitySet="PosPaymentQr">
+          <ScalarProperty Name="Guid" ColumnName="Guid" />
+          <ScalarProperty Name="BankCode" ColumnName="BankCode" />
+          <ScalarProperty Name="BankName" ColumnName="BankName" />
+          <ScalarProperty Name="AccountName" ColumnName="AccountName" />
+          <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
+          <ScalarProperty Name="Template" ColumnName="Template" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PosInventories">
+      <EntityTypeMapping TypeName="Gemini.PosInventory">
+        <MappingFragment StoreEntitySet="PosInventory">
+          <ScalarProperty Name="Guid" ColumnName="Guid" />
+          <ScalarProperty Name="GuidProduce" ColumnName="GuidProduce" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="Color" ColumnName="Color" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WRatingProduces">
+            <EntityTypeMapping TypeName="Gemini.WRatingProduce">
+              <MappingFragment StoreEntitySet="WRatingProduce">
+                <ScalarProperty Name="Avatar" ColumnName="Avatar" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Legit" ColumnName="Legit" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="GuidProduce" ColumnName="GuidProduce" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer>
+    <edmx:Connection>
+      <edmx:DesignerInfoPropertySet>
+        <edmx:DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </edmx:DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <edmx:DesignerInfoPropertySet>
+        <edmx:DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <edmx:DesignerProperty Name="EnablePluralization" Value="True" />
+        <edmx:DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <edmx:DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <edmx:DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </edmx:DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams />
+  </edmx:Designer>
+</edmx:Edmx>

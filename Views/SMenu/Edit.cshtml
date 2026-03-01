@@ -1,0 +1,201 @@
+﻿@model Gemini.Models._01_Hethong.SMenuModel
+@{ Layout = "~/Views/Shared/_FormList.cshtml"; }
+
+@Html.Action("AToolbarItem", "Nav")
+<div class="k-edit-form-container" style="overflow-x: hidden; ">
+    <form method="post" id="frmEdit" class="form-horizontal" role="form">
+        <div id="Tabs">
+            <ul>
+                <li class="k-state-active">@Html.Label(@Gemini.Resources.Resource.LBasic)</li>
+            </ul>
+            @*Cơ bản*@
+            <div>
+                <div style="height: 0; overflow: hidden">
+                    @Html.HiddenFor(model => model.Guid)
+                    @Html.HiddenFor(model => model.IsUpdate)
+                    <input type="hidden" id="hfLuuvathem" value="0" /><input type="hidden" id="hfExpand" value="0" />
+                    <button type="submit" id="btnLuu" style="visibility: hidden"></button>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-2 col-md-2">
+                        @Html.LabelFor(m => m.Name)
+                    </div>
+                    <div class="col-sm-4 col-md-4">
+                        @Html.TextBoxFor(model => model.Name, new { @class = "k-textbox", @onchange = "Friendly_urlChange();" })
+                        <div>@Html.ValidationMessageFor(model => model.Name)</div>
+                    </div>
+
+                    <div class="col-sm-2 col-md-2">
+                        @Html.LabelFor(m => m.GuidParent)
+                    </div>
+                    <div class="col-sm-4 col-md-4">
+                        @(Html.Kendo().DropDownListFor(model => model.GuidParent)
+                        .HtmlAttributes(new { @class = "k-dropdown" })
+                        .HtmlAttributes(new { style = "width:100%;z-index:1;" })
+                        .Filter(FilterType.Contains).OptionLabel(@Gemini.Resources.Resource.LChoose)
+                        .DataTextField("Name")
+                        .DataValueField("Guid")
+                        .DataSource(source => source.Read(read => read.Action("SMenu", "Combo", new { type = Model.Type })))
+                        )
+                        <div>@Html.ValidationMessageFor(model => model.GuidParent)</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-2 col-md-2">
+                        @Html.LabelFor(m => m.Active)
+                    </div>
+                    <div class="col-sm-4 col-md-4">
+                        @Html.CheckBoxFor(model => model.Active)
+                        <div>@Html.ValidationMessageFor(model => model.Active)</div>
+                    </div>
+                    <div class="col-sm-2 col-md-2">
+                        @Html.LabelFor(m => m.OrderMenu)
+                    </div>
+                    <div class="col-sm-4 col-md-4">
+                        @Html.Kendo().NumericTextBoxFor(model => model.OrderMenu).HtmlAttributes(new { style = "width:100%;" }).Format("n0")
+                        <div>@Html.ValidationMessageFor(model => model.OrderMenu)</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-2 col-md-2">
+                        @Html.LabelFor(m => m.FriendUrl)
+                    </div>
+                    <div class="col-sm-10 col-md-10">
+                        @Html.TextBoxFor(model => model.FriendUrl, new { @class = "k-textbox" })
+                        <div>@Html.ValidationMessageFor(model => model.FriendUrl)</div>
+                    </div>
+                
+                </div>
+
+                <div class="form-group">
+                 
+                    <div class="col-sm-2 col-md-2">
+                        @Html.LabelFor(m => m.LinkUrl)
+                    </div>
+                    <div class="col-sm-10 col-md-10">
+                        @Html.TextBoxFor(model => model.LinkUrl, new { @class = "k-textbox" })
+                        <div>@Html.ValidationMessageFor(model => model.LinkUrl)</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-2 col-md-2">
+                        @Html.LabelFor(m => m.RouterUrl)
+                    </div>
+                    <div class="col-sm-10 col-md-10">
+                        @Html.TextBoxFor(model => model.RouterUrl, new { @class = "k-textbox" })
+                        <div>@Html.ValidationMessageFor(model => model.RouterUrl)</div>
+                    </div>
+                 
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-2 col-md-2">
+                        @Html.LabelFor(m => m.Type)
+                    </div>
+                    <div class="col-sm-4 col-md-4">
+                        @(Html.Kendo().DropDownListFor(m => m.Type)
+              .Name("Type")
+              .HtmlAttributes(new { @class = "k-dropdown" })
+              .HtmlAttributes(new { style = "width:100%;z-index:1;" })
+              .DataTextField("ValueType")
+              .DataValueField("ValueType")
+              .DataSource(source => source.Read(read => read.Action("SType", "Combo", new { key = "TYPE_MENU" })))
+                        )
+                        <div>@Html.ValidationMessageFor(model => model.Type)</div>
+                    </div>
+                    <div class="col-sm-2 col-md-2">
+                        @Html.LabelFor(m => m.GuidLanguage)
+                    </div>
+                    <div class="col-sm-4 col-md-4">
+                        @(Html.Kendo().DropDownListFor(model => model.GuidLanguage)
+.HtmlAttributes(new { @class = "k-dropdown" })
+.HtmlAttributes(new { style = "width:100%;z-index:1;" })
+                       .Filter(FilterType.Contains).OptionLabel(@Gemini.Resources.Resource.LChoose)
+.DataTextField("Name")
+.DataValueField("Guid")
+.DataSource(source => source.Read(read => read.Action("SLanguage", "Combo")))
+                        )
+                        <div>@Html.ValidationMessageFor(model => model.GuidLanguage)</div>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-2 col-md-2">
+                        @Html.LabelFor(m => m.Note)
+                    </div>
+                    <div class="col-sm-10 col-md-10">
+                        @Html.TextAreaFor(model => model.Note, new { @class = "k-textbox", rows = "5" })
+                        <div>@Html.ValidationMessageFor(model => model.Note)</div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </form>
+</div>
+
+<script>
+    //Form submit
+    var validator = $("#frmEdit").kendoValidator().data("kendoValidator");
+    $("form").submit(function (event) {
+        if (validator.validate() == true) {
+            kendo.ui.progress(parent.$("#WidgetConfigWindow"), true);
+            var frm = $('#frmEdit');
+            var httpPost = $.post('@Url.Action("Update", "SMenu")', frm.serialize(), function (dataResponse) {
+                kendo.ui.progress(parent.$("#WidgetConfigWindow"), false);
+                if (dataResponse.StatusCode == 200) {
+                    parent.voidRefresh();
+                    parent.ActiveRow(dataResponse.ActiveCode);
+                    if (parseInt($("#hfLuuvathem").val()) == 0) {
+                        closeWindowEdit();
+                    } else {
+                        parent.Create('0');
+                    }
+                } else {
+                    Notification('@Gemini.Resources.Resource.EditUnsuccessful', dataResponse.StatusCode, dataResponse.MessagError, '@Gemini.Resources.Resource.ListStatusNotificationError', true);
+                }
+            }).fail(function (xhr, status, error) {
+                kendo.ui.progress(parent.$("#WidgetConfigWindow"), false);
+                Notification('@Gemini.Resources.Resource.ListUnsuccessful', '@Gemini.Resources.Resource.ListStatus404', error, '@Gemini.Resources.Resource.ListStatusNotificationError', true);
+            });
+        }
+        event.preventDefault();
+    });
+
+
+    function closeWindowEdit() {
+        var window = parent.$("#WidgetConfigWindow").data("kendoWindow");
+        window.close();
+    }
+
+    function voidDeleteItem() {
+        parent.Delete();
+        closeWindowEdit();
+    }
+
+    function voidRefreshItem() {
+        if (parseInt($("#IsUpdate").val()) == 0) {
+            parent.Create('0');
+        } else if (parseInt($("#IsUpdate").val()) == 1) {
+            parent.Edit('1');
+        }
+    }
+
+    function Friendly_urlChange() {
+        $("#FriendUrl").val(RemoveUnicode($("#Name").val()));
+    }
+
+    ToolbarItem_Click();
+    //Enter text box
+    PreventEventTextSubmit();
+    //Phím tắt
+    KeyboardNavigationEdit();
+    KendoTabStrip();
+</script>

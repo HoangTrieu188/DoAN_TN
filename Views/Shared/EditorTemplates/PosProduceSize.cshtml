@@ -1,0 +1,14 @@
+@model string
+
+@(Html.Kendo().DropDownList()
+    .Name("Size")
+    .DataTextField("text")
+    .DataValueField("value")
+    .HtmlAttributes(new { style = "width: 100%" })
+    .DataSource(source => {
+        source.Custom()
+            .Transport(transport => {
+                transport.Read("function(options) { options.success(sizes); }");
+            });
+    })
+)

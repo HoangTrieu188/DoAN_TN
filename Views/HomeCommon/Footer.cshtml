@@ -1,0 +1,174 @@
+﻿@model Gemini.Models._20_Web.FooterModel
+
+<!-- Footer Section Begin -->
+<footer class="footer spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="footer__about">
+                    <div class="footer__about__logo">
+                        <a href="/"><img src="~/assets/theme/img/logo.png" alt=""></a>
+                    </div>
+                    <ul>
+                        <li>Địa chỉ:TP Hồ Chí Minh </li>
+                        <li>SĐT: 0916 341 320 </li>
+                        <li>Email: thtrieu188@gmail.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
+                <div class="footer__widget">
+                    <h6>Danh mục sản phẩm</h6>
+                    @if (Model.ListPosCategory != null && Model.ListPosCategory.Any())
+                    {
+                        <nav class="navigation">
+                            @if (Model.ListPosCategory.Count > 6)
+                            {
+                                <ul class="mainmenu">
+                                    @for (var i = 0; i <= 5; i++)
+                                    {
+                                        <li onmouseover="showSubMenu('@Model.ListPosCategory[i].SeoFriendUrl', 'submenu-footer')" onmouseleave="hideSubMenu('@Model.ListPosCategory[i].SeoFriendUrl', 'submenu-footer')">
+                                            @if (Model.ListPosCategory[i].Items != null && Model.ListPosCategory[i].Items.Any())
+                                            {
+                                                <a>@Model.ListPosCategory[i].Name</a>
+
+                                                <ul id="submenu-footer-@Model.ListPosCategory[i].SeoFriendUrl" class="submenu">
+                                                    @foreach (var itemSub in Model.ListPosCategory[i].Items)
+                                                    {
+                                                        <li onmouseover="showSubMenu('@itemSub.SeoFriendUrl', 'submenu-footer')">
+                                                            @if (itemSub.Items != null && itemSub.Items.Any())
+                                                            {
+                                                                <a>● @itemSub.Name</a>
+
+                                                                <ul id="submenu-footer-@itemSub.SeoFriendUrl" class="submenu">
+                                                                    @foreach (var itemSub2 in itemSub.Items)
+                                                                    {
+                                                                        <li><a href="/danh-muc/@itemSub2.SeoFriendUrl">● @itemSub2.Name</a></li>
+                                                                    }
+                                                                </ul>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a href="/danh-muc/@itemSub.SeoFriendUrl">● @itemSub.Name</a>
+                                                            }
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            }
+                                            else
+                                            {
+                                                <a href="/danh-muc/@Model.ListPosCategory[i].SeoFriendUrl">@Model.ListPosCategory[i].Name</a>
+                                            }
+                                        </li>
+                                    }
+                                </ul>
+                                <ul class="mainmenu">
+                                    @for (var i = 10; i <= Model.ListPosCategory.Count; i++)
+                                    {
+                                        <li onmouseover="showSubMenu('@Model.ListPosCategory[i].SeoFriendUrl', 'submenu-footer')" onmouseleave="hideSubMenu('@Model.ListPosCategory[i].SeoFriendUrl', 'submenu-footer')">
+                                            @if (Model.ListPosCategory[i].Items != null && Model.ListPosCategory[i].Items.Any())
+                                            {
+                                                <a>@Model.ListPosCategory[i].Name</a>
+
+                                                <ul id="submenu-footer-@Model.ListPosCategory[i].SeoFriendUrl" class="submenu">
+                                                    @foreach (var itemSub in Model.ListPosCategory[i].Items)
+                                                    {
+                                                        <li onmouseover="showSubMenu('@itemSub.SeoFriendUrl', 'submenu-footer')">
+                                                            @if (itemSub.Items != null && itemSub.Items.Any())
+                                                            {
+                                                                <a>● @itemSub.Name</a>
+
+                                                                <ul id="submenu-footer-@itemSub.SeoFriendUrl" class="submenu">
+                                                                    @foreach (var itemSub2 in itemSub.Items)
+                                                                    {
+                                                                        <li><a href="/danh-muc/@itemSub2.SeoFriendUrl">● @itemSub2.Name</a></li>
+                                                                    }
+                                                                </ul>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a href="/danh-muc/@itemSub.SeoFriendUrl">● @itemSub.Name</a>
+                                                            }
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            }
+                                            else
+                                            {
+                                                <a href="/danh-muc/@Model.ListPosCategory[i].SeoFriendUrl">@Model.ListPosCategory[i].Name</a>
+                                            }
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                            else
+                            {
+                                <ul class="mainmenu">
+                                    @for (var i = 0; i < Model.ListPosCategory.Count; i++)
+                                    {
+                                        <li onmouseover="showSubMenu('@Model.ListPosCategory[i].SeoFriendUrl', 'submenu-footer')" onmouseleave="hideSubMenu('@Model.ListPosCategory[i].SeoFriendUrl', 'submenu-footer')">
+                                            @if (Model.ListPosCategory[i].Items != null && Model.ListPosCategory[i].Items.Any())
+                                            {
+                                                <a>@Model.ListPosCategory[i].Name</a>
+
+                                                <ul id="submenu-footer-@Model.ListPosCategory[i].SeoFriendUrl" class="submenu">
+                                                    @foreach (var itemSub in Model.ListPosCategory[i].Items)
+                                                    {
+                                                        <li onmouseover="showSubMenu('@itemSub.SeoFriendUrl', 'submenu-footer')">
+                                                            @if (itemSub.Items != null && itemSub.Items.Any())
+                                                            {
+                                                                <a>● @itemSub.Name</a>
+
+                                                                <ul id="submenu-footer-@itemSub.SeoFriendUrl" class="submenu">
+                                                                    @foreach (var itemSub2 in itemSub.Items)
+                                                                    {
+                                                                        <li><a href="/danh-muc/@itemSub2.SeoFriendUrl">● @itemSub2.Name</a></li>
+                                                                    }
+                                                                </ul>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a href="/danh-muc/@itemSub.SeoFriendUrl">● @itemSub.Name</a>
+                                                            }
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            }
+                                            else
+                                            {
+                                                <a href="/danh-muc/@Model.ListPosCategory[i].SeoFriendUrl">@Model.ListPosCategory[i].Name</a>
+                                            }
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                        </nav>
+                    }
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12">
+                <div class="footer__widget">
+                    <h6>Liên hệ với chúng tôi</h6>
+                    <div class="footer__widget__social">
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        <a href="#"><i class="fa fa-twitter"></i></a>
+                        <a href="#"><i class="fa fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="footer__copyright">
+                    <div class="footer__copyright__text">
+                        <p>
+                            Copyright &copy;
+                            <script>document.write(new Date().getFullYear());</script> All rights reserved
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Footer Section End -->

@@ -1,0 +1,1673 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AmCategory_Code" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="AmCategory_Link" xml:space="preserve">
+    <value>Link</value>
+  </data>
+  <data name="AmCategory_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Am_BrandName" xml:space="preserve">
+    <value>Brand Name</value>
+  </data>
+  <data name="Am_Code" xml:space="preserve">
+    <value>Code (Seller Sku)</value>
+  </data>
+  <data name="Am_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Am_Features0" xml:space="preserve">
+    <value>Features 1</value>
+  </data>
+  <data name="Am_Features1" xml:space="preserve">
+    <value>Features 2</value>
+  </data>
+  <data name="Am_Features2" xml:space="preserve">
+    <value>Features 3</value>
+  </data>
+  <data name="Am_Features3" xml:space="preserve">
+    <value>Features 4</value>
+  </data>
+  <data name="Am_Features4" xml:space="preserve">
+    <value>Features 5</value>
+  </data>
+  <data name="Am_KeySearch" xml:space="preserve">
+    <value>KeySearch</value>
+  </data>
+  <data name="Am_LinkImg0" xml:space="preserve">
+    <value>Image 1</value>
+  </data>
+  <data name="Am_LinkImg1" xml:space="preserve">
+    <value>Image 2</value>
+  </data>
+  <data name="Am_LinkImg2" xml:space="preserve">
+    <value>Image 3</value>
+  </data>
+  <data name="Am_LinkImg3" xml:space="preserve">
+    <value>Image 4</value>
+  </data>
+  <data name="Am_LinkImg4" xml:space="preserve">
+    <value>Image 5</value>
+  </data>
+  <data name="Am_LinkImg5" xml:space="preserve">
+    <value>Image 6</value>
+  </data>
+  <data name="Am_LinkProduceDetail" xml:space="preserve">
+    <value>Link detail</value>
+  </data>
+  <data name="Am_Manufacturer" xml:space="preserve">
+    <value>Manufacturer</value>
+  </data>
+  <data name="Am_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Am_OriginalPrice" xml:space="preserve">
+    <value>Original Price</value>
+  </data>
+  <data name="Am_Quantity" xml:space="preserve">
+    <value>Quantity</value>
+  </data>
+  <data name="Am_SearchTerms0" xml:space="preserve">
+    <value>SearchTerms 1</value>
+  </data>
+  <data name="Am_SearchTerms1" xml:space="preserve">
+    <value>SearchTerms 2</value>
+  </data>
+  <data name="Am_SearchTerms2" xml:space="preserve">
+    <value>SearchTerms 3</value>
+  </data>
+  <data name="Am_SearchTerms3" xml:space="preserve">
+    <value>SearchTerms 4</value>
+  </data>
+  <data name="Am_SearchTerms4" xml:space="preserve">
+    <value>SearchTerms 5</value>
+  </data>
+  <data name="Am_Shipping" xml:space="preserve">
+    <value>Shipping</value>
+  </data>
+  <data name="Am_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Am_Unit" xml:space="preserve">
+    <value>Unit</value>
+  </data>
+  <data name="Am_Upc" xml:space="preserve">
+    <value>Code UPC</value>
+  </data>
+  <data name="Am_WeightKg" xml:space="preserve">
+    <value>WeightKg</value>
+  </data>
+  <data name="Am_WeightLb" xml:space="preserve">
+    <value>WeightLb</value>
+  </data>
+  <data name="Am_YourPrice" xml:space="preserve">
+    <value>Your Price</value>
+  </data>
+  <data name="Basic_Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="Basic_ChiTiet" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="Basic_Ghichu" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="Basic_MaNguoiCapNhat" xml:space="preserve">
+    <value>Updated user</value>
+  </data>
+  <data name="Basic_MaNguoiTao" xml:space="preserve">
+    <value>Created by</value>
+  </data>
+  <data name="Basic_NtnCapNhat" xml:space="preserve">
+    <value>Updated at</value>
+  </data>
+  <data name="Basic_NtnTao" xml:space="preserve">
+    <value>Created at</value>
+  </data>
+  <data name="Basic_Stt" xml:space="preserve">
+    <value>Order</value>
+  </data>
+  <data name="Basic_TinhtrangId" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Btn_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Btn_Copy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="Btn_Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="Btn_Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Btn_Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Btn_Export" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="Btn_Import" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="Btn_ImportTabc" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="Btn_Print" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="Btn_Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="Btn_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Btn_XLSX" xml:space="preserve">
+    <value>XLSX</value>
+  </data>
+  <data name="CheckPasswordAgain" xml:space="preserve">
+    <value>Check password again</value>
+  </data>
+  <data name="ChuyenmucCode" xml:space="preserve">
+    <value>Categories Code</value>
+  </data>
+  <data name="ChuyenMuc_Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="ChuyenMuc_Anh" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="ChuyenMuc_FriendlyUrl" xml:space="preserve">
+    <value>Friendly url</value>
+  </data>
+  <data name="ChuyenMuc_MetaDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="ChuyenMuc_MetaKeyword" xml:space="preserve">
+    <value>Keyword</value>
+  </data>
+  <data name="ChuyenMuc_MetaTitle" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="ChuyenMuc_Mota" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="ChuyenMuc_ParentId" xml:space="preserve">
+    <value>Parent</value>
+  </data>
+  <data name="ChuyenMuc_Theloai" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="ChuyenMuc_Thongbao" xml:space="preserve">
+    <value>Notification</value>
+  </data>
+  <data name="ChuyenMuc_Tieude" xml:space="preserve">
+    <value>Name Categories</value>
+  </data>
+  <data name="ChuyenMuc_TinhtrangId" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="ChuyenMuc_TrangthaiId" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="CongViec_Amount" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="CongViec_CongViecCode" xml:space="preserve">
+    <value>Major
+Major
+Major code</value>
+  </data>
+  <data name="CongViec_CongViecName" xml:space="preserve">
+    <value>Major name</value>
+  </data>
+  <data name="CongViec_Thoigian" xml:space="preserve">
+    <value>minute</value>
+  </data>
+  <data name="CongViec_Yeucau" xml:space="preserve">
+    <value>Require</value>
+  </data>
+  <data name="Contacts_LoaiBĐS" xml:space="preserve">
+    <value>Real estate</value>
+  </data>
+  <data name="Contacts_LoaiDinhcu" xml:space="preserve">
+    <value>Settled</value>
+  </data>
+  <data name="Contacts_LoaiDuhoc" xml:space="preserve">
+    <value>Study abroad</value>
+  </data>
+  <data name="Control_Code" xml:space="preserve">
+    <value>Control code</value>
+  </data>
+  <data name="Control_ten" xml:space="preserve">
+    <value>Control name</value>
+  </data>
+  <data name="Control_TinhtrangId" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="CreationDate" xml:space="preserve">
+    <value>CreationDate</value>
+  </data>
+  <data name="CrmChienDich_ChuDe" xml:space="preserve">
+    <value>Topic</value>
+  </data>
+  <data name="CrmChienDich_Guithu" xml:space="preserve">
+    <value>Sent mail</value>
+  </data>
+  <data name="CrmChienDich_MaChienDich" xml:space="preserve">
+    <value>Campaign code</value>
+  </data>
+  <data name="CrmChienDich_MaEmailConfig" xml:space="preserve">
+    <value>Mailing email</value>
+  </data>
+  <data name="CrmChienDich_MaNhomCustomer" xml:space="preserve">
+    <value>Customer group</value>
+  </data>
+  <data name="CrmChienDich_Template" xml:space="preserve">
+    <value>Mailing Form</value>
+  </data>
+  <data name="CrmChienDich_TenChienDich" xml:space="preserve">
+    <value>Campaign name</value>
+  </data>
+  <data name="CrmCustomerGroup_MaNhomCustomer" xml:space="preserve">
+    <value>Group customer code</value>
+  </data>
+  <data name="CrmCustomerGroup_Mota" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="CrmCustomerGroup_TenNhomCustomer" xml:space="preserve">
+    <value>Group customer name</value>
+  </data>
+  <data name="CrmCustomer_CongTy" xml:space="preserve">
+    <value>Company</value>
+  </data>
+  <data name="CrmCustomer_DiaChi" xml:space="preserve">
+    <value>Adress</value>
+  </data>
+  <data name="CrmCustomer_Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="CrmCustomer_GioiTinh" xml:space="preserve">
+    <value>Sex</value>
+  </data>
+  <data name="CrmCustomer_HoCustomer" xml:space="preserve">
+    <value>First name</value>
+  </data>
+  <data name="CrmCustomer_HoVaTen" xml:space="preserve">
+    <value>Full name</value>
+  </data>
+  <data name="CrmCustomer_MaCustomer" xml:space="preserve">
+    <value>Customer code</value>
+  </data>
+  <data name="CrmCustomer_Tel" xml:space="preserve">
+    <value>Phone</value>
+  </data>
+  <data name="CrmCustomer_TenCustomer" xml:space="preserve">
+    <value>Customer name</value>
+  </data>
+  <data name="CrmCustomer_TenXungHo" xml:space="preserve">
+    <value>Nick name</value>
+  </data>
+  <data name="CrmCustomer_Tuoi" xml:space="preserve">
+    <value>Age</value>
+  </data>
+  <data name="CrmEmailConfig_BodyEmail" xml:space="preserve">
+    <value>Body email</value>
+  </data>
+  <data name="CrmEmailConfig_Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="CrmEmailConfig_EnableSsl" xml:space="preserve">
+    <value>Enable SSL</value>
+  </data>
+  <data name="CrmEmailConfig_IsBodyHtml" xml:space="preserve">
+    <value>Is Body Html</value>
+  </data>
+  <data name="CrmEmailConfig_MaEmailConfig" xml:space="preserve">
+    <value>Email code</value>
+  </data>
+  <data name="CrmEmailConfig_PassEmail" xml:space="preserve">
+    <value>Pass</value>
+  </data>
+  <data name="CrmEmailConfig_PortEmail" xml:space="preserve">
+    <value>Port email</value>
+  </data>
+  <data name="CrmEmailConfig_SmtpEmail" xml:space="preserve">
+    <value>SMTP email</value>
+  </data>
+  <data name="CrmEmailConfig_TimeSentEmail" xml:space="preserve">
+    <value>Time Sent Email</value>
+  </data>
+  <data name="CrmEmailConfig_TinhtrangId" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="CrmQt_ChiTietQt" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="CrmQt_PhanTramQt" xml:space="preserve">
+    <value>%</value>
+  </data>
+  <data name="CrmQt_TenQt" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="CrmQt_ThongBao" xml:space="preserve">
+    <value>Notification</value>
+  </data>
+  <data name="CrmQt_TrangThaiQt" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="CrmTask_Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="CrmTask_ChiTietTask" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="CrmTask_CountHoanThanh" xml:space="preserve">
+    <value>Process</value>
+  </data>
+  <data name="CrmTask_DinhGiaTask" xml:space="preserve">
+    <value>Values</value>
+  </data>
+  <data name="CrmTask_DoUuTien" xml:space="preserve">
+    <value>Priority</value>
+  </data>
+  <data name="CrmTask_DrDangThucHien" xml:space="preserve">
+    <value>Processing</value>
+  </data>
+  <data name="CrmTask_DrHoanThanh" xml:space="preserve">
+    <value>Completed</value>
+  </data>
+  <data name="CrmTask_DrKeHoach" xml:space="preserve">
+    <value>Plan</value>
+  </data>
+  <data name="CrmTask_DrTatCa" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="CrmTask_MaNguoiLam" xml:space="preserve">
+    <value>Do user</value>
+  </data>
+  <data name="CrmTask_NhiemThu" xml:space="preserve">
+    <value>Acceptance</value>
+  </data>
+  <data name="CrmTask_NsPhoihop" xml:space="preserve">
+    <value>Coordination</value>
+  </data>
+  <data name="CrmTask_NtnBatdau" xml:space="preserve">
+    <value>Start date</value>
+  </data>
+  <data name="CrmTask_TenTask" xml:space="preserve">
+    <value>Name task</value>
+  </data>
+  <data name="CrmTask_Thoigian" xml:space="preserve">
+    <value>Thời gian</value>
+  </data>
+  <data name="CrmTask_ThongBao" xml:space="preserve">
+    <value>Notification</value>
+  </data>
+  <data name="CrmTask_TrangThai" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="CrmTask_YeuCau" xml:space="preserve">
+    <value>Yêu cầu</value>
+  </data>
+  <data name="CrmTemplate_MaTemplate" xml:space="preserve">
+    <value>Template code</value>
+  </data>
+  <data name="CrmTemplate_Template" xml:space="preserve">
+    <value>Template</value>
+  </data>
+  <data name="CrmTemplate_TenTemplate" xml:space="preserve">
+    <value>Template name</value>
+  </data>
+  <data name="DmNhom_Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="DmNhom_FriendlyUrl" xml:space="preserve">
+    <value>Friendly Url</value>
+  </data>
+  <data name="DmNhom_MetaDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="DmNhom_MetaKeyword" xml:space="preserve">
+    <value>Keyword</value>
+  </data>
+  <data name="DmNhom_MetaTitle" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="DmNhom_Morelink" xml:space="preserve">
+    <value>More link</value>
+  </data>
+  <data name="DmNhom_Nhomcha" xml:space="preserve">
+    <value>Group parent</value>
+  </data>
+  <data name="DmNhom_NhomId" xml:space="preserve">
+    <value>Group id</value>
+  </data>
+  <data name="DmNhom_SoluotXem" xml:space="preserve">
+    <value>Viewed</value>
+  </data>
+  <data name="DmNhom_TenNhom" xml:space="preserve">
+    <value>Group name</value>
+  </data>
+  <data name="DmNhom_TinhtrangId" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Doitac_Code" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="Doitac_NhomDoiTacId" xml:space="preserve">
+    <value>Group </value>
+  </data>
+  <data name="Doitac_Ten" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Doitac_TenVietTat" xml:space="preserve">
+    <value>Short name</value>
+  </data>
+  <data name="Domain_EndDate" xml:space="preserve">
+    <value>End date</value>
+  </data>
+  <data name="Domain_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Domain_StartDate" xml:space="preserve">
+    <value>Start date</value>
+  </data>
+  <data name="Download_Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="Download_Anh" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="Download_Link" xml:space="preserve">
+    <value>Link</value>
+  </data>
+  <data name="Download_Mota" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Download_nhom" xml:space="preserve">
+    <value>Group document</value>
+  </data>
+  <data name="Download_Ten" xml:space="preserve">
+    <value>Download name</value>
+  </data>
+  <data name="Download_TinhtrangId" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Duan_Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="Duan_Anh" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="Duan_Code" xml:space="preserve">
+    <value>Projects code </value>
+  </data>
+  <data name="Duan_FriendlyUrl" xml:space="preserve">
+    <value>Friendly url</value>
+  </data>
+  <data name="Duan_MetaDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Duan_MetaKeyword" xml:space="preserve">
+    <value>Keyword</value>
+  </data>
+  <data name="Duan_MetaTitle" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="Duan_NoiDung" xml:space="preserve">
+    <value>Content</value>
+  </data>
+  <data name="Duan_Ten" xml:space="preserve">
+    <value>Projects name</value>
+  </data>
+  <data name="Duan_TinhtrangId" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Duan_Tomtat" xml:space="preserve">
+    <value>Summary</value>
+  </data>
+  <data name="EditUnsuccessful" xml:space="preserve">
+    <value>Unsuccessful !</value>
+  </data>
+  <data name="EmailTracking_CountOpen" xml:space="preserve">
+    <value>Count open</value>
+  </data>
+  <data name="EmailTracking_NtnGui" xml:space="preserve">
+    <value>Sent date</value>
+  </data>
+  <data name="EmailTracking_NtnOpen" xml:space="preserve">
+    <value>Open date</value>
+  </data>
+  <data name="ErrorMaxLength100" xml:space="preserve">
+    <value>Max length is 100 character</value>
+  </data>
+  <data name="ErrorMaxLength1000" xml:space="preserve">
+    <value>Max lengh 1000</value>
+  </data>
+  <data name="ErrorMaxLength200" xml:space="preserve">
+    <value>Max length is 200 character</value>
+  </data>
+  <data name="ErrorMaxLength2000" xml:space="preserve">
+    <value>Max length is 2000 character</value>
+  </data>
+  <data name="ErrorMaxLength25" xml:space="preserve">
+    <value>Max length is 25 character </value>
+  </data>
+  <data name="ErrorMaxLength255" xml:space="preserve">
+    <value>Max length is 255 character</value>
+  </data>
+  <data name="FaAccount_CountAddFriend" xml:space="preserve">
+    <value>Count add friend</value>
+  </data>
+  <data name="FaAccount_CountNews" xml:space="preserve">
+    <value>Count news</value>
+  </data>
+  <data name="FaAccount_CountNewsFirst" xml:space="preserve">
+    <value>Count news first</value>
+  </data>
+  <data name="FaAccount_CountScroll" xml:space="preserve">
+    <value>Count scroll</value>
+  </data>
+  <data name="FaAccount_IsAddFriend" xml:space="preserve">
+    <value>Add friend</value>
+  </data>
+  <data name="FaAccount_IsCheckIn" xml:space="preserve">
+    <value>Check in</value>
+  </data>
+  <data name="FaAccount_IsComment" xml:space="preserve">
+    <value> Comment</value>
+  </data>
+  <data name="FaAccount_IsLike" xml:space="preserve">
+    <value>Like</value>
+  </data>
+  <data name="FaAccount_IsLikeFanPage" xml:space="preserve">
+    <value>Like fan page</value>
+  </data>
+  <data name="FaAccount_IsPostImg" xml:space="preserve">
+    <value>Post img</value>
+  </data>
+  <data name="FaAccount_IsPostText" xml:space="preserve">
+    <value>Post text</value>
+  </data>
+  <data name="FaAccount_IsPostVideo" xml:space="preserve">
+    <value>Post video</value>
+  </data>
+  <data name="FaAccount_IsRate" xml:space="preserve">
+    <value>Is rate</value>
+  </data>
+  <data name="FaAccount_IsShare" xml:space="preserve">
+    <value>Share</value>
+  </data>
+  <data name="FaAccount_MinutesPost" xml:space="preserve">
+    <value>Minutes post</value>
+  </data>
+  <data name="FaAccount_PassFaceBook" xml:space="preserve">
+    <value>Pass faceBook</value>
+  </data>
+  <data name="FaAccount_TimerActive" xml:space="preserve">
+    <value>Timer active</value>
+  </data>
+  <data name="FaAccount_UserCreated" xml:space="preserve">
+    <value>User created</value>
+  </data>
+  <data name="FaAccount_UserFaceBook" xml:space="preserve">
+    <value>User faceBook</value>
+  </data>
+  <data name="FaComment_Comment" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="FaComment_CreationDate" xml:space="preserve">
+    <value>Creation date</value>
+  </data>
+  <data name="FaFanPageOfUsers_DelayTime" xml:space="preserve">
+    <value>Delay time</value>
+  </data>
+  <data name="FaFanPageOfUsers_FanPagesId" xml:space="preserve">
+    <value>Id fan pages </value>
+  </data>
+  <data name="FaFanPageOfUsers_LimitFirst" xml:space="preserve">
+    <value>Limit First</value>
+  </data>
+  <data name="FaFanPageOfUsers_LimitPost" xml:space="preserve">
+    <value>Limit posts</value>
+  </data>
+  <data name="FaFanPageOfUsers_Link" xml:space="preserve">
+    <value>Link fan page</value>
+  </data>
+  <data name="FaFanPageOfUsers_Name" xml:space="preserve">
+    <value>Name your fanpage</value>
+  </data>
+  <data name="FaFanPage_CreationDate" xml:space="preserve">
+    <value>Creation date</value>
+  </data>
+  <data name="FaFanPage_Id" xml:space="preserve">
+    <value>Id fan page</value>
+  </data>
+  <data name="FaFanPage_Link" xml:space="preserve">
+    <value>Link</value>
+  </data>
+  <data name="FaFanPage_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="FaFanPage_Rate" xml:space="preserve">
+    <value>Rate</value>
+  </data>
+  <data name="FaFanPage_Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="FaNews_CreationDate" xml:space="preserve">
+    <value>Creation date</value>
+  </data>
+  <data name="FaNews_IdFanPagesOfUser" xml:space="preserve">
+    <value>Id fan pages user</value>
+  </data>
+  <data name="FaNews_IdOfNews" xml:space="preserve">
+    <value>Id of news</value>
+  </data>
+  <data name="FaNews_Images" xml:space="preserve">
+    <value>Link Image</value>
+  </data>
+  <data name="FaNews_LinkFanPages" xml:space="preserve">
+    <value>Link fan pages</value>
+  </data>
+  <data name="FaNews_LinkNews" xml:space="preserve">
+    <value>Link news</value>
+  </data>
+  <data name="FaNews_News" xml:space="preserve">
+    <value>News</value>
+  </data>
+  <data name="FaPosts_CheckIn" xml:space="preserve">
+    <value>Check in</value>
+  </data>
+  <data name="FaPosts_CreationDate" xml:space="preserve">
+    <value>Creation date</value>
+  </data>
+  <data name="FaPosts_Images" xml:space="preserve">
+    <value>Images</value>
+  </data>
+  <data name="FaPosts_IsColor" xml:space="preserve">
+    <value>Color</value>
+  </data>
+  <data name="FaPosts_Post" xml:space="preserve">
+    <value>Post</value>
+  </data>
+  <data name="Gallery_Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="Gallery_Anh" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="Gallery_Link" xml:space="preserve">
+    <value>Link</value>
+  </data>
+  <data name="Gallery_Mota" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Gallery_Ten" xml:space="preserve">
+    <value>Gallery name</value>
+  </data>
+  <data name="Gallery_TinhtrangId" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Html_Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="Html_Anh" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="Html_Chantimkiem" xml:space="preserve">
+    <value>Block search</value>
+  </data>
+  <data name="Html_FriendlyUrl" xml:space="preserve">
+    <value>Friendly url</value>
+  </data>
+  <data name="Html_Html" xml:space="preserve">
+    <value>Html</value>
+  </data>
+  <data name="Html_MetaDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Html_MetaKeyword" xml:space="preserve">
+    <value>Keyword</value>
+  </data>
+  <data name="Html_MetaTitle" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="Html_Morelink" xml:space="preserve">
+    <value>More link</value>
+  </data>
+  <data name="Html_Noibat" xml:space="preserve">
+    <value>Highlights</value>
+  </data>
+  <data name="Html_NtnDen" xml:space="preserve">
+    <value>To date</value>
+  </data>
+  <data name="Html_NtnTu" xml:space="preserve">
+    <value>From date</value>
+  </data>
+  <data name="Html_SoluotXem" xml:space="preserve">
+    <value>Viewed</value>
+  </data>
+  <data name="Html_Tag" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="Html_Ten" xml:space="preserve">
+    <value>Html name</value>
+  </data>
+  <data name="Html_Tieude" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="Html_Tieudiem" xml:space="preserve">
+    <value>Focus</value>
+  </data>
+  <data name="Html_TinhtrangId" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Language_Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="Language_Code" xml:space="preserve">
+    <value>Language Code</value>
+  </data>
+  <data name="Language_Ten" xml:space="preserve">
+    <value>Language name</value>
+  </data>
+  <data name="Language_TinhtrangId" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="LAuthorities" xml:space="preserve">
+    <value>Authorities</value>
+  </data>
+  <data name="LBasic" xml:space="preserve">
+    <value>Basic</value>
+  </data>
+  <data name="LChoose" xml:space="preserve">
+    <value>----Choose----</value>
+  </data>
+  <data name="LConfigure" xml:space="preserve">
+    <value>Configure</value>
+  </data>
+  <data name="LContent" xml:space="preserve">
+    <value>Content</value>
+  </data>
+  <data name="LDactinh1" xml:space="preserve">
+    <value>Feature 1</value>
+  </data>
+  <data name="LDactinh2" xml:space="preserve">
+    <value>Feature  2</value>
+  </data>
+  <data name="LDescribe" xml:space="preserve">
+    <value>Describe</value>
+  </data>
+  <data name="LDetail" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="LDoYouWantToDelete" xml:space="preserve">
+    <value>Do you want to delete ?</value>
+  </data>
+  <data name="LExtend" xml:space="preserve">
+    <value>Extend</value>
+  </data>
+  <data name="LFeatures" xml:space="preserve">
+    <value>Features</value>
+  </data>
+  <data name="LImage" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="Link_Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="Link_Noidung" xml:space="preserve">
+    <value>Content</value>
+  </data>
+  <data name="Link_SoluotXem" xml:space="preserve">
+    <value>Viewed</value>
+  </data>
+  <data name="Link_Tieude" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="Link_TinhtrangId" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Link_Url" xml:space="preserve">
+    <value>Url</value>
+  </data>
+  <data name="ListConfirmCopy" xml:space="preserve">
+    <value>Do you want Copy Record ?</value>
+  </data>
+  <data name="ListConfirmDelete" xml:space="preserve">
+    <value>Do you want Delete Record ?</value>
+  </data>
+  <data name="ListFormatDatetime" xml:space="preserve">
+    <value>{0:MM/dd/yyyy h:mm:ss tt}</value>
+  </data>
+  <data name="ListItemsPerPage" xml:space="preserve">
+    <value>items per page</value>
+  </data>
+  <data name="ListNoItemsSelected" xml:space="preserve">
+    <value>Chưa có bản ghi nào được chọn !</value>
+  </data>
+  <data name="ListStatus404" xml:space="preserve">
+    <value>404</value>
+  </data>
+  <data name="ListStatusNotificationError" xml:space="preserve">
+    <value>error</value>
+  </data>
+  <data name="ListStatusNotificationInfo" xml:space="preserve">
+    <value>info</value>
+  </data>
+  <data name="ListTitleAmProduces" xml:space="preserve">
+    <value>Produces Amazon</value>
+  </data>
+  <data name="ListTitleBienSoanTin" xml:space="preserve">
+    <value>Edit news</value>
+  </data>
+  <data name="ListTitleCategory" xml:space="preserve">
+    <value>Category Amazon</value>
+  </data>
+  <data name="ListTitleChiendich" xml:space="preserve">
+    <value>Campaing</value>
+  </data>
+  <data name="ListTitleCongviec" xml:space="preserve">
+    <value>Major</value>
+  </data>
+  <data name="ListTitleContact" xml:space="preserve">
+    <value>Contacts</value>
+  </data>
+  <data name="ListTitleControl" xml:space="preserve">
+    <value>Control</value>
+  </data>
+  <data name="ListTitleCustomer" xml:space="preserve">
+    <value>Customer</value>
+  </data>
+  <data name="ListTitleCustomerGroup" xml:space="preserve">
+    <value>Customer group</value>
+  </data>
+  <data name="ListTitleDmNhomAnh" xml:space="preserve">
+    <value>Group gallery</value>
+  </data>
+  <data name="ListTitleDmNhomFAQ" xml:space="preserve">
+    <value>List FAQ</value>
+  </data>
+  <data name="ListTitleDmNhomHtml" xml:space="preserve">
+    <value>Group html</value>
+  </data>
+  <data name="ListTitleDmNhomTaiLieu" xml:space="preserve">
+    <value>Group document </value>
+  </data>
+  <data name="ListTitleDmNhomVideo" xml:space="preserve">
+    <value>Group video</value>
+  </data>
+  <data name="ListTitleDomain" xml:space="preserve">
+    <value>Domain</value>
+  </data>
+  <data name="ListTitleDuan" xml:space="preserve">
+    <value>Projects</value>
+  </data>
+  <data name="ListTitleEmailConfig" xml:space="preserve">
+    <value>Email config</value>
+  </data>
+  <data name="ListTitleEmailReplace" xml:space="preserve">
+    <value>Email replace</value>
+  </data>
+  <data name="ListTitleFaComment" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="ListTitleFaFanPage" xml:space="preserve">
+    <value>Fan Page</value>
+  </data>
+  <data name="ListTitleFaFanPageAddAu" xml:space="preserve">
+    <value>Fanpage Add Auto</value>
+  </data>
+  <data name="ListTitleFaFanPagesGetInfor" xml:space="preserve">
+    <value>Fanpages get infor</value>
+  </data>
+  <data name="ListTitleFaFanPagesOfUsers" xml:space="preserve">
+    <value>Fan Pages Of Users</value>
+  </data>
+  <data name="ListTitleFaNews" xml:space="preserve">
+    <value>News</value>
+  </data>
+  <data name="ListTitleFaPosts" xml:space="preserve">
+    <value>Posts</value>
+  </data>
+  <data name="ListTitleFAQ" xml:space="preserve">
+    <value>FAQ</value>
+  </data>
+  <data name="ListTitleGallery" xml:space="preserve">
+    <value>Gallery</value>
+  </data>
+  <data name="ListTitleHTML" xml:space="preserve">
+    <value>HTML</value>
+  </data>
+  <data name="ListTitleLanguage" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="ListTitleLink" xml:space="preserve">
+    <value>U Link</value>
+  </data>
+  <data name="ListTitleLogTask" xml:space="preserve">
+    <value>Log Task</value>
+  </data>
+  <data name="ListTitleMenu" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="ListTitleNDuan" xml:space="preserve">
+    <value>Projects group</value>
+  </data>
+  <data name="ListTitleNGallery" xml:space="preserve">
+    <value>Gallery group</value>
+  </data>
+  <data name="ListTitleNhomDoiTac" xml:space="preserve">
+    <value>Grop customer</value>
+  </data>
+  <data name="ListTitleNhomRight" xml:space="preserve">
+    <value>Group Right</value>
+  </data>
+  <data name="ListTitlePortal" xml:space="preserve">
+    <value>Portal</value>
+  </data>
+  <data name="ListTitleQuytrinh" xml:space="preserve">
+    <value>Process</value>
+  </data>
+  <data name="ListTitleRight" xml:space="preserve">
+    <value>Right</value>
+  </data>
+  <data name="ListTitleSprint" xml:space="preserve">
+    <value>Sprint</value>
+  </data>
+  <data name="ListTitleTag" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="ListTitleTailieu" xml:space="preserve">
+    <value>Document</value>
+  </data>
+  <data name="ListTitleTask" xml:space="preserve">
+    <value>Task</value>
+  </data>
+  <data name="ListTitleTemplate" xml:space="preserve">
+    <value>Template</value>
+  </data>
+  <data name="ListTitleTinChuyenMuc" xml:space="preserve">
+    <value>Categories news</value>
+  </data>
+  <data name="ListTitleTrangthai" xml:space="preserve">
+    <value>Combo</value>
+  </data>
+  <data name="ListTitleUpc" xml:space="preserve">
+    <value>UPC</value>
+  </data>
+  <data name="ListTitleUser" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="ListSuccessful" xml:space="preserve">
+    <value>Successful !</value>
+  </data>
+  <data name="ListUnsuccessful" xml:space="preserve">
+    <value>Unsuccessful !</value>
+  </data>
+  <data name="LKeywordsearch" xml:space="preserve">
+    <value>Keyword search</value>
+  </data>
+  <data name="LNoItemsSelected" xml:space="preserve">
+    <value>No items selected !</value>
+  </data>
+  <data name="LogTask_Code" xml:space="preserve">
+    <value>Code log task </value>
+  </data>
+  <data name="LogTask_Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="LogTask_Detail" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="LogTask_SpentTime" xml:space="preserve">
+    <value>Spent Time</value>
+  </data>
+  <data name="LPublish" xml:space="preserve">
+    <value>Publish</value>
+  </data>
+  <data name="LSearchTerms" xml:space="preserve">
+    <value>Search Terms</value>
+  </data>
+  <data name="LSEO" xml:space="preserve">
+    <value>SEO</value>
+  </data>
+  <data name="LSummary" xml:space="preserve">
+    <value>Summary</value>
+  </data>
+  <data name="LUnsuccessful" xml:space="preserve">
+    <value>Your action unsuccessful !</value>
+  </data>
+  <data name="LYouAreNotAllowedToCreate" xml:space="preserve">
+    <value>You are not allowed to create!</value>
+  </data>
+  <data name="LYouAreNotAllowedToDelete" xml:space="preserve">
+    <value>You are not allowed to delete !</value>
+  </data>
+  <data name="LYouAreNotAllowedToEdit" xml:space="preserve">
+    <value>You are not allowed to edit !</value>
+  </data>
+  <data name="Menu_Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="Menu_Code" xml:space="preserve">
+    <value>Menu code</value>
+  </data>
+  <data name="Menu_FriendlyUrl" xml:space="preserve">
+    <value>Friendly url</value>
+  </data>
+  <data name="Menu_HelpUrl" xml:space="preserve">
+    <value>Help url</value>
+  </data>
+  <data name="Menu_ImageIndex" xml:space="preserve">
+    <value>Image index</value>
+  </data>
+  <data name="Menu_IsCreateIcon" xml:space="preserve">
+    <value>Icon</value>
+  </data>
+  <data name="Menu_IsDesktop" xml:space="preserve">
+    <value>Desktop</value>
+  </data>
+  <data name="Menu_IsFirstGroup" xml:space="preserve">
+    <value>First Group</value>
+  </data>
+  <data name="Menu_IsLock" xml:space="preserve">
+    <value>Lock</value>
+  </data>
+  <data name="Menu_IsMobile" xml:space="preserve">
+    <value>Mobile</value>
+  </data>
+  <data name="Menu_IsReport" xml:space="preserve">
+    <value>Report</value>
+  </data>
+  <data name="Menu_IsWeb" xml:space="preserve">
+    <value>Web</value>
+  </data>
+  <data name="Menu_LinkUrl" xml:space="preserve">
+    <value>LinkUrl</value>
+  </data>
+  <data name="Menu_MetaDescription" xml:space="preserve">
+    <value>Meta description</value>
+  </data>
+  <data name="Menu_MetaKeyword" xml:space="preserve">
+    <value>Meta keyword</value>
+  </data>
+  <data name="Menu_MetaTitle" xml:space="preserve">
+    <value>Meta title</value>
+  </data>
+  <data name="Menu_order" xml:space="preserve">
+    <value>Menu order</value>
+  </data>
+  <data name="Menu_ParentId" xml:space="preserve">
+    <value>ParentId</value>
+  </data>
+  <data name="Menu_RouteUrl" xml:space="preserve">
+    <value>RouteUrl</value>
+  </data>
+  <data name="Menu_Ten" xml:space="preserve">
+    <value>Menu name</value>
+  </data>
+  <data name="Menu_TenViettat" xml:space="preserve">
+    <value>Short name</value>
+  </data>
+  <data name="Menu_TinhtrangId" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="NDuan_Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="NDuan_Anh" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="NDuan_FriendlyUrl" xml:space="preserve">
+    <value>Friendly url</value>
+  </data>
+  <data name="NDuan_MetaDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="NDuan_MetaKeyword" xml:space="preserve">
+    <value>Keyword</value>
+  </data>
+  <data name="NDuan_MetaTitle" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="NDuan_NoiBat" xml:space="preserve">
+    <value>Highlights</value>
+  </data>
+  <data name="NDuan_NoiDung" xml:space="preserve">
+    <value>Content</value>
+  </data>
+  <data name="NDuan_NThoiGian" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="NDuan_NTienDo" xml:space="preserve">
+    <value>Progress</value>
+  </data>
+  <data name="NDuan_Tag" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="NDuan_Ten" xml:space="preserve">
+    <value>Group project name</value>
+  </data>
+  <data name="NDuan_TinhtrangId" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="NDuan_Tomtat" xml:space="preserve">
+    <value>Summary</value>
+  </data>
+  <data name="Ngallery_Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="Ngallery_Anh" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="Ngallery_Chantimkiem" xml:space="preserve">
+    <value>Block search</value>
+  </data>
+  <data name="Ngallery_FriendlyUrl" xml:space="preserve">
+    <value>Friendlu url</value>
+  </data>
+  <data name="Ngallery_MetaDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Ngallery_MetaKeyword" xml:space="preserve">
+    <value>Keyword</value>
+  </data>
+  <data name="Ngallery_MetaTitle" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="Ngallery_Mota" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Ngallery_Noibat" xml:space="preserve">
+    <value>Highlights</value>
+  </data>
+  <data name="Ngallery_SoluotXem" xml:space="preserve">
+    <value>Viewed</value>
+  </data>
+  <data name="Ngallery_TagId" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="Ngallery_Template" xml:space="preserve">
+    <value>Template</value>
+  </data>
+  <data name="Ngallery_Tieudiem" xml:space="preserve">
+    <value>Focus</value>
+  </data>
+  <data name="Ngallery_TinhtrangId" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="NhomDoiTac_Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="NhomDoiTac_TinhtrangId" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="NhomRight_Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="NhomRight_Ten" xml:space="preserve">
+    <value>Tên</value>
+  </data>
+  <data name="NhomRight_TinhtrangId" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Nhom_Download" xml:space="preserve">
+    <value>Group download</value>
+  </data>
+  <data name="Nhom_video" xml:space="preserve">
+    <value>Group video</value>
+  </data>
+  <data name="Nsd_AccAmazon" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="Nsd_Capdo" xml:space="preserve">
+    <value>Level</value>
+  </data>
+  <data name="Nsd_CapdoGan" xml:space="preserve">
+    <value>Assign level</value>
+  </data>
+  <data name="Nsd_CapdoXem" xml:space="preserve">
+    <value>View level</value>
+  </data>
+  <data name="Nsd_ChucDanh" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="Nsd_Chuky" xml:space="preserve">
+    <value>Sign</value>
+  </data>
+  <data name="Nsd_Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Nsd_EndDate" xml:space="preserve">
+    <value>End Date</value>
+  </data>
+  <data name="Nsd_Fax" xml:space="preserve">
+    <value>Fax </value>
+  </data>
+  <data name="Nsd_IpAddress" xml:space="preserve">
+    <value>IP address</value>
+  </data>
+  <data name="Nsd_IsChangePassword" xml:space="preserve">
+    <value>Change password</value>
+  </data>
+  <data name="Nsd_Mobile" xml:space="preserve">
+    <value>Mobiphone</value>
+  </data>
+  <data name="Nsd_NtnDangnhap" xml:space="preserve">
+    <value>Assign level</value>
+  </data>
+  <data name="Nsd_PassAmazon" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Nsd_Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Nsd_Password1" xml:space="preserve">
+    <value>Password 1</value>
+  </data>
+  <data name="Nsd_Sky" xml:space="preserve">
+    <value>Sky</value>
+  </data>
+  <data name="Nsd_StartDate" xml:space="preserve">
+    <value>Start Date</value>
+  </data>
+  <data name="Nsd_Tel" xml:space="preserve">
+    <value>Telephone</value>
+  </data>
+  <data name="Nsd_HoTen" xml:space="preserve">
+    <value>Full name</value>
+  </data>
+  <data name="Nsd_TenNsd" xml:space="preserve">
+    <value>Full user name</value>
+  </data>
+  <data name="Nsd_Username" xml:space="preserve">
+    <value>User name</value>
+  </data>
+  <data name="NTimeNotification" xml:space="preserve">
+    <value>10000</value>
+  </data>
+  <data name="Portal_Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="Portal_FaceBook" xml:space="preserve">
+    <value>FaceBook</value>
+  </data>
+  <data name="Portal_Feed" xml:space="preserve">
+    <value>Feed</value>
+  </data>
+  <data name="Portal_GoogleAnalytics" xml:space="preserve">
+    <value>Google Analytics</value>
+  </data>
+  <data name="Portal_GooglePlus" xml:space="preserve">
+    <value>Google +</value>
+  </data>
+  <data name="Portal_GoogleWebmasters" xml:space="preserve">
+    <value>Google Webmasters</value>
+  </data>
+  <data name="Portal_Linkedin" xml:space="preserve">
+    <value>Linked In</value>
+  </data>
+  <data name="Portal_Pinterest" xml:space="preserve">
+    <value>Pinterest</value>
+  </data>
+  <data name="Portal_Ten" xml:space="preserve">
+    <value>Portal name</value>
+  </data>
+  <data name="Portal_TenViettat" xml:space="preserve">
+    <value>Short name</value>
+  </data>
+  <data name="Portal_TinhtrangId" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Portal_Twitter" xml:space="preserve">
+    <value>Twitter</value>
+  </data>
+  <data name="Portal_Youtobe" xml:space="preserve">
+    <value>Youtobe</value>
+  </data>
+  <data name="Qtnv_ChiTiet" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="Qtnv_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Qtnv_PhanTram" xml:space="preserve">
+    <value>%</value>
+  </data>
+  <data name="RegularEmailFill" xml:space="preserve">
+    <value>Invalid email</value>
+  </data>
+  <data name="RequiredFill" xml:space="preserve">
+    <value>Please fill out this field.</value>
+  </data>
+  <data name="SaveAndAdd" xml:space="preserve">
+    <value>Save and add</value>
+  </data>
+  <data name="Sprint_Code" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="Sprint_EndDate" xml:space="preserve">
+    <value>End Date</value>
+  </data>
+  <data name="Sprint_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Sprint_StartDate" xml:space="preserve">
+    <value>Start Date</value>
+  </data>
+  <data name="StringLengthFill" xml:space="preserve">
+    <value>Please enter a minimum of 6 characters.</value>
+  </data>
+  <data name="TabBasic" xml:space="preserve">
+    <value>Basic</value>
+  </data>
+  <data name="Tag_Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="Tag_TinhtrangId" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Task_Code" xml:space="preserve">
+    <value>Code task</value>
+  </data>
+  <data name="TinTuc_Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="TinTuc_Anh" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="TinTuc_Banquyen" xml:space="preserve">
+    <value>License</value>
+  </data>
+  <data name="TinTuc_FriendlyUrl" xml:space="preserve">
+    <value>Friendly url</value>
+  </data>
+  <data name="TinTuc_Lienket" xml:space="preserve">
+    <value>Link</value>
+  </data>
+  <data name="TinTuc_Lienquan" xml:space="preserve">
+    <value>Related news</value>
+  </data>
+  <data name="TinTuc_MetaDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="TinTuc_MetaKeyword" xml:space="preserve">
+    <value>Keyword</value>
+  </data>
+  <data name="TinTuc_MetaTitle" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="TinTuc_Nguontin" xml:space="preserve">
+    <value>Sources</value>
+  </data>
+  <data name="TinTuc_Noibat" xml:space="preserve">
+    <value>Highlights</value>
+  </data>
+  <data name="TinTuc_Noidung" xml:space="preserve">
+    <value>Content</value>
+  </data>
+  <data name="TinTuc_Photo" xml:space="preserve">
+    <value>Photo</value>
+  </data>
+  <data name="TinTuc_SoluotXem" xml:space="preserve">
+    <value>Viewed</value>
+  </data>
+  <data name="TinTuc_SoluotYkien" xml:space="preserve">
+    <value>reviews</value>
+  </data>
+  <data name="TinTuc_Tacgia" xml:space="preserve">
+    <value>Author</value>
+  </data>
+  <data name="TinTuc_Tag" xml:space="preserve">
+    <value>Tag</value>
+  </data>
+  <data name="TinTuc_TheloaiId" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="TinTuc_Thongbao" xml:space="preserve">
+    <value>Notification</value>
+  </data>
+  <data name="TinTuc_Tieude" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="TinTuc_Tieudiem" xml:space="preserve">
+    <value>Focus</value>
+  </data>
+  <data name="TinTuc_Tingoc" xml:space="preserve">
+    <value>Original news</value>
+  </data>
+  <data name="TinTuc_TinhtrangId" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="TinTuc_Tinnong" xml:space="preserve">
+    <value>Hot news</value>
+  </data>
+  <data name="TinTuc_Tomtat" xml:space="preserve">
+    <value>Summary</value>
+  </data>
+  <data name="TinTuc_TrangthaiId" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="TinTuc_Video" xml:space="preserve">
+    <value>Video</value>
+  </data>
+  <data name="TinTuc_Ykien" xml:space="preserve">
+    <value>Opinion</value>
+  </data>
+  <data name="Trangthai_Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="Trangthai_Nhom" xml:space="preserve">
+    <value>Status group</value>
+  </data>
+  <data name="Trangthai_Ten" xml:space="preserve">
+    <value>Status name</value>
+  </data>
+  <data name="Trangthai_TinhtrangId" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Upc_Code" xml:space="preserve">
+    <value>Code Upc</value>
+  </data>
+  <data name="Upc_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Video_Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="Video_Anh" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="Video_Chantimkiem" xml:space="preserve">
+    <value>Prevent search</value>
+  </data>
+  <data name="Video_Chatluong" xml:space="preserve">
+    <value>Quality</value>
+  </data>
+  <data name="Video_Dungluong" xml:space="preserve">
+    <value>Capacity</value>
+  </data>
+  <data name="Video_Filename" xml:space="preserve">
+    <value>File name</value>
+  </data>
+  <data name="Video_FriendlyUrl" xml:space="preserve">
+    <value>Friendly Url</value>
+  </data>
+  <data name="Video_Is_youtube" xml:space="preserve">
+    <value>Is youtobe</value>
+  </data>
+  <data name="Video_Mayoutube" xml:space="preserve">
+    <value>Youtobe code</value>
+  </data>
+  <data name="Video_MetaDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Video_MetaKeyword" xml:space="preserve">
+    <value>Keyword</value>
+  </data>
+  <data name="Video_MetaTitle" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="Video_Mota" xml:space="preserve">
+    <value>Describe</value>
+  </data>
+  <data name="Video_Noibat" xml:space="preserve">
+    <value>Featured</value>
+  </data>
+  <data name="Video_Noidung" xml:space="preserve">
+    <value>Content</value>
+  </data>
+  <data name="Video_Ntn_batdau" xml:space="preserve">
+    <value>Start date</value>
+  </data>
+  <data name="Video_Ntn_ketthuc" xml:space="preserve">
+    <value>End date</value>
+  </data>
+  <data name="Video_Soluotdownload" xml:space="preserve">
+    <value>Number of downloads</value>
+  </data>
+  <data name="Video_Soluot_xem" xml:space="preserve">
+    <value>Viewed</value>
+  </data>
+  <data name="Video_Tag" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="Video_Tap" xml:space="preserve">
+    <value>Episode</value>
+  </data>
+  <data name="Video_Ten" xml:space="preserve">
+    <value>Video name</value>
+  </data>
+  <data name="Video_Thoiluong" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="Video_Tieudiem" xml:space="preserve">
+    <value>Focus</value>
+  </data>
+  <data name="Video_TrangthaiId" xml:space="preserve">
+    <value>Status</value>
+  </data>
+</root>

@@ -1,0 +1,24 @@
+[
+   {
+      "IsUpdate":0,
+      "Id":0,
+      "NameFanPages":"Fanpage test 1",
+      "UserCreated":"",
+      "CreationDate":"2017-09-25T16:54:58.6688895+07:00",
+      "Note":"System auto add new Fanpage",
+      "Status":"pending",
+      "Active":true,
+	  "UserFaceBook":""
+   },
+   {
+      "IsUpdate":0,
+      "Id":0,
+      "NameFanPages":"Fanpage test 1",
+      "UserCreated":"",
+      "CreationDate":"2017-09-25T16:54:58.6688895+07:00",
+      "Note":"System auto add new Fanpage",
+      "Status":"pending",
+      "Active":false,
+	  "UserFaceBook":""
+   }
+]

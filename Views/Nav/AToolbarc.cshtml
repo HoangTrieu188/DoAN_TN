@@ -1,0 +1,25 @@
+﻿@model List<Gemini.Models._01_Hethong.SControlModel>
+
+    <div class="toolbar">
+        @(Html.Kendo().ToolBar()
+                                  .Name("Toolbarc")
+                                  .Items(items =>
+                                  {
+                                      foreach (var item in Model)
+                                      {
+                                          items.Add().Type(CommandType.Button).Text(@item.Name).SpriteCssClass(@item.SpriteCssClass).Url("javascript:Toolbarc_Click('" + @item.EventClick + "')").Id(@item.EventClick);
+                                      }
+
+                          })
+        )
+    </div>
+    <style>
+        .toolbar {
+            width: 100%;
+            border: none;
+            margin: 0px;
+            padding: 0px;
+            margin-top: 0px;
+        }
+    </style>
+

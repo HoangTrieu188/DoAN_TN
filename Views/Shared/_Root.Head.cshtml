@@ -1,0 +1,314 @@
+﻿<!DOCTYPE html>
+<!--[if IE 8 ]><html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="vi-VN" lang="vi-VN">
+<!--<![endif]-->
+<head>
+    <!-- Basic Page Needs -->
+    <meta charset="utf-8">
+    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+    <title>@ViewBag.Title</title>
+    <meta name="description" content="@ViewBag.Description">
+    <meta property="og:title" content="@ViewBag.Title" />
+    <meta property="og:description" content="@ViewBag.Description" />
+    <meta property="og:image" content="@ViewBag.Image" />
+    <meta property="og:locale" content="vi_VN" />
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <link rel='stylesheet' href='/assets/theme/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='/assets/theme/css/elegant-icons.css'>
+    <link rel='stylesheet' href='/assets/theme/css/font-awesome.min.css'>
+    <link rel='stylesheet' href='/assets/theme/css/jquery-ui.min.css'>
+    <link rel='stylesheet' href='/assets/theme/css/nice-select.css'>
+    <link rel='stylesheet' href='/assets/theme/css/owl.carousel.min.css'>
+    <link rel='stylesheet' href='/assets/theme/css/slicknav.min.css'>
+    <link rel='stylesheet' href='/assets/theme/css/style.css'>
+    <!-- Sử dụng CDN -->
+    @{
+        var link1 = "https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css";
+        var link2 = "https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/carousel/carousel.css";
+        var link3 = "https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/carousel/carousel.thumbs.css";
+    }
+    <link rel='stylesheet' href='@link1'>
+    <link rel='stylesheet' href='@link2'>
+    <link rel='stylesheet' href='@link3'>
+</head>
+<body id="body" class="blog-page blog-post">
+    <script src="~/assets/theme/js/jquery-3.3.1.min.js"></script>
+    <script src="~/assets/theme/js/common.js"></script>
+    <script>
+        var sortBy = "newest";
+        var page = "page-1";
+
+        function loadSearchData() {
+            let url = "/tim-kiem?keyWord=" + $('#keyWord').val();
+            if (page && page.length > 0) {
+                url += "&page=" + page;
+            }
+            if (sortBy && sortBy.length > 0) {
+                url += "&sortBy=" + sortBy;
+            }
+            location.href = location.origin + url;
+        }
+
+        function loveProduce(guidProduce, username) {
+            if (username) {
+                var val = getCookie("loveProduce_" + username);
+                if (val && val.length > 0) {
+                    if (val.indexOf(guidProduce) > -1) {
+                        val = val.replace(guidProduce, "");
+                    }
+                    else {
+                        val += "," + guidProduce;
+                    }
+                }
+                else {
+                    val = guidProduce;
+                }
+
+                setCookie("loveProduce_" + username, val, 15);
+
+                loadLoveProduce(username);
+            }
+            else {
+                window.location.href = "/admin";
+            }
+        }
+
+        function loadLoveProduce(username) {
+            if (username) {
+                var lstProduce = $('.liProduce');
+                for (var i = 0; i < lstProduce.length; i++) {
+                    lstProduce[i].classList.remove("featured__item__pic__hovered");
+                }
+
+                var count = 0;
+
+                var val = getCookie("loveProduce_" + username);
+
+                if (val && val.length > 0) {
+                    var lstGuidProduce = val.split(",");
+
+                    if (lstGuidProduce && lstGuidProduce.length > 0) {
+                        for (var i = 0; i < lstGuidProduce.length; i++) {
+                            var guidProduce = lstGuidProduce[i];
+
+                            if (guidProduce && guidProduce.length > 0) {
+                                var aTag = $('#' + guidProduce);
+                                if (aTag && aTag.length > 0) {
+                                    var li = aTag[0].parentNode;
+                                    li.classList.add("featured__item__pic__hovered");
+                                }
+
+                                count++;
+                            }
+                        }
+                    }
+                }
+
+                $('.header__cart > ul > li > .tin__da__luu > span').html(count);
+                $('.humberger__menu__cart > ul > li > .tin__da__luu > span').html(count);
+            }
+        }
+
+        function followUser(guidUser, username) {
+            if (username) {
+                var data = "guidUser=" + guidUser;
+                $.post('@Url.Action("FollowUser", "HomeCommon")', data, function (dataResponse) {
+                    if (dataResponse.url) {
+                        location.href = location.origin + dataResponse.url;
+                    }
+                    else {
+                        if (dataResponse.StatusCode == 200) {
+                            loadFollowUser(username);
+                        } else {
+                            $('#follow-fail').show();
+                        }
+                    }
+                });
+            }
+            else {
+                window.location.href = "/admin";
+            }
+        }
+
+        function loadFollowUser(username) {
+            if (username) {
+                var lstFollow = $('.liFollow');
+                for (var i = 0; i < lstFollow.length; i++) {
+                    lstFollow[i].classList.remove("featured__item__pic__hovered");
+                    var aTag = lstFollow[i].getElementsByTagName('a');
+                    if (aTag && aTag.length > 0) {
+                        $('#' + aTag[0].id).html('<i class="fa fa-plus" style="top: -4px"> Theo dõi</i>');
+                        $('#' + aTag[0].id).attr('title', 'Theo dõi');
+                    }
+                }
+
+                $.post('@Url.Action("GetFollowUser", "HomeCommon")', {}, function (dataResponse) {
+                    if (dataResponse.guidFollow && dataResponse.guidFollow.length > 0) {
+                        var val = dataResponse.guidFollow;
+
+                        if (val && val.length > 0) {
+                            var lstGuidFollow = val.split(",");
+
+                            if (lstGuidFollow && lstGuidFollow.length > 0) {
+                                for (var i = 0; i < lstGuidFollow.length; i++) {
+                                    var guidFol = lstGuidFollow[i];
+
+                                    if (guidFol && guidFol.length > 0) {
+                                        var aTag = $('#' + guidFol);
+                                        if (aTag && aTag.length > 0) {
+                                            aTag.html('<i class="fa fa-check" style="top: -4px"> Đang theo dõi</i>');
+                                            aTag.attr('title', 'Đang theo dõi');
+                                            var li = aTag[0].parentNode;
+                                            li.classList.add("featured__item__pic__hovered");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        var isShowLiveChat = false;
+
+        function onLiveChat(username) {
+            if (username) {
+                isShowLiveChat = true;
+
+                $('#miniLiveChat').hide();
+                $('#LiveChat').show();
+            }
+            else {
+                window.location.href = "/admin";
+            }
+        }
+
+        function offLiveChat() {
+            isShowLiveChat = false;
+
+            $('#miniLiveChat').show();
+            $('#LiveChat').hide();
+        }
+
+        function cartProduce(guidProduce, username, qty, size, color) {
+            if (username) {
+                var vals = [];
+                var cookieCart = decodeURIComponent(atob(getCookie("cartProduce_" + username)));
+                if (cookieCart) {
+                    vals = JSON.parse(cookieCart);
+                }
+
+                var existVal = vals.find(x => x.GuidProduce == guidProduce);
+                console.log(existVal)
+                if (existVal) {
+                    let temp = parseInt(existVal.Quantity || 0) + parseInt(qty);
+                    existVal.Quantity = temp;
+                    existVal.Size = size;
+                    existVal.Color = color;
+                }
+                else {
+                    var val = {
+                        GuidProduce: guidProduce,
+                        Quantity: parseInt(qty),
+                        Size: size,
+                        Color: color
+                    };
+
+                    vals.push(val);
+                }
+                console.log(vals)
+                console.log(existVal)
+
+                setCookie("cartProduce_" + username, btoa(encodeURIComponent(JSON.stringify(vals))), 15);
+
+                loadCartProduce(username);
+
+                var x = document.getElementById("addCartSuccess");
+                x.className = "show";
+                setTimeout(function () {
+                    x.className = x.className.replace("show", "");
+                }, 1500);
+            }
+            else {
+                window.location.href = "/admin";
+            }
+        }
+
+        function loadCartProduce(username) {
+            var vals = [];
+            var cookieCart = decodeURIComponent(atob(getCookie("cartProduce_" + username)));
+            if (cookieCart) {
+                vals = JSON.parse(cookieCart);
+            }
+
+            var count = 0;
+
+            if (vals && vals.length > 0) {
+                for (var i = 0; i < vals.length; i++) {
+                    var itemProduce = vals[i];
+
+                    if (itemProduce && itemProduce.Quantity > 0) {
+                        count += itemProduce.Quantity;
+                    }
+                }
+            }
+
+            $('.header__cart > ul > li > .gio__hang > span').html(count);
+            $('.humberger__menu__cart > ul > li > .gio__hang > span').html(count);
+        }
+
+        function redirect(e, url) {
+            if (url && e.target.localName == "div") {
+                location.href = url;
+            }
+        }
+
+        function showSubMenu(guidMenu, id) {
+            if (!id) {
+                id = "submenu";
+            }
+            var subMenu = $("#" + id + "-" + guidMenu);
+            if (subMenu) {
+                subMenu.css({ "display": "block" });
+                subMenu.css({ "maxHeight": "unset" });
+            }
+        }
+
+        function hideSubMenu(guidMenu, id) {
+            if (!id) {
+                id = "submenu";
+            }
+            var subMenu = $("#" + id + "-" + guidMenu);
+            if (subMenu) {
+                subMenu.css({ "maxHeight": "0px" });
+            }
+
+            $('.submenu').css({ "maxHeight": "0px" });
+        }
+    </script>
+    <div id="addCartSuccess">Sản phẩm đã được thêm vào Giỏ hàng</div>
+    <div id="removeCartSuccess">Sản phẩm đã được xóa khỏi Giỏ hàng</div>
+    <div id="changePasswordSuccess">Đổi mật khẩu thành công</div>
+
+    @*<body class="body-color-blue" data-main-color="#0b2076">*@
+    @Html.Action("Header", "Homecommon")
+    @RenderBody()
+    @Html.Action("Footer", "Homecommon")
+    @Html.Action("PartialLiveChat", "Homecommon")
+
+    @Scripts.Render("~/bundles/themejs")
+    @{
+        var link4 = "https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js";
+        var link5 = "https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/carousel/carousel.umd.js";
+        var link6 = "https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/carousel/carousel.thumbs.umd.js";
+    }
+    <script src='@link4'></script>
+    <script src='@link5'></script>
+    <script src='@link6'></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

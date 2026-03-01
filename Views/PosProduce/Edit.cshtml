@@ -1,0 +1,687 @@
+﻿@model Gemini.Models._03_Pos.PosProduceModel
+@{
+    Layout = "~/Views/Shared/_FormList.cshtml";
+    bool isAdmin = ViewBag.IsAdmin;
+}
+
+@Html.Action("AToolbarItem", "Nav")
+
+<div class="k-edit-form-container" style=" overflow-x: hidden; ">
+    <form method="post" id="frmEdit" class="form-horizontal" role="form">
+        <div id="Tabs">
+            <ul>
+                <li class="k-state-active">@Html.Label(@Gemini.Resources.Resource.LBasic)</li>
+                <li>@Html.Label(@Gemini.Resources.Resource.LDescribe)</li>
+                <li>@Html.Label(@Gemini.Resources.Resource.LImage)</li>
+                @if (Model.IsUpdate == 1)
+                {
+                    <li>@Html.Label("Tồn kho")</li>
+                    <li>@Html.Label("QR Code")</li>
+                }
+            </ul>
+
+            @*Cơ bản*@
+        <div>
+            <div style="height: 0; overflow: hidden">
+                @Html.HiddenFor(model => model.Guid)
+                @Html.HiddenFor(model => model.IsUpdate)
+                @Html.HiddenFor(model => model.Legit)
+                @Html.HiddenFor(model => model.LegitCount)
+                <input type="hidden" id="hfLuuvathem" value="0" /><input type="hidden" id="hfExpand" value="0" />
+                <button type="submit" id="btnLuu" style="visibility: hidden"></button>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-2 col-md-2">
+                    @Html.LabelFor(m => m.Code)
+                </div>
+                <div class="col-sm-10 col-md-10">
+                    @Html.TextBoxFor(model => model.Code, new { @class = "k-textbox", @onchange = "Friendly_urlChange();" })
+                    <div>@Html.ValidationMessageFor(model => model.Code)</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-2 col-md-2">
+                    @Html.LabelFor(m => m.Name)
+                </div>
+                <div class="col-sm-4 col-md-4">
+                    @Html.TextBoxFor(model => model.Name, new { @class = "k-textbox", @onchange = "Friendly_urlChange();" })
+                    <div>@Html.ValidationMessageFor(model => model.Name)</div>
+                </div>
+                <div class="col-sm-2 col-md-2">
+                    @Html.LabelFor(m => m.GuidCategory)
+                </div>
+                <div class="col-sm-4 col-md-4">
+                    @(Html.Kendo().DropDownListFor(model => model.GuidCategory)
+                          .Name("GuidCategory")
+                          .HtmlAttributes(new { @class = "k-dropdown" })
+                          .HtmlAttributes(new { style = "width:100%;z-index:1;" })
+                          .Filter(FilterType.Contains).OptionLabel(@Gemini.Resources.Resource.LChoose)
+                          .DataTextField("Name")
+                          .DataValueField("Guid")
+                          .DataSource(source => source.Read(read => read.Action("PosCategory", "Combo")))
+                        )
+                    <div>@Html.ValidationMessageFor(model => model.GuidCategory)</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-2 col-md-2">
+                    @Html.LabelFor(m => m.Price)
+                </div>
+                <div class="col-sm-4 col-md-4">
+                    @Html.Kendo().NumericTextBoxFor(model => model.Price).HtmlAttributes(new { style = "width:100%;" }).Format("n0")
+                    <div>@Html.ValidationMessageFor(model => model.Price)</div>
+                </div>
+                <div class="col-sm-2 col-md-2">
+                    @Html.LabelFor(m => m.Unit)
+                </div>
+                <div class="col-sm-4 col-md-4">
+                    @Html.Kendo().TextBoxFor(model => model.Unit).HtmlAttributes(new { @class = "k-textbox", @Value = "VNĐ" })
+                    <div>@Html.ValidationMessageFor(model => model.Unit)</div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-sm-2 col-md-2">
+                    @Html.LabelFor(m => m.Size)
+                    <p style="color:red;">*Cách nhau bởi dấu ,</p>
+                </div>
+                <div class="col-sm-4 col-md-4">
+                    @Html.Kendo().TextBoxFor(model => model.Size).HtmlAttributes(new { style = "width:100%;", required = true })
+                    <div>@Html.ValidationMessageFor(model => model.Size)</div>
+                </div>
+                <div class="col-sm-2 col-md-2">
+                    @Html.LabelFor(m => m.Color)
+                    <p style="color:red;">*Cách nhau bởi dấu ,</p>
+                </div>
+                <div class="col-sm-4 col-md-4">
+                    @Html.Kendo().TextBoxFor(model => model.Color).HtmlAttributes(new { @class = "k-textbox", required = true })
+                    <div>@Html.ValidationMessageFor(model => model.Color)</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-2 col-md-2">
+                    @Html.LabelFor(m => m.Active)
+                </div>
+                <div class="col-sm-4 col-md-4">
+                    @Html.CheckBoxFor(model => model.Active)
+                    <div>@Html.ValidationMessageFor(model => model.Active)</div>
+                </div>
+                <div class="col-sm-2 col-md-2">
+                    @Html.LabelFor(m => m.HotProduce)
+                </div>
+                <div class="col-sm-4 col-md-4">
+                    @Html.CheckBoxFor(model => model.HotProduce)
+                    <div>@Html.ValidationMessageFor(model => model.HotProduce)</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-2 col-md-2">
+                    @Html.LabelFor(m => m.GuidBatch)
+                </div>
+                <div class="col-sm-4 col-md-4">
+                    @(Html.Kendo().DropDownListFor(model => model.GuidBatch)
+                          .Name("GuidBatch")
+                          .HtmlAttributes(new { @class = "k-dropdown" })
+                          .HtmlAttributes(new { style = "width:100%;z-index:1;" })
+                          .Filter(FilterType.Contains).OptionLabel(@Gemini.Resources.Resource.LChoose)
+                          .DataTextField("Name")
+                          .DataValueField("Guid")
+                          .DataSource(source => source.Read(read => read.Action("PosBatch", "Combo")))
+                        )
+                    <div>@Html.ValidationMessageFor(model => model.GuidBatch)</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-2 col-md-2">
+                    @Html.Label("Ghi chú:")
+                </div>
+            </div>
+            <div>
+                @(Html.Kendo().EditorFor(model => model.Note)
+                          .HtmlAttributes(new { style = "width: 100%;height:420px" })
+                          .Tools(tools => tools
+                              .Clear().Bold().Italic().Underline().Strikethrough().JustifyLeft().JustifyCenter().JustifyRight().JustifyFull()
+                              .InsertUnorderedList().InsertOrderedList().Outdent().Indent().CreateLink().Unlink()
+                              .InsertImage().InsertFile().SubScript().SuperScript().TableEditing().ViewHtml().Formatting().FontName()
+                              .FontSize().FontColor().BackColor()
+                          //.CustomButton(cb => cb.Name("Preview template").ToolTip("Preview template").Exec("Preview"))
+                          ).ImageBrowser(imageBrowser => imageBrowser
+                              .Image("~/Content/UserFiles/Others/{0}")
+                              .Read("Read", "ImageBrowser")
+                              .Create("Create", "ImageBrowser")
+                              //.Destroy("Destroy", "ImageBrowser")
+                              .Upload("Upload", "ImageBrowser")
+                              .Thumbnail("Thumbnail", "ImageBrowser"))
+                              .FileBrowser(fileBrowser => fileBrowser
+                              .File("~/Content/UserFiles/Others/{0}")
+                              .Read("Read", "FileBrowser")
+                              .Create("Create", "FileBrowser")
+                              //.Destroy("Destroy", "FileBrowser")
+                              .Upload("Upload", "FileBrowser")
+                          ))
+                <div>@Html.ValidationMessageFor(model => model.Note)</div>
+            </div>
+        </div>
+
+            @*Mô tả*@
+            <div>
+                @(Html.Kendo().EditorFor(model => model.Description)
+                      .HtmlAttributes(new { style = "width: 100%;height:420px" })
+                      .Tools(tools => tools
+                          .Clear().Bold().Italic().Underline().Strikethrough().JustifyLeft().JustifyCenter().JustifyRight().JustifyFull()
+                          .InsertUnorderedList().InsertOrderedList().Outdent().Indent().CreateLink().Unlink()
+                          .InsertImage().InsertFile().SubScript().SuperScript().TableEditing().ViewHtml().Formatting().FontName()
+                          .FontSize().FontColor().BackColor()
+                      //.CustomButton(cb => cb.Name("Preview template").ToolTip("Preview template").Exec("Preview"))
+                      ).ImageBrowser(imageBrowser => imageBrowser
+                          .Image("~/Content/UserFiles/Others/{0}")
+                          .Read("Read", "ImageBrowser")
+                          .Create("Create", "ImageBrowser")
+                          //.Destroy("Destroy", "ImageBrowser")
+                          .Upload("Upload", "ImageBrowser")
+                          .Thumbnail("Thumbnail", "ImageBrowser"))
+                          .FileBrowser(fileBrowser => fileBrowser
+                          .File("~/Content/UserFiles/Others/{0}")
+                          .Read("Read", "FileBrowser")
+                          .Create("Create", "FileBrowser")
+                          //.Destroy("Destroy", "FileBrowser")
+                          .Upload("Upload", "FileBrowser")
+                      ))
+            </div>
+
+            @*Ảnh*@
+            <div>
+                @(Html.Kendo().Grid<Gemini.Models._02_Cms.U.UGalleryModel>()
+                            .Name("grid")
+                            .Columns(columns =>
+                            {
+                                columns.Bound(p => p.Name).Width(60)
+                                    .ClientTemplate("# if (IsProduce == true) { #" + "<input class='chkbox' type='checkbox' checked/>" + "# } else { #" + "<input class='chkbox' type='checkbox'/>" + "# } #").Filterable(false).HeaderTemplate("<input type='checkbox' id='selectAll'  onclick='checkall()' />").Sortable(false);
+                                columns.Bound(p => p.Name).Width(145).Sortable(true).Filterable(ftb => ftb.Cell(cell => cell.Operator("contains")));
+                                columns.Bound(p => p.Image).Width(85).ClientTemplate("<img height='50px' width='85px' src='#:Image#'  alt='' align='middle' />").Filterable(false).Sortable(false);
+                            })
+                            .ToolBar(toolbar =>
+                            {
+                            toolbar.Template(@<text>
+                                                <div class="form-horizontal toolbar">
+                                                    <div class="col-md-3">
+                                                        <input type="file" name="File_path1" id="btnUpload" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-horizontal toolbar">
+                                                    <div class="col-md-3">
+                                                        <a class="k-button" id="btnDeleteImage" onclick="DeleteImage()"><i class="glyphicon glyphicon-log-out"></i> Delete Image</a>
+                                                    </div>
+                                                </div>
+                            </text>);
+                            })
+                            .Pageable(pageable => pageable.PageSizes(new[] { 5, 10, 20, 50, 100, 200, 500, 1000 }))
+                            .Sortable()
+                            .Scrollable()
+                            .Selectable()
+                            .Filterable(ftb => ftb.Mode(GridFilterMode.Row))
+                            .Navigatable()
+
+                            .Resizable(resize => resize.Columns(true))
+                            .DataSource(dataSource => dataSource
+                                .Ajax()
+                                .PageSize(1000)
+                                .ServerOperation(false)
+                                .Model(model => model.Id(p => p.Guid))
+                                .Read(read => read.Action("ReadProduce", "UGallery", new { guid = Model.Guid }))
+                                .Batch(false)
+                                .AutoSync(false)
+                            )
+                        //.Events(e => e.DataBound("grid_DataBound"))
+                        )
+            </div>
+
+            @if (Model.IsUpdate == 1)
+            {
+                @*Tồn kho*@
+                <div>
+                    <div class="form-horizontal toolbar" style="margin-bottom: 10px;">
+                        <div class="col-md-12">
+                            <button type="button" class="k-button k-primary" onclick="addInventoryRow()">
+                                <i class="glyphicon glyphicon-plus"></i> Thêm variant
+                            </button>
+                            <button type="button" class="k-button" onclick="saveInventory()">
+                                <i class="glyphicon glyphicon-floppy-disk"></i> Lưu tồn kho
+                            </button>
+                        </div>
+                    </div>
+                    
+                    @(Html.Kendo().Grid<Gemini.Models.PosInventory>()
+                        .Name("gridInventory")
+                        .Events(e => e.Edit("onGridEdit"))
+                        .Columns(columns =>
+                        {
+                            columns.Bound(p => p.Size).Title("Size").Width(150);
+                            columns.Bound(p => p.Color).Title("Màu sắc").Width(150);
+                            columns.Bound(p => p.Quantity).Title("Số lượng").Width(120).Format("{0:n0}");
+                            columns.Bound(p => p.UpdatedAt).Title("Cập nhật").Width(150).Format("{0:dd/MM/yyyy HH:mm}");
+                            columns.Command(command =>
+                            {
+                                command.Edit().Text("Sửa");
+                                command.Destroy().Text("Xóa");
+                            }).Width(180);
+                        })
+                        .ToolBar(toolbar =>
+                        {
+                            toolbar.Create().Text("Thêm mới");
+                        })
+                        .Editable(editable => editable.Mode(GridEditMode.InLine))
+                        .Pageable(pageable => pageable.PageSizes(new[] { 10, 20, 50, 100 }))
+                        .Sortable()
+                        .Filterable()
+                        .DataSource(dataSource => dataSource
+                            .Ajax()
+                            .PageSize(20)
+                            .Model(model =>
+                            {
+                                model.Id(p => p.Guid);
+                                model.Field(p => p.Guid).Editable(false).DefaultValue(Guid.Empty);
+                                model.Field(p => p.GuidProduce).Editable(false).DefaultValue(Model.Guid);
+                                model.Field(p => p.Size);
+                                model.Field(p => p.Color);
+                                model.Field(p => p.Quantity).DefaultValue(0);
+                                model.Field(p => p.UpdatedAt).Editable(false);
+                            })
+                            .Read(read => read.Action("ReadInventory", "PosProduce", new { guidProduce = Model.Guid }))
+                            .Create(create => create.Action("CreateInventory", "PosProduce").Data("additionalData"))
+                            .Update(update => update.Action("UpdateInventory", "PosProduce"))
+                            .Destroy(destroy => destroy.Action("DeleteInventory", "PosProduce"))
+                        )
+                    )
+
+<script>
+    function additionalData() {
+        return {
+            GuidProduce: '@Model.Guid'
+        };
+    }
+
+    var sizes = [];
+    var colors = [];
+
+    // Parse Size and Color from Model
+    $(document).ready(function() {
+        var sizeStr = "@Html.Raw(Model.Size)";
+        var colorStr = "@Html.Raw(Model.Color)";
+
+        if (sizeStr) {
+            sizes = sizeStr.split(',').map(function(item) {
+                return { text: item.trim(), value: item.trim() };
+            });
+        }
+
+        if (colorStr) {
+            colors = colorStr.split(',').map(function(item) {
+                return { text: item.trim(), value: item.trim() };
+            });
+        }
+    });
+
+
+    function onGridEdit(e) {
+        if (!e.model.isNew()) {
+            // Optional: Disable auditing fields if needed
+        }
+
+        // Use setTimeout to allow Kendo to finish rendering the input cell
+        setTimeout(function() {
+            // Initialize Size Dropdown
+            var sizeInput = e.container.find("input[name=Size]");
+            if (sizeInput.length === 0) {
+                 // Try to find by attribute data-bind="value:Size" if name is missing
+                 sizeInput = e.container.find("[data-bind='value:Size']");
+            }
+
+            if (sizeInput.length > 0) {
+                // Determine if it is already a widget
+                if (!sizeInput.data("kendoDropDownList")) {
+                    sizeInput.kendoDropDownList({
+                        dataTextField: "text",
+                        dataValueField: "value",
+                        dataSource: sizes,
+                        optionLabel: "-- Chọn Size --",
+                        change: function(e) {
+                            // Force update model
+                            var grid = $("#gridInventory").data("kendoGrid");
+                            var item = grid.dataItem(this.element.closest("tr"));
+                            item.set("Size", this.value());
+                        }
+                    });
+                }
+            } else {
+                console.log("Size input not found!");
+            }
+
+            // Initialize Color Dropdown
+            var colorInput = e.container.find("input[name=Color]");
+            if (colorInput.length === 0) {
+                 colorInput = e.container.find("[data-bind='value:Color']");
+            }
+
+            if (colorInput.length > 0) {
+                if (!colorInput.data("kendoDropDownList")) {
+                    colorInput.kendoDropDownList({
+                        dataTextField: "text",
+                        dataValueField: "value",
+                        dataSource: colors,
+                        optionLabel: "-- Chọn Màu --",
+                        change: function(e) {
+                            var grid = $("#gridInventory").data("kendoGrid");
+                            var item = grid.dataItem(this.element.closest("tr"));
+                            item.set("Color", this.value());
+                        }
+                    });
+                }
+            } else {
+                 console.log("Color input not found!");
+            }
+        }, 100);
+    }
+
+    function addInventoryRow() {
+        var grid = $("#gridInventory").data("kendoGrid");
+        grid.addRow();
+    }
+
+    function saveInventory() {
+        var grid = $("#gridInventory").data("kendoGrid");
+        grid.saveChanges();
+    }
+</script>
+                </div>
+                
+                @*QR Code*@
+                <div>
+                    <p>
+                        <div id="QR_Code_@Model.Guid" class="QR_Code_Item"></div>
+                    </p>
+                </div>
+            }
+
+            @*Seo*@
+            <div style="display: none">
+                <div class="form-group">
+                    <div class="col-md-2 col-sm-2">
+                        @Html.LabelFor(m => m.SeoFriendUrl)
+                    </div>
+                    <div class="col-md-10 col-sm-10">
+                        @Html.TextBoxFor(model => model.SeoFriendUrl, new { @class = "k-textbox" })
+                        <div>@Html.ValidationMessageFor(model => model.SeoFriendUrl)</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-2 col-sm-2">
+                        @Html.LabelFor(m => m.SeoTitle)
+                    </div>
+                    <div class="col-md-10 col-sm-10">
+                        @Html.TextAreaFor(model => model.SeoTitle, new { @class = "k-textbox", rows = "3" })
+                        <div>@Html.ValidationMessageFor(model => model.SeoTitle)</div>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-2 col-sm-2">
+                        @Html.LabelFor(m => m.SeoDescription)
+                    </div>
+                    <div class="col-md-10 col-sm-10">
+                        @Html.TextAreaFor(model => model.SeoDescription, new { @class = "k-textbox", rows = "5" })
+                        <div>@Html.ValidationMessageFor(model => model.SeoDescription)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <style>
+        .QR_Code_Item > img {
+            margin: auto;
+        }
+    </style>
+</div>
+
+@*div Main*@
+<div>
+    @(Html.Kendo().Window()
+          .Name("WidgetConfigWindow1")
+          .Title("Image")
+          .Iframe(true)
+          .Events(ev => ev.Open(@"function(f){
+                if(window.loaded){
+                    this.refresh();
+                }
+                window.loaded = true;
+            }"))
+          .Animation(true)
+          .Resizable()
+          .Draggable()
+          .Width(850).Height(400)
+          .Actions(actions => actions.Pin().Minimize().Maximize().Close())
+          .HtmlAttributes(new { style = "marign:0;padding:0;overflow:hidden" })
+          .Visible(false)
+          .Modal(true)
+          )
+</div>
+
+<script type="text/javascript" src="~/assets/admin/js/qrcode.js"></script>
+<script>
+    var valqr = window.location.origin + "/admin/PosProduce/Display?Guid=@Model.Guid";
+    var qrcode = new QRCode("QR_Code_@Model.Guid", {
+        text: valqr,
+        width: 200,
+        height: 200,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+    });
+</script>
+
+<script>
+    //Form submit
+    var validator = $("#frmEdit").kendoValidator().data("kendoValidator");
+    $("form").submit(function (event) {
+        if (validator.validate() === true) {
+            kendo.ui.progress(parent.$("#WidgetConfigWindow"), true);
+            var frm = $('#frmEdit');
+            var httpPost = $.post('@Url.Action("Update", "PosProduce")', frm.serialize(), function (dataResponse) {
+                kendo.ui.progress(parent.$("#WidgetConfigWindow"), false);
+                if (dataResponse.StatusCode === 200) {
+                    parent.voidRefresh();
+                    parent.ActiveRow(dataResponse.ActiveCode);
+                    if (parseInt($("#hfLuuvathem").val()) === 0) {
+                        closeWindowEdit();
+                    } else {
+                        parent.Create('0');
+                    }
+                } else {
+                    Notification('@Gemini.Resources.Resource.EditUnsuccessful', dataResponse.StatusCode, dataResponse.MessagError, '@Gemini.Resources.Resource.ListStatusNotificationError', true);
+                }
+            }).fail(function (xhr, status, error) {
+                kendo.ui.progress(parent.$("#WidgetConfigWindow"), false);
+                Notification('@Gemini.Resources.Resource.ListUnsuccessful', '@Gemini.Resources.Resource.ListStatus404', error, '@Gemini.Resources.Resource.ListStatusNotificationError', true);
+            });
+        }
+        event.preventDefault();
+    });
+
+    function closeWindowEdit() {
+        var window = parent.$("#WidgetConfigWindow").data("kendoWindow");
+        window.close();
+    }
+
+    function voidDeleteItem() {
+        parent.Delete();
+        closeWindowEdit();
+    }
+
+    function voidRefreshItem() {
+        if (parseInt($("#IsUpdate").val()) == 0) {
+            parent.Create('0');
+        } else if (parseInt($("#IsUpdate").val()) == 1) {
+            parent.Edit('1');
+        }
+    }
+
+    function checkall() {
+        var cbox = document.getElementsByClassName("chkbox");
+        if ($("#selectAll").is(":checked") === true) {
+            for (var i = 0; i < cbox.length; i++) {
+                if (cbox[i].type == 'checkbox')
+                    cbox[i].checked = true;
+            }
+        } else {
+            for (var i = 0; i < cbox.length; i++) {
+                if (cbox[i].type == 'checkbox')
+                    cbox[i].checked = false;
+            }
+        }
+    }
+
+    var idsChecked = "";
+    function rowCheckDelete() {
+        idsChecked = "";
+        var grid = $("#grid").data("kendoGrid");
+        var ds = grid.dataSource.view();
+        for (var i = 0; i < ds.length; i++) {
+            var row = grid.table.find("tr[data-uid='" + ds[i].uid + "']");
+            var checkbox = $(row).find(".chkbox");
+            if (checkbox.is(":checked")) {
+                idsChecked = idsChecked + ds[i].Guid + ";";
+            }
+        }
+    }
+
+    function getDataItem() {
+        var grid = $("#grid").data("kendoGrid");
+        if (grid.select().length > 0) {
+            var dataItem = grid.dataItem(grid.select());
+            if (dataItem) {
+                return dataItem;
+            }
+        }
+        return null;
+    }
+
+    function DeleteImage() {
+        rowCheckDelete();
+        kendo.ui.progress(parent.$("#WidgetConfigWindow1"), true);
+        $.get('@Url.Action("DeleteFProduceGallery", "PosProduce")', { guidProduce: $("#Guid").val(), guidGallery: idsChecked },
+                    function (dataResponse) {
+                        kendo.ui.progress(parent.$("#WidgetConfigWindow1"), false);
+                        if (dataResponse.StatusCode == 200) {
+                            voidRefresh();
+                            parent.voidRefresh();
+                            parent.ActiveRow(dataResponse.ActiveCode);
+
+                            Notification('@Gemini.Resources.Resource.ListSuccessful',
+                                undefined,
+                                '@Gemini.Resources.Resource.ListSuccessful',
+                                '@Gemini.Resources.Resource.ListStatusNotificationInfo');
+                        } else {
+                            Notification('@Gemini.Resources.Resource.ListUnsuccessful',
+                                dataResponse.StatusCode,
+                                dataResponse.MessagError,
+                                '@Gemini.Resources.Resource.ListStatusNotificationError');
+                        }
+                    })
+    };
+
+    function voidRefresh() {
+        LoadDataFind();
+    }
+
+    function LoadDataFind() {
+        $("#grid").data("kendoGrid").dataSource.read({ guid: $("#Guid").val() });
+    }
+
+    //Set friendly from name
+    function Friendly_urlChange() {
+        $("#SeoFriendUrl").val(RemoveUnicode($("#Name").val()));
+        $("#SeoTitle").val($("#Name").val());
+    }
+
+    $(document).ready(function () {
+        $("#btnUpload").kendoUpload({
+            async: {
+                saveUrl: '@Url.Action("Save", "PosProduce")?guidProduce=' + $("#Guid").val() + '',
+            },
+            select: onSelect,
+            multiple: false,
+            success: onSuccess,
+            upload: onUpload
+        });
+    });
+
+    var lstFilePath = [];
+    function onSuccess(e) {
+        var data = e.response;
+        var filePath = data.physicalPath;
+        lstFilePath.push(filePath);
+
+        if (parseInt($("#IsUpdate").val()) == 0) {
+            $("#grid").data("kendoGrid").dataSource.read({ guid: "", lstFilePath: lstFilePath.join(";") });
+        } else if (parseInt($("#IsUpdate").val()) == 1) {
+            $("#grid").data("kendoGrid").dataSource.read({ guid: $("#Guid").val(), lstFilePath: "" });
+        }
+    }
+
+    function onSelect(e) {
+        getFileInfo(e);
+    }
+
+    function onUpload(e) {
+        var files = e.files;
+        $.each(files, function () {
+            if (this.extension.toLowerCase() == ".png"
+                || this.extension.toLowerCase() == ".jpg"
+                || this.extension.toLowerCase() == ".jpeg"
+                || this.extension.toLowerCase() == ".mov"
+                || this.extension.toLowerCase() == ".mp4"
+                || this.extension.toLowerCase() == ".wmv"
+                || this.extension.toLowerCase() == ".mpg"
+                || this.extension.toLowerCase() == ".vob"
+                || this.extension.toLowerCase() == ".mp3") {
+
+            }
+            else {
+                alert("Định dạng file không hợp lệ");
+                e.preventDefault();
+            }
+        });
+    }
+
+    function getUpload() {
+        return $("#btnUpload").data("kendoUpload");
+    }
+
+    // size file
+    function getFileInfo(e) {
+        return $.map(e.files, function (file) {
+            var info = file.name;
+            var size;
+            // File size is not available in all browsers
+            if (file.size > 0) {
+                size = Math.ceil(file.size);
+            }
+            return size;
+        });
+    }
+
+    ToolbarItem_Click();
+    PreventEventTextSubmit();
+    KeyboardNavigationEdit();
+    KendoTabStrip();
+</script>

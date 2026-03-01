@@ -1,0 +1,141 @@
+﻿@model List<Gemini.Models._01_Hethong.SMenuModel>
+    @{
+        
+    }
+    <div>
+        @if (Model.Any())
+        {
+            @(Html.Kendo().Menu()
+                .Name("Menu")
+                .Items(items =>
+                {
+                foreach (var item in Model)
+                {
+                    if ((item.GuidParent == null) && item.Active && (Model.Count(s => s.GuidParent == item.Guid) > 0))
+                    {
+                        items.Add().Text(@item.Name).ImageUrl("~/Content/icons/" + @item.Icon + ".png").Items(children =>
+                        {
+                            foreach (var pItem in Model.Where(s => s.GuidParent == @item.Guid).OrderBy(s => s.OrderMenu))
+                            {
+                                if (pItem.LinkUrl != null && pItem.Active)
+                                {
+                                    children.Add().Text(pItem.Name).Url("~/" + ViewData["Portal"].ToString().ToLower() + "/" + pItem.LinkUrl).HtmlAttributes(new { id = pItem.Guid }).ImageUrl("~/Content/icons/" + pItem.Icon + ".png");
+                                    //children.Add().Text(@pItem.Name).ImageUrl("~/Content/icons/" + pItem.Icon + ".png").Items(
+                                    //innerChildren =>
+                                    //{
+                                    //    foreach (var pItem1 in Model.Where(s => s.GuidParent == @pItem.Guid).OrderBy(s => s.OrderMenu))
+                                    //    {
+                                    //        innerChildren.Add().Text(pItem1.Name).Url("~/" + ViewData["Portal"].ToString().ToLower() + "/" + pItem1.LinkUrl).HtmlAttributes(new { id = pItem1.Guid }).ImageUrl("~/Content/icons/" + pItem1.Icon + ".png");
+                                    //    }
+                                    //});
+                                }
+                                else if(pItem.LinkUrl == null&& pItem.Active)
+                                {
+                                    children.Add().Text(@pItem.Name).ImageUrl("~/Content/icons/" + pItem.Icon + ".png").Items(
+                                    innerChildren =>
+                                    {
+                                        foreach (var pItem1 in Model.Where(s => s.GuidParent == @pItem.Guid).OrderBy(s => s.OrderMenu))
+                                        {
+                                            innerChildren.Add().Text(pItem1.Name).Url("~/" + ViewData["Portal"].ToString().ToLower() + "/" + pItem1.LinkUrl).HtmlAttributes(new { id = pItem1.Guid }).ImageUrl("~/Content/icons/" + pItem1.Icon + ".png");
+                                        }
+                                    });
+                                }
+                            }
+                            // Hardcoded menu item for Promotion
+                            {
+                                children.Add().Text("Quản lý khuyến mãi")
+                                    .Url("~/" + ViewData["Portal"].ToString().ToLower() + "/Promotion")
+                                    .ImageUrl("~/Content/icons/001_Help.png"); 
+                                
+                                children.Add().Text("Quản lý QR")
+                                    .Url("~/" + ViewData["Portal"].ToString().ToLower() + "/PaymentQr")
+                                    .ImageUrl("~/Content/icons/191_bank.png");
+                            }
+                        });
+                    }
+                }
+                })
+                .Events(e => e.Select("Menu_Select"))
+            )
+
+            <div id="menu__userProfile" style="float: right ;margin-top: -53px">
+                @(Html.Kendo().Menu().Name("UserProfile")
+                    .Items(items =>
+                    {
+                        items.Add().Text(ViewData["Username"].ToString());
+                        items.Add().Text("Home").Url("/").ImageUrl("~/Content/icons/home.png");
+                        items.Add().Text("Logout").Url("~/" + ViewData["Portal"].ToString().ToLower() + "/Admin/Logout").ImageUrl("~/Content/icons/logout.png");
+                    })
+                )
+            </div>
+        }
+        else
+        {
+            <style>
+                #menu__userProfile {
+                    margin-top: 0px !important;
+                    float: none !important;
+                }
+
+                #menu__userProfile > ul > li {
+                    float: right !important;
+                }
+            </style>
+            <div id="menu__userProfile">
+                @(Html.Kendo().Menu().Name("UserProfile")
+                    .Items(items =>
+                    {
+                        items.Add().Text("Logout").Url("~/" + ViewData["Portal"].ToString().ToLower() + "/Admin/Logout").ImageUrl("~/Content/icons/logout.png");
+                        items.Add().Text("Home").Url("/").ImageUrl("~/Content/icons/home.png");
+                        items.Add().Text(ViewData["Username"].ToString());
+                    })
+                )
+            </div>
+        }
+        
+
+        @*div Main*@
+        <div>
+            @(Html.Kendo().Window()
+                .Name("WidgetConfigWindow")
+                .Title(@Gemini.Resources.Resource.ListTitleTrangthai)
+                .Iframe(true)
+                .Events(ev => ev.Open(@"function(f){
+                    if(window.loaded){
+                        this.refresh();
+                    }
+                    window.loaded = true;
+                }"))
+                .Animation(true)
+                .Resizable()
+                .Draggable()
+                .Width(850).Height(400)
+                .Actions(actions => actions.Pin().Minimize().Maximize().Close())
+                .HtmlAttributes(new { style = "marign:0;padding:0;overflow:hidden" })
+                .Visible(false)
+                .Modal(true)
+            )
+        </div>
+    </div>
+
+<script>
+    function btnmThoat_click() {
+        var url = '@ViewData["Portal"].ToString()' + "/Admin/Logout";
+        window.location = url;
+    }
+
+    $(document).click(function (e) {
+        if (e.target.parentNode.id == "UserProfile_mn_active") {
+            EditUser('@ViewData["GuidUser"]');
+        }
+    });
+
+    function EditUser(guidUser) {
+        var windowWidget = $("#WidgetConfigWindow").data("kendoWindow").title("User");
+        windowWidget.refresh({
+            url: '@Url.Action("EditPopup", "SUser")?guid=' + guidUser + ''
+        });
+        windowWidget.center();
+        windowWidget.open();
+    }
+</script>

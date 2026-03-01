@@ -1,0 +1,95 @@
+﻿@model Gemini.Models._05_Website.PartialChatPannelModel
+
+<div id="MainContentHolder_UpdatePanel1">
+    <div>
+        <h4 style="text-align: center" class="alert alert-info">@Model.MsgSender</h4>
+        <span style="float: right"></span>
+    </div>
+    <div id="MainContentHolder_chatPanel">
+        <div style="vertical-align: middle; min-height: 480px;" class="pre-scrollable">
+            <div>
+                @if (Model.ListLiveChat != null && Model.ListLiveChat.Any())
+                {
+                    <table id="MainContentHolder_DataList2" cellspacing="0" align="Center" style="font-weight:normal;font-style:normal;text-decoration:none;border-collapse:collapse;">
+                        <tbody>
+                            @foreach (var item in Model.ListLiveChat)
+                            {
+                                <tr>
+                                    <td>
+                                        @if (item.MsgSender == Model.CurrentUsername)
+                                        {
+                                            <div class="SenderClass MainChatListClass">
+                                                <span>
+                                                    <span style="color:#efdab5">You :</span>
+                                                    <span>@item.ChatMsg</span>
+                                                </span>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="ReceiverClass MainChatListClass">
+                                                <span>
+                                                    <span style="color:#efdab5">@item.MsgSender :</span>
+                                                    <span>@item.ChatMsg</span>
+                                                </span>
+                                            </div>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div style="padding: 5px 15px 5px 5px">
+    <div id="MainContentHolder_MsgPanel">
+        <div id="MainContentHolder_ctl01">
+            <div>
+                <table style="width: 120%" id="tableLiveChat">
+                    <tbody>
+                        <tr>
+                            <td id="messageLiveChat" style="padding-right: 5px">
+                                <input name="ctl00$MainContentHolder$MSGTextBox" type="text" id="MainContentHolder_MSGTextBox" class="form-control" placeholder="Gửi tin nhắn" style="width:100%;">
+                            </td>
+                            <td id="btnSendLiveChat" style="width: 25%">
+                                <input type="submit" name="ctl00$MainContentHolder$sendBTN" value="Gửi" onclick="sendChatMsg();" id="MainContentHolder_sendBTN" class="btn btn-default" style="width:30%;">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <img id="MainContentHolder_LoadingImage" src="~/assets/admin/img/loadingIcon.gif" align="right" style="opacity:0;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var scroll = $('#MainContentHolder_chatPanel');
+    scroll.animate({ scrollTop: scroll.prop("scrollHeight") });
+
+    function loadDataChatPannel(msgSender) {
+        $.ajax({
+            type: "POST",
+            url: "/WLiveChat/PartialChatPannel?msgSender=" + msgSender,
+            dataType: "html",
+            success: function (response) {
+                $('#partialChatPannel').html(response);
+            }
+        });
+    }
+
+    function sendChatMsg() {
+        document.getElementById('MainContentHolder_LoadingImage').style.opacity = 1;
+
+        $.post('@Url.Action("SendMsg", "WLiveChat")?msgSender=@Model.MsgSender&chatMsg=' + $('#MainContentHolder_MSGTextBox').val(), {}, function (dataResponse) {
+            if (dataResponse.StatusCode == 200) {
+                loadDataChatPannel('@Model.MsgSender');
+            } else {
+                alert(dataResponse.errMsg);
+            }
+        });
+    }
+</script>

@@ -1,0 +1,279 @@
+﻿@model Gemini.Models._01_Hethong.User
+<!DOCTYPE html>
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+    <title>Đăng nhập</title>
+
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Favicon -->
+    <link href="~/assets/admin/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- CSS Global Compulsory -->
+    <link rel="stylesheet" href="~/assets/admin/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/assets/admin/css/style.css">
+
+    <!-- CSS Implementing Plugins -->
+    <link rel="stylesheet" href="~/assets/admin/plugins/line-icons/line-icons.css">
+    <link rel="stylesheet" href="~/assets/admin/plugins/font-awesome/css/font-awesome.min.css">
+
+    <!-- CSS Page Style -->
+    <link rel="stylesheet" href="~/assets/admin/css/pages/page_log_reg_v2.css">
+
+    <!-- CSS Theme -->
+    <link rel="stylesheet" href="~/assets/admin/css/themes/blue.css" id="style_color">
+
+    <!-- CSS Customization -->
+    <link rel="stylesheet" href="~/assets/admin/css/custom.css">
+
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    @*<div id="notchrome">
+            <div class="row" style="text-align: center">
+                <div class="col-md-12">
+                    <img width="400px" height="300px" src="~/Content/UserFiles/Cauhinh/chrome-logo.png" />
+                    <h1 style="color: #fff; font-weight: bold; font-size: 33px; text-transform: uppercase; ">Hệ thống chỉ hỗ trợ trên trình duyệt web chrome</h1>
+                    <h2><a target="blank" href="https://www.google.com/intl/en/chrome/browser/desktop/index.html?standalone=1">Download tại đây</a></h2>
+                </div>
+
+            </div>
+        </div>*@
+    <div>
+        @using (Html.BeginForm())
+        {
+            <div style="height: 0; overflow: hidden">
+                @Html.HiddenFor(model => model.KendoLanguage)
+                @Html.HiddenFor(model => model.KendoTheme)
+            </div>
+            <div class="container">
+                <!--Reg Block-->
+                <div class="reg-block">
+                    <div class="reg-block-header">
+                        <h2>Login</h2>
+                        <ul class="social-icons text-center">
+                            <li><a target="_blank" class="rounded-x social_facebook" data-original-title="Facebook" href="#"></a></li>
+                            <li><a target="_blank" class="rounded-x social_twitter" data-original-title="Twitter" href="#"></a></li>
+                            <li><a target="_blank" class="rounded-x social_googleplus" data-original-title="Google Plus" href="#"></a></li>
+                            <li><a target="_blank" class="rounded-x social_linkedin" data-original-title="Linkedin" href="#"></a></li>
+                        </ul>
+                        <p>Bạn chưa có tài khoản hãy click <a class="color-green" href="Register">Đăng Ký</a></p>
+                    </div>
+                    <div id="errAcc" class="error" style="text-align: center;margin-bottom: 30px;margin-top: -20px;font-weight: bold;">@Html.Raw(@ViewBag.ErrorAcc)</div>
+
+                    <div>@Html.ValidationMessageFor(model => model.Username, "", new { @class = "error" })</div>
+                    <div class="input-group margin-bottom-20">
+                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                        @Html.TextBoxFor(u => u.Username, new { @class = "form-control", @placeholder = "Username", autocomplete = "off" })
+                    </div>
+
+                    <div>@Html.ValidationMessageFor(model => model.Password, "", new { @class = "error" })</div>
+                    <div class="input-group margin-bottom-20">
+                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                        @Html.PasswordFor(u => u.Password, new { @class = "form-control", @placeholder = "Password", autocomplete = "off" })
+                    </div>
+
+                    <div style="display: none">@Html.ValidationMessageFor(model => model.SecurityCode, "", new { @class = "error" })</div>
+                    <div style="display: none" class="input-group margin-bottom-20">
+                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                        @Html.TextBoxFor(u => u.SecurityCode, new { @class = "form-control", @placeholder = "Security code" })
+                    </div>
+
+                    @*<div class="btn-group" data-toggle="tooltip" data-placement="top" title="Theme">
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle  btn-info" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Theme
+                                <i class="fa fa-cog" style="line-height: 1.45;"></i>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu " aria-labelledby="dropdownMenu1" id="menu1">
+                                <li><a href="#" data-value="kendo.Black.min.css">Black</a></li>
+                                <li><a href="#" data-value="kendo.BlueOpal.min.css">BlueOpal</a></li>
+                                <li><a href="#" data-value="kendo.Bootstrap.min.css"> Bootstrap</a></li>
+                                <li><a href="#" data-value="kendo.Material.min.css"> Material</a></li>
+                                <li><a href="#" data-value="kendo.Metro.min.css"> Metro</a></li>
+                                <li><a href="#" data-value="kendo.MetroBlack.min.css"> MetroBlack</a></li>
+                                <li><a href="#" data-value="kendo.Moonlight.min.css"> Moonlight</a></li>
+                                <li><a href="#" data-value="kendo.Silver.min.css"> Silver</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#" data-value="kendo.Default.min.css">Default</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="btn-group" data-toggle="tooltip" data-placement="top" title="Language">
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle btn-info" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Language
+                                <i class="fa fa-cog" style="line-height: 1.45;"></i>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" id="menu2">
+                                <li><a href="#" data-value="kendo.en-GB.js">Great Britain</a></li>
+                                <li><a href="#" data-value="kendo.en-US.js">United States</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#" data-value="kendo.Vi-vn.js">Viet Nam</a></li>
+                            </ul>
+                        </div>
+                    </div>*@
+
+                    <label class="checkbox">
+                        @Html.CheckBoxFor(u => u.RememberMe)
+                        <p style="display: inline-block;"> @Html.Label("Duy trì đăng nhập")</p>
+                        <a class="color-green" href="ForgotPassword" style="float: right">Quên mật khẩu</a>
+                    </label>
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1">
+                            <button type="submit" class="btn-u btn-block">Đăng nhập</button>
+                        </div>
+                    </div>
+                </div>
+                <!--End Reg Block-->
+            </div>
+        }
+    </div>
+
+    <!-- JS Global Compulsory -->
+    <script type="text/javascript" src="~/assets/admin/plugins/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="~/assets/admin/plugins/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="~/assets/admin/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <!-- JS Implementing Plugins -->
+    <script type="text/javascript" src="~/assets/admin/plugins/back-to-top.js"></script>
+    <script type="text/javascript" src="~/assets/admin/plugins/countdown/jquery.countdown.js"></script>
+    <script type="text/javascript" src="~/assets/admin/plugins/backstretch/jquery.backstretch.min.js"></script>
+    <script type="text/javascript">
+        $.backstretch([
+            "/Content/UserFiles/Cauhinh/1.jpg",
+            "/Content/UserFiles/Cauhinh/2.jpg",
+            "/Content/UserFiles/Cauhinh/3.jpg",
+        ], {
+            fade: 700,
+            duration: 3000
+        });
+    </script>
+    <!-- JS Page Level -->
+    <script type="text/javascript" src="~/assets/admin/js/app.js"></script>
+    <script type="text/javascript">
+        //$(document).bind("contextmenu", function (e) {
+        //    e.preventDefault();
+        //});
+        //$(document).keydown(function (e) {
+        //    if (e.which === 123) {
+        //        return false;
+        //    }
+        //});
+
+        //var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+        //if (isChrome === true) {
+        //    $("#chrome").show();
+        //    $("#notchrome").hide();
+        //} else {
+        //    $("#chrome").hide();
+        //    $("#notchrome").show();
+        //}
+
+        jQuery(document).ready(function () {
+            App.init();
+        });
+
+        $("#menu1 li a").click(function () {
+            //Theme
+            $(this).parents(".dropdown").find('#dropdownMenu1').html($(this).text() + '   <i class="fa fa-cog" style="line-height: 1.45;"></i> <span class="sr-only">Toggle Dropdown</span>');
+            $(this).parents(".dropdown").find('#dropdownMenu1').val($(this).data('value'));
+
+            if (typeof (Storage) !== "undefined") {
+                var storagetheme = {
+                    GetKendoTheme: $(this).data('value'),
+                    GetKendoThemeName: $(this).text() + '   <i class="fa fa-cog" style="line-height: 1.45;"></i> <span class="sr-only">Toggle Dropdown</span>',
+                }
+                localStorage.setItem("localStorageKendoTheme", JSON.stringify(storagetheme));
+                $('#KendoTheme').val($(this).data('value'));
+            }
+        });
+
+        $("#menu2 li a").click(function () {
+            //Language
+            $(this).parents(".dropdown").find('#dropdownMenu2').html($(this).text() + '   <i class="fa fa-cog" style="line-height: 1.45;"></i> <span class="sr-only">Toggle Dropdown</span>');
+            $(this).parents(".dropdown").find('#dropdownMenu2').val($(this).data('value'));
+
+            if (typeof (Storage) !== "undefined") {
+                var storageLanguage = {
+                    GetKendoLanguage: $(this).data('value'),
+                    GetKendoLanguageName: $(this).text() + '   <i class="fa fa-cog" style="line-height: 1.45;"></i> <span class="sr-only">Toggle Dropdown</span>'
+                }
+                localStorage.setItem("localStorageKendoLanguage", JSON.stringify(storageLanguage));
+                $('#KendoLanguage').val($(this).data('value'));
+                GetLanguage();
+            }
+        });
+
+        $(document).ready(function () {
+            //localStorage.removeItem("GetKendo");
+            if (localStorage.getItem("localStorageKendoTheme") === "undefined" || localStorage.getItem("localStorageKendoTheme") == null) {
+                $('button#dropdownMenu1.btn.btn-default.dropdown-toggle').html("Default" + '   <i class="fa fa-cog" style="line-height: 1.45;"></i> <span class="sr-only">Toggle Dropdown</span>');
+                $('#KendoTheme').val("kendo.Default.min.css");
+            } else {
+                $('button#dropdownMenu1.btn.btn-default.dropdown-toggle').html(JSON.parse(localStorage.getItem("localStorageKendoTheme")).GetKendoThemeName);
+                $('#KendoTheme').val(JSON.parse(localStorage.getItem("localStorageKendoTheme")).GetKendoTheme);
+            }
+
+            if (localStorage.getItem("localStorageKendoLanguage") === "undefined" || localStorage.getItem("localStorageKendoLanguage") == null) {
+                $('button#dropdownMenu2.btn.btn-default.dropdown-toggle').html("Viet Nam" + '   <i class="fa fa-cog" style="line-height: 1.45;"></i> <span class="sr-only">Toggle Dropdown</span>');
+                $('#KendoLanguage').val("kendo.Vi-vn.js");
+            } else {
+                $('button#dropdownMenu2.btn.btn-default.dropdown-toggle').html(JSON.parse(localStorage.getItem("localStorageKendoLanguage")).GetKendoLanguageName);
+                $('#KendoLanguage').val(JSON.parse(localStorage.getItem("localStorageKendoLanguage")).GetKendoLanguage);
+            }
+
+            GetLanguage();
+        });
+
+        function GetLanguage() {
+            if (typeof localStorage.getItem('language') != "undefined") {
+                localStorage.removeItem("language");
+            }
+            if (JSON.parse(localStorage.getItem("localStorageKendoLanguage")) == null) {
+                localStorage.setItem('language', 'vi_VN');
+            } else {
+                switch (JSON.parse(localStorage.getItem("localStorageKendoLanguage")).GetKendoLanguage) {
+                    case "kendo.en-GB.js":
+                    case "kendo.en-US.js":
+                        localStorage.setItem('language', 'en_GB');
+                        break;
+                    case "kendo.fr-FR.js":
+                        localStorage.setItem('language', 'fr_FR');
+                        break;
+                    case "kendo.de-DE":
+                        localStorage.setItem('language', 'de');
+                        break;
+                    default:
+                        localStorage.setItem('language', 'vi_VN');
+                };
+            }
+        }
+
+        function SendEmailActive() {
+            $.post('@Url.Action("SendEmailActive", "Admin")', { username: $('#Username').val() },
+                    function (dataResponse) {
+                        if (dataResponse.StatusCode != 200) {
+                            $('#errAcc').html(dataResponse.MessagError);
+                        }
+                    })
+        }
+    </script>
+
+    <!-- CSS jquery error -->
+    <script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>

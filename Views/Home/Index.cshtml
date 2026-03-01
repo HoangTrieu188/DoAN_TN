@@ -1,0 +1,139 @@
+﻿@using Gemini.Controllers.Bussiness
+
+@model Gemini.Models._20_Web.HomeModel
+@{
+    Layout = "~/Views/Shared/_Root.Head.cshtml";
+
+}
+
+<!-- Hero Section Begin -->
+<section class="hero">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="hero__categories">
+                    <div class="hero__categories__all">
+                        <i class="fa fa-bars"></i>
+
+                        <span>Danh mục sản phẩm</span>
+                    </div>
+                    <nav class="navigation">
+                        <ul class="mainmenu">
+                            @if (Model.ListPosCategory != null && Model.ListPosCategory.Any())
+                            {
+                                foreach (var item in Model.ListPosCategory)
+                                {
+                                    <li onmouseover="showSubMenu('@item.SeoFriendUrl')" onmouseleave="hideSubMenu('@item.SeoFriendUrl')">
+                                        @if (item.Items != null && item.Items.Any())
+                                        {
+                                            <a>@item.Name</a>
+
+                                            <ul id="submenu-@item.SeoFriendUrl" class="submenu">
+                                                @foreach (var itemSub in item.Items)
+                                                {
+                                                    <li onmouseover="showSubMenu('@itemSub.SeoFriendUrl')">
+                                                        @if (itemSub.Items != null && itemSub.Items.Any())
+                                                        {
+                                                            <a>● @itemSub.Name</a>
+
+                                                            <ul id="submenu-@itemSub.SeoFriendUrl" class="submenu">
+                                                                @foreach (var itemSub2 in itemSub.Items)
+                                                                {
+                                                                    <li><a href="/danh-muc/@itemSub2.SeoFriendUrl">● @itemSub2.Name</a></li>
+                                                                }
+                                                            </ul>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a href="/danh-muc/@itemSub.SeoFriendUrl">● @itemSub.Name</a>
+                                                        }
+                                                    </li>
+                                                }
+                                            </ul>
+                                        }
+                                        else
+                                        {
+                                            <a href="/danh-muc/@item.SeoFriendUrl">@item.Name</a>
+                                        }
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="hero__search">
+                    <div class="hero__search__form">
+                        <form action="javascript:loadSearchData();">
+                            <input type="text" id="keyWord" placeholder="Tìm kiếm ...">
+                            <button type="button" class="site-btn" onclick="loadSearchData();"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        </form>
+                    </div>
+                    <div class="hero__search__phone">
+                        <div class="hero__search__phone__icon">
+                            <i class="fa fa-phone"></i>
+                        </div>
+                        <div class="hero__search__phone__text">
+                            <h5>0916 341 320 </h5>
+                            <span>Hỗ trợ 24/7</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero__item set-bg" data-setbg="/assets/theme/img/hero/AA.jpg">
+                    <div class="hero__text">
+                        <span>Hoàng Triều </span>
+                        <h2>Hệ thống Website <br />Bán Phụ Kiện Du Lịch</h2>
+                        <p>TP Hồ Chí Minh</p>
+                        <a href="/" class="primary-btn">MUA NGAY</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Hero Section End -->
+<!-- Banner Begin -->
+<div class="banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="banner__pic">
+                    <img src="/assets/theme/img/banner/Salee .png" alt="" width="500" height="250">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="banner__pic">
+                    <img src="/assets/theme/img/banner/Salee 1.png" alt="" width="500" height="250">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Banner End -->
+@Html.Action("PartialLatestProduct", "HomeCommon")
+
+
+
+<!-- Banner Begin -->
+<div class="banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="banner__pic">
+                    <img src="/assets/theme/img/banner/banner-1.jpg" alt="" width="570" height="270">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="banner__pic">
+                    <img src="/assets/theme/img/banner/banner-2.jpg" alt="" width="570" height="270">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Banner End -->
+
+@Html.Action("PartialFeaturedProduct", "HomeCommon")
+@Html.Action("PartialFavouriteProduct", "HomeCommon")
